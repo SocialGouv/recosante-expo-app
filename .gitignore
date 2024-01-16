@@ -1,0 +1,78 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+*.aab
+*.ipa
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+!splash.key
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+.awspublish*
+.cache
+.eggs
+.venv
+.env
+.env.*
+!.env.example
+!.env.docker
+*.egg-info
+.sass-cache
+.webassets-cache
+.DS_Store
+__pycache__
+celerybeat-schedule
+config.json
+dist
+ecosante.egg-info
+node_modules
+public
+celerybeat-schedule.db
+
+node_modules
+.DS_Store
+.github/.DS_Store
+.env
+.cache_ggshield
+test-local.js
+/test-results/
+/playwright-report/
+/playwright/.cache/
+.vscode/launch.json
+
+# Yarn Berry
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+

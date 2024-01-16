@@ -1,0 +1,17 @@
+.github
+.husky
+.kontinuous
+api
+brevo-scripts
+frontend
+libs
+mail
+node_modules
+
+expo-app/.expo
+api-node/data/municipalities.json
+CHANGELOG.md
+pyrightconfig.json
+README.md
+api-node/.yarn
+api-node/.yarnrc.yml

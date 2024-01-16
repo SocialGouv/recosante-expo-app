@@ -1,0 +1,8 @@
+.github
+.husky
+.kontinuous
+node_modules
+
+.expo
+CHANGELOG.md
+README.md
