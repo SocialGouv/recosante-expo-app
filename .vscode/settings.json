@@ -1,7 +1,11 @@
 {
-  "tailwindCSS.classAttributes": ["className", "textClassName", "viewClassName"],
+  "tailwindCSS.classAttributes": [
+    "className",
+    "textClassName",
+    "viewClassName"
+  ],
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#3f42ff",
     "titleBar.inactiveBackground": "#3f42ff"
-  },
+  }
 }

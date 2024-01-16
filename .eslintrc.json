@@ -34,5 +34,10 @@
     "@typescript-eslint/consistent-type-definitions": "off",
     "no-tabs": "off",
     "@typescript-eslint/ban-ts-comment": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"]
+    }
+  ]
 }
