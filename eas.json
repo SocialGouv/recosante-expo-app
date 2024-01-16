@@ -15,7 +15,11 @@
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_SCHEME": "https",
+        "EXPO_PUBLIC_API_HOST": "api-node-recosante-preprod.dev.fabrique.social.gouv.fr"
+      }
     }
   },
   "submit": {

@@ -61,6 +61,7 @@ node_modules
 .DS_Store
 .github/.DS_Store
 .env
+.env.production
 .cache_ggshield
 test-local.js
 /test-results/
