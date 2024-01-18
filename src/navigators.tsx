@@ -48,6 +48,7 @@ function TabBarLabel(props: TabBarLabelProps) {
 // @ts-expect-error TODO
 type HomeProps = NativeStackScreenProps<RootStackParamList, RouteEnum.HOME>;
 const HomeBottomTab = createBottomTabNavigator();
+
 function Home(props: HomeProps) {
   const { favoriteIndicator } = useIndicatorsList((state) => state);
 
@@ -130,7 +131,6 @@ export function Navigators() {
     await SplashScreen.hideAsync();
     await logEvent({ category: 'APP', action: 'APP_OPEN' });
   }
-
   const prevCurrentRouteName = useRef<string>(null);
   async function onNavigationStateChange() {
     if (!navigationRef.isReady()) return;

@@ -38,14 +38,11 @@ export async function registerForPushNotificationsAsync({
   // if (Device.isDevice) {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
-  console.log('existingStatus', existingStatus);
   if (existingStatus !== 'granted') {
-    console.log('force', force);
     if (!force) return null;
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
   }
-  console.log('finalStatus', finalStatus);
   if (finalStatus !== 'granted') {
     Alert.alert(
       'Permission for Push notifications not granted',

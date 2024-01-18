@@ -7,10 +7,13 @@ import API from './api';
 import { STORAGE_MATOMO_ID } from '~/constants/matamo';
 
 // storage.delete('STORAGE_MATOMO_ID');
-export const initMatomo = async () => {
+export async function initMatomo() {
   let matomo_id = await AsyncStorage.getItem(STORAGE_MATOMO_ID);
+  console.log('matomo_id', matomo_id);
   if (!matomo_id) {
+    console.log('no matomo_id');
     matomo_id = Matomo.makeid();
+    console.log('created matamo id', matomo_id);
     AsyncStorage.setItem(STORAGE_MATOMO_ID, matomo_id);
     API.post({
       path: '/user',
@@ -39,7 +42,7 @@ export const initMatomo = async () => {
   //   [4]: "",
   //   [5]: "",
   // });
-};
+}
 
 // const checkNetwork = async () => {
 //   const networkState = await NetInfo.fetch();

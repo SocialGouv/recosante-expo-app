@@ -102,7 +102,80 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.bathing_water:
         return 'Anticipez les variations météorologiques en portant des vêtements adaptés à tout changement de température.';
       default:
-        throw new Error('No description found');
+        throw new Error(`No description found for ${slug as string}`);
+    }
+  }
+
+  type DataVisualisation = {
+    range: number;
+    color: string[];
+    valuesInRange?: number[][];
+  };
+  export function getDataVisualisationBySlug(
+    slug: IndicatorsSlugEnum,
+  ): DataVisualisation {
+    switch (slug) {
+      case IndicatorsSlugEnum.indice_atmospheric:
+        return {
+          range: 5,
+          color: ['#46EFDF', '#45C39A', '#ECE333', '#FC373F', '#820026'],
+          valuesInRange: [[1], [2], [3], [4], [5]],
+        };
+      case IndicatorsSlugEnum.indice_uv:
+        return {
+          range: 5,
+          color: ['#419240', '#D1C74B', '#E05E45', '#B43C4E', '#6D50C6'],
+          valuesInRange: [
+            [1, 2],
+            [3, 4, 5],
+            [6, 7],
+            [8, 9, 10],
+            [11, 12, 13, 14, 15, 16],
+          ],
+        };
+      case IndicatorsSlugEnum.pollen_allergy:
+        return {
+          range: 4,
+          // TODO: not valid colors
+          color: ['#00A3FF', '#FC373F', '#820026', '#6D50C6'],
+          valuesInRange: [[1], [2], [3], [4]],
+        };
+      case IndicatorsSlugEnum.weather_alert:
+        return {
+          range: 4,
+          color: ['#419240', '#D1C74B', '#E05E45', '#FC373F'],
+          valuesInRange: [[1], [2], [3], [4]],
+        };
+      case IndicatorsSlugEnum.episode_pollution_atmospheric:
+        return {
+          range: 6,
+          // TODO: not valid colors
+          color: [
+            '#419240',
+            '#D1C74B',
+            '#E05E45',
+            '#FC373F',
+            '#820026',
+            '#6D50C6',
+          ],
+          valuesInRange: [[1], [2], [3], [4], [5], [6]],
+        };
+      case IndicatorsSlugEnum.tap_water:
+        return {
+          range: 2,
+          // TODO: not valid colors
+          color: ['#00A3FF', '#FC373F'],
+          valuesInRange: [[1], [2]],
+        };
+      case IndicatorsSlugEnum.bathing_water:
+        return {
+          range: 4,
+          // TODO: not valid colors
+          color: ['#00A3FF', '#FC373F', '#419240', '#6D50C6'],
+          valuesInRange: [[1], [2], [3], [4]],
+        };
+      default:
+        throw new Error(`No range found for ${slug as string}`);
     }
   }
 }
