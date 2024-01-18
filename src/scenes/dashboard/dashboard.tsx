@@ -15,6 +15,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   const { setIndicatorsDto } = useIndicatorsDto((state) => state);
   const { address } = useAddress((state) => state);
   const [error, setError] = useState<string>('');
+
   useEffect(() => {
     if (!address?.citycode) return;
     let ignore = false;

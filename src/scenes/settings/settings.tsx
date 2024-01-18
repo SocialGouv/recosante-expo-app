@@ -1,11 +1,11 @@
 import React from 'react';
 import { ScrollView, Alert, Pressable, View } from 'react-native';
-
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function SettingsPage({ navigation }: { navigation: any }) {
   return (
@@ -31,6 +31,17 @@ export function SettingsPage({ navigation }: { navigation: any }) {
             })
           }
         />
+        <View className="mt-12 border-b border-app-gray">
+          <TextRow
+            text="Dev mode / Clear Cookies"
+            onPress={async () => {
+              await AsyncStorage.clear();
+              console.log('AsyncStorage cleared');
+
+              navigation.navigate(RouteEnum.ONBOARDING);
+            }}
+          />
+        </View>
 
         <Pressable
           onPress={() => {

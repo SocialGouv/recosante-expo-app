@@ -5,11 +5,12 @@ import { IndicatorService } from '~/services/indicator';
 import dayjs from 'dayjs';
 import { cn } from '~/utils/tailwind';
 import { Info } from '~/assets/icons/info';
-import { LineChart } from './graphs/line';
+import { LineChartWithCursor } from './graphs/line-with-cursor';
 import { useIndicatorsDto } from '~/zustand/indicator/useIndicatorsDto';
 import { useAddress } from '~/zustand/address/useAddress';
 import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
+import { LineList } from './graphs/lines-list';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
@@ -33,7 +34,9 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   }
 
   const indicatorDataInCurrentDay = currentIndicatorData?.[props.day];
-
+  const indicatorRange = IndicatorService.getDataVisualisationBySlug(
+    props.indicator.slug,
+  )?.range;
   return (
     <View
       style={{
@@ -59,6 +62,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               {indicatorDataInCurrentDay?.label}
             </MyText>
           </View>
+
           <Pressable className="-top-6 flex items-end" onPress={handleSelect}>
             <Info />
           </Pressable>
@@ -82,7 +86,26 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           >
             {address?.label} {dayjs().format('DD/MM')}
           </MyText>
-          <LineChart value={indicatorDataInCurrentDay?.value} />
+          <LineChartWithCursor
+            value={indicatorDataInCurrentDay?.value}
+            slug={currentIndicatorData?.slug}
+          />
+
+          {props.isFavorite ? (
+            <LineList
+              values={indicatorDataInCurrentDay?.values}
+              range={indicatorRange}
+              isPreviewMode
+              onMorePress={() => {
+                // @ts-expect-error TODO
+                navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
+                  indicator: currentIndicatorData,
+                  day: props.day,
+                });
+              }}
+            />
+          ) : null}
+
           {currentIndicatorData?.slug != null ? (
             <MyText className="mt-4 text-xs">
               {IndicatorService.getDescriptionBySlug(

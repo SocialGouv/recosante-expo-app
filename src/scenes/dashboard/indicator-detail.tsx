@@ -3,11 +3,16 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo, useCallback, useEffect } from 'react';
 import MyText from '~/components/ui/my-text';
 import { Close } from '~/assets/icons/close';
-import { LineChart } from '~/components/indicators/graphs/line';
+import { LineChartWithCursor } from '~/components/indicators/graphs/line-with-cursor';
 import { DateService } from '~/services/date';
 import { useNavigation } from '@react-navigation/native';
 import type { RootStackParamList, RouteEnum } from '~/constants/route';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAddress } from '~/zustand/address/useAddress';
+import dayjs from 'dayjs';
+import { LineList } from '~/components/indicators/graphs/lines-list';
+import { IndicatorService } from '~/services/indicator';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -17,18 +22,22 @@ type IndicatorSelectorSheetProps = NativeStackScreenProps<
 
 export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const { address } = useAddress((state) => state);
 
   const navigation = useNavigation();
   const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
   const isOpenedRef = useRef(false);
   const { indicator, day } = props.route.params;
   const currentDayIndicatorData = indicator?.[day];
-
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
       isOpenedRef.current = false;
     }
   }, []);
+
+  const indicatorRange = IndicatorService.getDataVisualisationBySlug(
+    indicator.slug,
+  )?.range;
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
@@ -60,7 +69,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         }}
         enablePanDownToClose
       >
-        <View className="flex flex-1 bg-app-gray ">
+        <ScrollView className="flex flex-1 bg-app-gray ">
           <View
             className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary
 "
@@ -69,7 +78,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               {indicator?.name}
             </MyText>
             <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
-              Mise à jour le {DateService.getTimeFromNow(indicator?.created_at)}
+              Mise à jour {DateService.getTimeFromNow(indicator?.created_at)}
             </MyText>
           </View>
           <Pressable
@@ -80,8 +89,51 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           >
             <Close />
           </Pressable>
-          <View className="px-6 pt-12">
-            <LineChart value={currentDayIndicatorData?.value} />
+          <View className="px-6 pt-6">
+            <View className="mb-4 flex flex-row items-center justify-center">
+              <View>
+                <MyText
+                  className="text-wrap text-2xl uppercase text-black"
+                  font="MarianneExtraBold"
+                >
+                  Short name
+                </MyText>
+
+                <MyText
+                  className="max-w-[80%] text-xs uppercase text-gray-500"
+                  font="MarianneRegular"
+                >
+                  {address?.label} {dayjs().format('DD/MM')}
+                </MyText>
+              </View>
+              <View
+                className="mx-auto items-center rounded-full px-6 py-1"
+                style={{
+                  backgroundColor: currentDayIndicatorData?.color,
+                }}
+              >
+                <MyText font="MarianneBold" className="uppercase">
+                  {currentDayIndicatorData?.label}
+                </MyText>
+              </View>
+            </View>
+            <LineChartWithCursor
+              value={currentDayIndicatorData?.value}
+              slug={indicator.slug}
+            />
+            <LineList
+              values={currentDayIndicatorData?.values}
+              range={indicatorRange}
+            />
+            <Title
+              label={`Recommandation title: ${currentDayIndicatorData?.label}`}
+            />
+            <View className="mt-2 ">
+              <MyText className=" text-xs">
+                {currentDayIndicatorData?.recommendation}
+              </MyText>
+            </View>
+
             <Title label="Nos recommandations" />
             {indicator?.recommendations?.map((recommendation) => {
               return (
@@ -95,9 +147,23 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             })}
             <Title label="A propos" />
             <MyText className=" mt-2 ">{indicator?.about}</MyText>
-            <MyText className=" mt-2 ">En savoir plus</MyText>
+            <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
+
+            <View className="mb-8">
+              {currentDayIndicatorData?.values?.map((value) => {
+                return (
+                  <View key={value.name}>
+                    <MyText className="capitalize">{value.name}</MyText>
+                    <MyText className="mb-4 mt-2 capitalize text-gray-500">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Voluptate molestias sequi quo soluta.
+                    </MyText>
+                  </View>
+                );
+              })}
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </BottomSheet>
     </View>
   );

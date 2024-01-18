@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, View } from 'react-native';
 import Button from '~/components/ui/button';
 import MyText from '~/components/ui/my-text';
@@ -12,13 +12,14 @@ import API from '~/services/api';
 
 export function Geolocation({ navigation }: { navigation: any }) {
   const { setAddress } = useAddress((state) => state);
-
+  const [isLoading, setIsLoading] = useState(false);
   const onNext = async () => {
     const token = await registerForPushNotificationsAsync({
       force: false,
       expo: true,
     });
-    if (token) {
+
+    if (token?.data) {
       API.put({
         path: '/user',
         body: { push_notif_token: JSON.stringify(token) },
@@ -50,28 +51,36 @@ export function Geolocation({ navigation }: { navigation: any }) {
       </MyText>
       <View>
         <Button
+          disabled={isLoading}
           onPress={async () => {
+            setIsLoading(true);
             const location = await LocationService.requestLocation();
             if (!location) {
               Alert.alert('Erreur', 'Impossible de trouver votre position');
               return;
             }
-            const adress = await LocationService.getAdressByCoordinates(
+            LocationService.getAdressByCoordinates(
               location.coords.latitude,
               location.coords.longitude,
-            );
-            if (!adress) {
-              Alert.alert('Erreur', 'Impossible de trouver votre position');
-              return;
-            }
-            setAddress(adress);
-            onNext();
+            )
+              .then((adress) => {
+                if (adress) {
+                  setAddress(adress);
+                  setIsLoading(false);
+                }
+                onNext();
+              })
+              .catch((err) => {
+                console.log('err', err);
+                setIsLoading(false);
+                onNext();
+              });
           }}
           viewClassName="bg-app-yellow p-4"
           textClassName="text-black"
           font="MarianneMedium"
         >
-          C'est parti !
+          {isLoading ? 'Chargement' : "C'est parti !"}
         </Button>
       </View>
     </View>

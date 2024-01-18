@@ -164,7 +164,9 @@ export function LocationPage(props: LocationPageProps) {
                         {
                           text: 'OK',
                           style: 'cancel',
-                          onPress: () => {},
+                          onPress: () => {
+                            navigation.goBack();
+                          },
                         },
                       ],
                     );

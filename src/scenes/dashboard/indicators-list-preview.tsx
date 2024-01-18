@@ -39,7 +39,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
             isFavorite
           />
         ) : null}
-        <View className=" mx-3 flex flex-1  flex-row flex-wrap pb-24">
+        <View className=" mx-1 flex flex-1  flex-row flex-wrap pb-24">
           {filteredIndicators?.map((indicator) => (
             <IndicatorPreview
               day={route.params.day}

@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#3643b6"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.recosante.recosante",
