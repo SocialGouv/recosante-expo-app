@@ -6,7 +6,7 @@ export interface IndicatorItem {
 export type IndicatorDay = 'j0' | 'j1';
 
 export type IndicatorsDto = Partial<
-  Record<IndicatorsSlugEnum, IndicatorCommonData>
+  Record<IndicatorsSlugEnum, IndicatorDataTodayAndTomorrow>
 >;
 
 export enum IndicatorsSlugEnum {
@@ -19,32 +19,32 @@ export enum IndicatorsSlugEnum {
   bathing_water = 'bathing_water',
 }
 
-export type IndicatorDataPerDay = {
+export interface IndicatorData {
   value: number;
   color: string;
-  label: LabelEnum;
-  recommendation: string;
-  values?: Array<{
-    name: string;
-    color: string;
-    value: number;
-  }>;
-};
-
-export interface IndicatorCommonData {
+  label: string;
+  recommendation?: string;
+  about?: string;
+}
+export interface IndicatorDataDay {
   id: string;
+  validity_start: Date;
+  validity_end: Date;
+  diffusion_date: Date;
+  created_at: Date;
+  updated_at: Date;
+  summary: IndicatorData;
+  values: IndicatorData[];
+}
+
+export interface IndicatorDataTodayAndTomorrow {
   slug: IndicatorsSlugEnum;
   name: string;
   municipality_insee_code: string;
-  validity_start: string;
-  validity_end: string;
-  diffusion_date: string;
-  created_at: string;
-  updated_at: string;
   recommendations: string[];
   about: string;
-  j0: IndicatorDataPerDay; // specific to each indicator
-  j1?: IndicatorDataPerDay; // specific to each indicator
+  j0: IndicatorDataDay;
+  j1?: IndicatorDataDay;
 }
 
 export enum IndicatorColorEnum {

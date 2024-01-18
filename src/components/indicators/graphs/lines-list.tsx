@@ -1,11 +1,11 @@
 import { Pressable, View } from 'react-native';
-import { type IndicatorDataPerDay } from '~/types/indicator';
+import { type IndicatorDataDay } from '~/types/indicator';
 import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
 import { useMemo } from 'react';
 
 interface LineChartProps {
-  values: IndicatorDataPerDay['values'];
+  values: IndicatorDataDay['values'];
   range: number;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
@@ -28,9 +28,9 @@ export function LineList(props: LineChartProps) {
         ?.map((line) => {
           if (line.value === 0) return null;
           return (
-            <View key={line.name} className="flex  flex-row">
+            <View key={line.label} className="flex  flex-row">
               <MyText className="bottom-1 mr-3 min-w-[75px] capitalize text-app-gray-200">
-                {line.name}
+                {line.label}
               </MyText>
               <View className="w-full flex-1 ">
                 <LineChart

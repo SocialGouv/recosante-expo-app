@@ -70,15 +70,24 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         enablePanDownToClose
       >
         <ScrollView className="flex flex-1 bg-app-gray ">
-          <View
-            className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary
-"
+          {!currentDayIndicatorData ? (
+            <View
+            className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary"
+          >
+            <MyText font="MarianneBold" className=" text-2xl text-white">
+              {indicator?.name}
+            </MyText>
+          </View>
+          ) : (
+            <>
+            <View
+            className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary"
           >
             <MyText font="MarianneBold" className=" text-2xl text-white">
               {indicator?.name}
             </MyText>
             <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
-              Mise à jour {DateService.getTimeFromNow(indicator?.created_at)}
+              Mise à jour {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
             </MyText>
           </View>
           <Pressable
@@ -109,28 +118,28 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               <View
                 className="mx-auto items-center rounded-full px-6 py-1"
                 style={{
-                  backgroundColor: currentDayIndicatorData?.color,
+                  backgroundColor: currentDayIndicatorData.summary.color,
                 }}
               >
                 <MyText font="MarianneBold" className="uppercase">
-                  {currentDayIndicatorData?.label}
+                  {currentDayIndicatorData.summary.label}
                 </MyText>
               </View>
             </View>
             <LineChartWithCursor
-              value={currentDayIndicatorData?.value}
+              value={currentDayIndicatorData.summary.value}
               slug={indicator.slug}
             />
             <LineList
-              values={currentDayIndicatorData?.values}
+              values={currentDayIndicatorData.values}
               range={indicatorRange}
             />
             <Title
-              label={`Recommandation title: ${currentDayIndicatorData?.label}`}
+              label={`Recommandation title: ${currentDayIndicatorData.summary.label}`}
             />
             <View className="mt-2 ">
               <MyText className=" text-xs">
-                {currentDayIndicatorData?.recommendation}
+                {currentDayIndicatorData.summary.recommendation}
               </MyText>
             </View>
 
@@ -150,10 +159,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
 
             <View className="mb-8">
-              {currentDayIndicatorData?.values?.map((value) => {
+              {currentDayIndicatorData.values.map((value) => {
                 return (
-                  <View key={value.name}>
-                    <MyText className="capitalize">{value.name}</MyText>
+                  <View key={value.label}>
+                    <MyText className="capitalize">{value.label}</MyText>
                     <MyText className="mb-4 mt-2 capitalize text-gray-500">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Voluptate molestias sequi quo soluta.
@@ -163,6 +172,9 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               })}
             </View>
           </View>
+            </>
+          )}
+
         </ScrollView>
       </BottomSheet>
     </View>
