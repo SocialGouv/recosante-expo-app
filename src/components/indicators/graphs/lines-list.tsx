@@ -14,6 +14,7 @@ interface LineChartProps {
 const MAX_LINE = 4;
 
 export function LineList(props: LineChartProps) {
+  // TODO: this should be sorted in the backend
   const sortedValues = useMemo(
     () => props.values?.sort((a, b) => b.value - a.value),
     [props.values],
@@ -28,9 +29,9 @@ export function LineList(props: LineChartProps) {
         ?.map((line) => {
           if (line.value === 0) return null;
           return (
-            <View key={line.label} className="flex  flex-row">
+            <View key={line.name} className="flex  flex-row">
               <MyText className="bottom-1 mr-3 min-w-[75px] capitalize text-app-gray-200">
-                {line.label}
+                {line.name}
               </MyText>
               <View className="w-full flex-1 ">
                 <LineChart

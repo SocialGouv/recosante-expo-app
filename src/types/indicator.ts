@@ -20,6 +20,7 @@ export enum IndicatorsSlugEnum {
 }
 
 export interface IndicatorData {
+  name: string;
   value: number;
   color: string;
   label: string;

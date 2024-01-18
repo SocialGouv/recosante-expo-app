@@ -41,7 +41,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     <View
       style={{
         borderColor: props.isFavorite
-          ? indicatorDataInCurrentDay?.color
+          ? indicatorDataInCurrentDay?.summary.color
           : 'transparent',
       }}
       className={cn(
@@ -55,11 +55,11 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View
             className=" -top-6  mx-auto items-center  rounded-full  px-6 py-1"
             style={{
-              backgroundColor: indicatorDataInCurrentDay?.color,
+              backgroundColor: indicatorDataInCurrentDay?.summary.color,
             }}
           >
             <MyText font="MarianneBold" className="uppercase">
-              {indicatorDataInCurrentDay?.label}
+              {indicatorDataInCurrentDay?.summary.label}
             </MyText>
           </View>
 
@@ -69,8 +69,8 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View className="-top-6 flex items-center justify-center">
             {IndicatorService.getPicto({
               slug: props.indicator.slug,
-              indicatorValue: indicatorDataInCurrentDay?.value,
-              color: indicatorDataInCurrentDay?.color,
+              indicatorValue: indicatorDataInCurrentDay?.summary.value,
+              color: indicatorDataInCurrentDay?.summary.color,
             })}
           </View>
 
@@ -87,11 +87,11 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             {address?.label} {dayjs().format('DD/MM')}
           </MyText>
           <LineChartWithCursor
-            value={indicatorDataInCurrentDay?.value}
+            value={indicatorDataInCurrentDay?.summary.value}
             slug={currentIndicatorData?.slug}
           />
 
-          {props.isFavorite ? (
+          {props.isFavorite && indicatorDataInCurrentDay?.values?.length ? (
             <LineList
               values={indicatorDataInCurrentDay?.values}
               range={indicatorRange}
