@@ -49,6 +49,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     bottomSheetRef.current?.expand();
   }, []);
 
+  if (!currentDayIndicatorData) {
+    return <> </>;
+  }
+
   return (
     <View className="flex-1">
       <BottomSheet
@@ -65,26 +69,15 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           borderTopRightRadius: 50,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#3343BD',
+          backgroundColor: '#ebeefa',
         }}
         enablePanDownToClose
       >
-        <ScrollView className="flex flex-1 bg-app-gray ">
-          {!currentDayIndicatorData ? (
-            <View
-            className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary"
+          <View
+            className="left-0 right-0 flex items-center justify-center bg-app-primary"
           >
             <MyText font="MarianneBold" className=" text-2xl text-white">
-              {indicator?.name}
-            </MyText>
-          </View>
-          ) : (
-            <>
-            <View
-            className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary"
-          >
-            <MyText font="MarianneBold" className=" text-2xl text-white">
-              {indicator?.name}
+              {indicator.name}
             </MyText>
             <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
               Mise à jour {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
@@ -98,6 +91,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           >
             <Close />
           </Pressable>
+        <ScrollView className="flex flex-1 bg-app-gray">
           <View className="px-6 pt-6">
             <View className="mb-4 flex flex-row items-center justify-center">
               <View>
@@ -155,7 +149,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               );
             })}
             <Title label="A propos" />
-            <MyText className=" mt-2 ">{indicator?.about}</MyText>
+            <MyText className=" mt-2 ">{indicator?.about_title}</MyText>
             <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
 
             <View className="mb-8">
@@ -172,8 +166,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               })}
             </View>
           </View>
-            </>
-          )}
+
 
         </ScrollView>
       </BottomSheet>

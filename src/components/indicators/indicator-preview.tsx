@@ -22,7 +22,9 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const { address } = useAddress((state) => state);
   const navigation = useNavigation();
   const { indicators } = useIndicators((state) => state);
-  const currentIndicatorData = indicators?.[props.indicator.slug];
+  const currentIndicatorData = indicators?.find(
+    (indicator) => indicator.slug === props.indicator.slug,
+  );
 
   function handleSelect() {
     if (!currentIndicatorData) return;

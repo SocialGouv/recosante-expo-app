@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { type Indicators } from '~/types/indicator';
+import { type Indicator } from '~/types/indicator';
 
 interface State {
-  indicators: Indicators | null;
-  setIndicators: (indicators: Indicators) => void;
+  indicators: Array<Indicator>;
+  setIndicators: (indicators: Array<Indicator>) => void;
 }
 
 export const useIndicators = create<State>()((set, _get) => ({
-  indicators: null,
-  setIndicators: async (indicators: Indicators) => {
+  indicators: [],
+  setIndicators: async (indicators: Array<Indicator>) => {
     set({ indicators });
   },
 }));

@@ -15,8 +15,6 @@ export interface IndicatorItem {
 
 export type IndicatorDay = 'j0' | 'j1';
 
-export type Indicators = Record<IndicatorsSlugEnum, Indicator>
-
 
 export interface IndicatorByPeriod {
   id: string;
@@ -26,13 +24,10 @@ export interface IndicatorByPeriod {
   created_at: string;
   updated_at: string;
   summary: {
-    name: string;
     value: number;
     status: string;
     status_description?: string;
-    recommendations?: Array<string>;
-    about_title?: string;
-    about_description?: string;
+    recommendations?: string[];
   };
   values?: Array<{
     slug: string;
@@ -46,7 +41,8 @@ export interface Indicator {
   name: string;
   short_name: string;
   municipality_insee_code: string;
-  about: string;
+  about_title: string;
+  about_description: string;
   j0: IndicatorByPeriod;
   j1?: IndicatorByPeriod;
 }
