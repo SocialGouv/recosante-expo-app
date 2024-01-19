@@ -31,7 +31,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
             })
           }
         />
-        <View className="mt-12 border-b border-app-gray">
+        {/* <View className="mt-12 border-b border-app-gray">
           <TextRow
             text="Dev mode / Clear Cookies"
             onPress={async () => {
@@ -41,7 +41,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
               navigation.navigate(RouteEnum.ONBOARDING);
             }}
           />
-        </View>
+        </View> */}
 
         <Pressable
           onPress={() => {
@@ -53,6 +53,18 @@ export function SettingsPage({ navigation }: { navigation: any }) {
             className=" mt-8 text-xs uppercase underline"
           >
             nous contacter
+          </MyText>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            Alert.alert('TODO');
+          }}
+        >
+          <MyText
+            font="MarianneRegular"
+            className=" mt-8 text-xs uppercase underline"
+          >
+            Mentions légales
           </MyText>
         </Pressable>
       </ScrollView>

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useState } from 'react';
-import { type IndicatorItem } from '~/types/indicator';
+import { IndicatorsSlugEnum, type IndicatorItem } from '~/types/indicator';
 import { IndicatorService } from '~/services/indicator';
 import { cn } from '~/utils/tailwind';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
@@ -24,6 +24,12 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
     setFavoriteIndicator(state);
     props.onSubmit();
   }
+
+  const indicatorsAvailableList = [
+    IndicatorsSlugEnum.weather_alert,
+    IndicatorsSlugEnum.pollen_allergy,
+    IndicatorsSlugEnum.bathing_water,
+  ];
   return (
     <View className="flex flex-col ">
       <View className="flex  flex-row flex-wrap items-start ">
@@ -31,6 +37,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
           const isFavorite = state?.slug === indicator.slug;
           return (
             <Button
+              disabled={!indicatorsAvailableList.includes(indicator.slug)}
               onPress={() => {
                 handleSelectIndicator(indicator);
               }}

@@ -156,7 +156,7 @@ export function Navigators() {
           <RootStack.Navigator
             screenOptions={{ headerShown: false }}
             initialRouteName={
-              hasAddress ? RouteEnum.HOME : RouteEnum.ONBOARDING
+              hasAddress ? RouteEnum.DASHBOARD : RouteEnum.ONBOARDING
             }
           >
             <RootStack.Screen
