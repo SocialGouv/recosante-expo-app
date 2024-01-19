@@ -24,17 +24,20 @@ import { useNavigation } from '@react-navigation/native';
 import { LocationIcon } from '~/assets/icons/location';
 import { cn } from '~/utils/tailwind';
 import { Close } from '~/assets/icons/close';
+import { Illu } from '~/assets/location/illu';
 
 interface LocationPageProps {
   navigation: any;
   route: any;
 }
+
+type Status = 'idle' | 'loading' | 'with_results' | 'no_result' | 'error';
 export function LocationPage(props: LocationPageProps) {
   const navigation = useNavigation();
   const { setAddress } = useAddress((state) => state);
   const [query, setQuery] = useState('');
   const hadMin3Char = query.length >= 3;
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<Status>('idle');
   const [suggestedAddress, setSuggestedAddress] = useState<Address[]>([]);
   function handleSelect(address: Address) {
     setAddress(address);
@@ -49,23 +52,28 @@ export function LocationPage(props: LocationPageProps) {
       // TODO: debounce
       setQuery(text);
       if (query.length < 3) {
+        setStatus('idle');
         setSuggestedAddress([]);
       }
+
       const search = query.toLowerCase();
-      setLoading(true);
+      setStatus('loading');
       const url = new URL('https://api-adresse.data.gouv.fr/search/');
       url.searchParams.append('q', search);
       const response = await fetch(url);
       const items = await response.json();
-      const adressReponse: Address[] = items?.features?.map(
-        (feature: Feature) => {
+      const adressReponse: Address[] =
+        items?.features?.map((feature: Feature) => {
           return LocationService.formatPropertyToAddress(feature.properties);
-        },
-      );
+        }) ?? [];
       setSuggestedAddress(adressReponse);
-      setLoading(false);
+      if (query.length >= 3 && suggestedAddress.length === 0) {
+        setStatus('no_result');
+      } else {
+        setStatus('with_results');
+      }
     },
-    [query, setSuggestedAddress, setLoading],
+    [query, setSuggestedAddress, setStatus],
   );
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -144,8 +152,8 @@ export function LocationPage(props: LocationPageProps) {
         </View>
       </View>
 
-      <View className="flex items-start justify-start">
-        <View className="w-full  border-b  border-gray-300 p-4  ">
+      <View className="flex items-start justify-start bg-app-gray">
+        <View className="w-full   border-b  border-gray-300 p-4">
           <Pressable
             onPress={async () => {
               Location.requestForegroundPermissionsAsync().then(
@@ -186,7 +194,7 @@ export function LocationPage(props: LocationPageProps) {
                 },
               );
             }}
-            className="flex flex-row items-center justify-start rounded-lg bg-app-yellow p-4"
+            className="flex flex-row items-center justify-start "
           >
             <LocationIcon color="black" />
 
@@ -194,12 +202,12 @@ export function LocationPage(props: LocationPageProps) {
               font="MarianneRegular"
               className="ml-4 w-fit text-lg text-black"
             >
-              Je veux être géolocalisé
+              Utiliser ma géolocalisation
             </MyText>
           </Pressable>
         </View>
 
-        {loading && (
+        {status === 'loading' ? (
           <View className="w-full  border-b  border-gray-300 p-4  ">
             <MyText
               font="MarianneRegular"
@@ -208,7 +216,30 @@ export function LocationPage(props: LocationPageProps) {
               Chargement...
             </MyText>
           </View>
-        )}
+        ) : null}
+        {status === 'idle' ? (
+          <View className="mt-8 h-full w-full">
+            <Illu />
+            <MyText
+              font="MarianneRegular"
+              className="mt-4 px-4 text-center text-lg text-gray-700"
+            >
+              Optimisez votre expérience en activant la géolocalisation afin
+              d’améliorer votre utilisation de l'application.
+            </MyText>
+          </View>
+        ) : null}
+        {status === 'no_result' ? (
+          <View className="mt-8 h-full w-full">
+            <Illu />
+            <MyText
+              font="MarianneRegular"
+              className="mt-4 px-4 text-center text-lg text-gray-700"
+            >
+              Aucun résultat n'a été trouvé pour cette recherche.
+            </MyText>
+          </View>
+        ) : null}
         {suggestedAddress?.map((address) => {
           return (
             <View

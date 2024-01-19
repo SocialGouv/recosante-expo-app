@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { IndicatorService } from '~/services/indicator';
 import { type IndicatorsSlugEnum } from '~/types/indicator';
