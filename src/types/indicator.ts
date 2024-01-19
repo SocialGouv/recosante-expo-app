@@ -1,13 +1,3 @@
-export interface IndicatorItem {
-  name: string;
-  slug: IndicatorsSlugEnum;
-}
-
-export type IndicatorDay = 'j0' | 'j1';
-
-export type IndicatorsDto = Partial<
-  Record<IndicatorsSlugEnum, IndicatorDataTodayAndTomorrow>
->;
 
 export enum IndicatorsSlugEnum {
   indice_atmospheric = 'indice_atmospheric',
@@ -18,34 +8,49 @@ export enum IndicatorsSlugEnum {
   tap_water = 'tap_water',
   bathing_water = 'bathing_water',
 }
-
-export interface IndicatorData {
+export interface IndicatorItem {
   name: string;
-  value: number;
-  color: string;
-  label: string;
-  recommendation?: string;
-  about?: string;
-}
-export interface IndicatorDataDay {
-  id: string;
-  validity_start: Date;
-  validity_end: Date;
-  diffusion_date: Date;
-  created_at: Date;
-  updated_at: Date;
-  summary: IndicatorData;
-  values: IndicatorData[];
+  slug: IndicatorsSlugEnum;
 }
 
-export interface IndicatorDataTodayAndTomorrow {
+export type IndicatorDay = 'j0' | 'j1';
+
+export type IndicatorsDto = Partial<
+  Record<IndicatorsSlugEnum, Indicator>
+>;
+
+
+export interface IndicatorByPeriod {
+  id: string;
+  validity_start: string;
+  validity_end: string;
+  diffusion_date: string;
+  created_at: string;
+  updated_at: string;
+  summary: {
+    name: string;
+    value: number;
+    status: string;
+    status_description?: string;
+    recommendations?: Array<string>;
+    about_title?: string;
+    about_description?: string;
+  };
+  values?: Array<{
+    slug: string;
+    name: string;
+    value: number;
+  }>;
+}
+
+export interface Indicator {
   slug: IndicatorsSlugEnum;
   name: string;
+  short_name: string;
   municipality_insee_code: string;
-  recommendations: string[];
   about: string;
-  j0: IndicatorDataDay;
-  j1?: IndicatorDataDay;
+  j0: IndicatorByPeriod;
+  j1?: IndicatorByPeriod;
 }
 
 export enum IndicatorColorEnum {

@@ -1,11 +1,11 @@
 import { Pressable, View } from 'react-native';
-import { type IndicatorDataDay } from '~/types/indicator';
+import { type IndicatorByPeriod } from '~/types/indicator';
 import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
 import { useMemo } from 'react';
 
 interface LineChartProps {
-  values: IndicatorDataDay['values'];
+  values: IndicatorByPeriod['values'];
   range: number;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
