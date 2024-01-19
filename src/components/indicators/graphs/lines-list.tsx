@@ -1,11 +1,11 @@
 import { Pressable, View } from 'react-native';
-import { type IndicatorDataPerDay } from '~/types/indicator';
+import { type IndicatorByPeriod } from '~/types/indicator';
 import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
 import { useMemo } from 'react';
 
 interface LineChartProps {
-  values: IndicatorDataPerDay['values'];
+  values: IndicatorByPeriod['values'];
   range: number;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
@@ -14,6 +14,7 @@ interface LineChartProps {
 const MAX_LINE = 4;
 
 export function LineList(props: LineChartProps) {
+  // TODO: this should be sorted in the backend
   const sortedValues = useMemo(
     () => props.values?.sort((a, b) => b.value - a.value),
     [props.values],
@@ -34,7 +35,9 @@ export function LineList(props: LineChartProps) {
               </MyText>
               <View className="w-full flex-1 ">
                 <LineChart
-                  color={line.color}
+                  color="red"
+                  // TODO
+                  // color={getColorFromValue(line.value)}
                   value={line.value}
                   //   TODO: fix this
                   range={props.range + 1}

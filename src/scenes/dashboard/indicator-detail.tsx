@@ -49,6 +49,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     bottomSheetRef.current?.expand();
   }, []);
 
+  if (!currentDayIndicatorData) {
+    return <> </>;
+  }
+
   return (
     <View className="flex-1">
       <BottomSheet
@@ -65,30 +69,28 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           borderTopRightRadius: 50,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#3343BD',
+          backgroundColor: '#ebeefa',
         }}
         enablePanDownToClose
       >
-        <ScrollView className="flex flex-1 bg-app-gray ">
-          <View
-            className=" -top-2 left-0 right-0 flex items-center justify-center bg-app-primary
-"
-          >
-            <MyText font="MarianneBold" className=" text-2xl text-white">
-              {indicator?.name}
-            </MyText>
-            <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
-              Mise à jour {DateService.getTimeFromNow(indicator?.created_at)}
-            </MyText>
-          </View>
-          <Pressable
-            onPress={() => {
-              closeBottomSheet();
-            }}
-            className="absolute right-2 top-0"
-          >
-            <Close />
-          </Pressable>
+        <View className="left-0 right-0 flex items-center justify-center bg-app-primary">
+          <MyText font="MarianneBold" className=" text-2xl text-white">
+            {indicator.name}
+          </MyText>
+          <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
+            Mise à jour{' '}
+            {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
+          </MyText>
+        </View>
+        <Pressable
+          onPress={() => {
+            closeBottomSheet();
+          }}
+          className="absolute right-2 top-0"
+        >
+          <Close />
+        </Pressable>
+        <ScrollView className="flex flex-1 bg-app-gray">
           <View className="px-6 pt-6">
             <View className="mb-4 flex flex-row items-center justify-center">
               <View>
@@ -109,50 +111,52 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               <View
                 className="mx-auto items-center rounded-full px-6 py-1"
                 style={{
-                  backgroundColor: currentDayIndicatorData?.color,
+                  backgroundColor: 'red', // TODO getColorFromValue(currentDayIndicatorData.summary.value)
                 }}
               >
                 <MyText font="MarianneBold" className="uppercase">
-                  {currentDayIndicatorData?.label}
+                  {currentDayIndicatorData.summary.status}
                 </MyText>
               </View>
             </View>
             <LineChartWithCursor
-              value={currentDayIndicatorData?.value}
+              value={currentDayIndicatorData.summary.value}
               slug={indicator.slug}
             />
             <LineList
-              values={currentDayIndicatorData?.values}
+              values={currentDayIndicatorData.values}
               range={indicatorRange}
             />
             <Title
-              label={`Recommandation title: ${currentDayIndicatorData?.label}`}
+              label={`Recommandation title: ${currentDayIndicatorData.summary.status}`}
             />
             <View className="mt-2 ">
               <MyText className=" text-xs">
-                {currentDayIndicatorData?.recommendation}
+                {currentDayIndicatorData.summary.recommendations?.[0]}
               </MyText>
             </View>
 
             <Title label="Nos recommandations" />
-            {indicator?.recommendations?.map((recommendation) => {
-              return (
-                <View
-                  key={recommendation}
-                  className="mt-2 flex flex-row items-center rounded-md bg-white p-2"
-                >
-                  <MyText className=" text-xs">{recommendation}</MyText>
-                </View>
-              );
-            })}
+            {currentDayIndicatorData.summary?.recommendations?.map(
+              (recommendation) => {
+                return (
+                  <View
+                    key={recommendation}
+                    className="mt-2 flex flex-row items-center rounded-md bg-white p-2"
+                  >
+                    <MyText className=" text-xs">{recommendation}</MyText>
+                  </View>
+                );
+              },
+            )}
             <Title label="A propos" />
-            <MyText className=" mt-2 ">{indicator?.about}</MyText>
+            <MyText className=" mt-2 ">{indicator?.about_title}</MyText>
             <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
 
             <View className="mb-8">
-              {currentDayIndicatorData?.values?.map((value) => {
+              {currentDayIndicatorData.values?.map((value) => {
                 return (
-                  <View key={value.name}>
+                  <View key={value.slug}>
                     <MyText className="capitalize">{value.name}</MyText>
                     <MyText className="mb-4 mt-2 capitalize text-gray-500">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.

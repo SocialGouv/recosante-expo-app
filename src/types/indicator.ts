@@ -1,14 +1,3 @@
-export interface IndicatorItem {
-  name: string;
-  slug: IndicatorsSlugEnum;
-}
-
-export type IndicatorDay = 'j0' | 'j1';
-
-export type IndicatorsDto = Partial<
-  Record<IndicatorsSlugEnum, IndicatorCommonData>
->;
-
 export enum IndicatorsSlugEnum {
   indice_atmospheric = 'indice_atmospheric',
   indice_uv = 'indice_uv',
@@ -18,33 +7,42 @@ export enum IndicatorsSlugEnum {
   tap_water = 'tap_water',
   bathing_water = 'bathing_water',
 }
-
-export type IndicatorDataPerDay = {
-  value: number;
-  color: string;
-  label: LabelEnum;
-  recommendation: string;
-  values?: Array<{
-    name: string;
-    color: string;
-    value: number;
-  }>;
-};
-
-export interface IndicatorCommonData {
-  id: string;
-  slug: IndicatorsSlugEnum;
+export interface IndicatorItem {
   name: string;
-  municipality_insee_code: string;
+  slug: IndicatorsSlugEnum;
+}
+
+export type IndicatorDay = 'j0' | 'j1';
+
+export interface IndicatorByPeriod {
+  id: string;
   validity_start: string;
   validity_end: string;
   diffusion_date: string;
   created_at: string;
   updated_at: string;
-  recommendations: string[];
-  about: string;
-  j0: IndicatorDataPerDay; // specific to each indicator
-  j1?: IndicatorDataPerDay; // specific to each indicator
+  summary: {
+    value: number;
+    status: string;
+    status_description?: string;
+    recommendations?: string[];
+  };
+  values?: Array<{
+    slug: string;
+    name: string;
+    value: number;
+  }>;
+}
+
+export interface Indicator {
+  slug: IndicatorsSlugEnum;
+  name: string;
+  short_name: string;
+  municipality_insee_code: string;
+  about_title: string;
+  about_description: string;
+  j0: IndicatorByPeriod;
+  j1?: IndicatorByPeriod;
 }
 
 export enum IndicatorColorEnum {

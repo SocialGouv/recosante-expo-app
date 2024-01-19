@@ -1,5 +1,5 @@
 import type { DayEnum } from '~/types/day';
-import type { IndicatorCommonData } from '~/types/indicator';
+import type { Indicator } from '~/types/indicator';
 
 export enum RouteEnum {
   DASHBOARD = 'DASHBOARD',
@@ -22,7 +22,7 @@ export interface RootStackParamList {
     enablePanDownToClose: boolean;
   };
   [RouteEnum.INDICATOR_DETAIL]: {
-    indicator: IndicatorCommonData;
+    indicator: Indicator;
     day: DayEnum;
   };
 }
