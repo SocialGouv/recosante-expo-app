@@ -5,7 +5,6 @@ import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function SettingsPage({ navigation }: { navigation: any }) {
   return (

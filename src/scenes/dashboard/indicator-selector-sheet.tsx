@@ -21,7 +21,7 @@ export function IndicatorSelectorSheet({
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose } = route.params;
 
-  const snapPoints = useMemo(() => ['30%', '65%', '90%'], []);
+  const snapPoints = useMemo(() => ['30%', '90%', '100%'], []);
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();

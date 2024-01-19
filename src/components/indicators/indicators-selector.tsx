@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useState } from 'react';
-import { IndicatorsSlugEnum, type IndicatorItem } from '~/types/indicator';
+import { type IndicatorItem } from '~/types/indicator';
 import { IndicatorService } from '~/services/indicator';
 import { cn } from '~/utils/tailwind';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
