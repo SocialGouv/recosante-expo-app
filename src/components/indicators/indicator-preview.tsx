@@ -1,9 +1,5 @@
 import { View, Pressable } from 'react-native';
-import {
-  type IndicatorItem,
-  type IndicatorDay,
-  type Indicator,
-} from '~/types/indicator';
+import { type IndicatorItem, type IndicatorDay } from '~/types/indicator';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
 import dayjs from 'dayjs';
@@ -43,11 +39,17 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const indicatorRange = IndicatorService.getDataVisualisationBySlug(
     props.indicator.slug,
   )?.range;
+  const indicatorColor = IndicatorService.getColorForValue(
+    props.indicator.slug,
+    indicatorDataInCurrentDay?.summary.value ?? 0,
+  );
+
+  if (!indicatorDataInCurrentDay) return <></>;
   return (
     <View
       style={{
         borderColor: props.isFavorite
-          ? 'red' // TODO getColorFromValue(currentDayIndicatorData.summary.value)
+          ? indicatorColor // TODO getColorFromValue(currentDayIndicatorData.summary.value)
           : 'transparent',
       }}
       className={cn(
@@ -61,7 +63,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View
             className=" -top-6  mx-auto items-center  rounded-full  px-6 py-1"
             style={{
-              backgroundColor: 'red', // TODO getColorFromValue(currentDayIndicatorData.summary.value)
+              backgroundColor: indicatorColor, // TODO getColorFromValue(currentDayIndicatorData.summary.value)
             }}
           >
             <MyText font="MarianneBold" className="uppercase">
@@ -72,11 +74,11 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <Pressable className="-top-6 flex items-end" onPress={handleSelect}>
             <Info />
           </Pressable>
-          <View className="-top-6 flex items-center justify-center">
+          <View className="-top-6 flex items-center justify-center opacity-70">
             {IndicatorService.getPicto({
               slug: props.indicator.slug,
               indicatorValue: indicatorDataInCurrentDay?.summary.value,
-              color: 'red', // TODO getColorFromValue(currentDayIndicatorData.summary.value)
+              color: indicatorColor,
             })}
           </View>
 
@@ -99,6 +101,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
           {props.isFavorite && indicatorDataInCurrentDay?.values?.length ? (
             <LineList
+              slug={currentIndicatorData?.slug}
               values={indicatorDataInCurrentDay?.values}
               range={indicatorRange}
               isPreviewMode

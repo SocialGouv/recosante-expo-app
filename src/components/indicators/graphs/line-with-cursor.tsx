@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { IndicatorService } from '~/services/indicator';
 import { type IndicatorsSlugEnum } from '~/types/indicator';
@@ -15,6 +16,7 @@ export function LineChartWithCursor(props: LineChartProps) {
     IndicatorService.getDataVisualisationBySlug(props.slug);
   const rangeForValue =
     valuesInRange?.findIndex((range) => range.includes(value)) ?? 0;
+  const trianglePosition = (110 / range) * rangeForValue;
 
   if (value === 0) {
     return <></>;
@@ -22,9 +24,10 @@ export function LineChartWithCursor(props: LineChartProps) {
   function Triangle() {
     return (
       <View
+        className="transition-all duration-300 ease-in-out"
         style={{
           width: 0,
-          left: `${(110 / range) * rangeForValue}%` ?? '0%',
+          left: `${trianglePosition}%`,
           borderStyle: 'solid',
           borderLeftWidth: 8,
           borderRightWidth: 8,

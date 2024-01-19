@@ -70,15 +70,15 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_uv:
         return <Uv value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
-        return <Pollen />;
+        return <Pollen value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.weather_alert:
-        return <Weather />;
+        return <Weather value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.episode_pollution_atmospheric:
-        return <Air />;
+        return <Air value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.tap_water:
-        return <Swimming />;
+        return <Swimming value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.bathing_water:
-        return <Swimming />;
+        return <Swimming value={indicatorValue} color={color} />;
       default:
         console.log('No picto found');
       // throw new Error('No picto found');
@@ -114,6 +114,7 @@ export namespace IndicatorService {
   export function getDataVisualisationBySlug(
     slug: IndicatorsSlugEnum,
   ): DataVisualisation {
+    if (!slug) return { range: 0, color: [] };
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
@@ -177,5 +178,14 @@ export namespace IndicatorService {
       default:
         throw new Error(`No range found for ${slug as string}`);
     }
+  }
+  export function getColorForValue(slug: IndicatorsSlugEnum, value: number) {
+    const { valuesInRange, color } = getDataVisualisationBySlug(slug);
+    const index = valuesInRange?.findIndex((range) => range.includes(value));
+    if (value === 0) {
+      return '#D9D9EF';
+      // TODO:fix this "!"
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    } else return color[index!];
   }
 }
