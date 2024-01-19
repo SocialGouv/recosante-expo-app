@@ -32,17 +32,18 @@ export function Notifications({ navigation }: { navigation: any }) {
       <View>
         <Button
           onPress={async () => {
-            const token = await registerForPushNotificationsAsync({
+            registerForPushNotificationsAsync({
               force: true,
               expo: true,
+            }).then((token) => {
+              navigation.navigate(RouteEnum.HOME);
+              if (token) {
+                API.put({
+                  path: '/user',
+                  body: { push_notif_token: JSON.stringify(token) },
+                });
+              }
             });
-            if (token) {
-              API.put({
-                path: '/user',
-                body: { push_notif_token: JSON.stringify(token) },
-              });
-            }
-            navigation.navigate(RouteEnum.HOME);
           }}
           viewClassName="bg-app-yellow p-4"
           textClassName="text-black"

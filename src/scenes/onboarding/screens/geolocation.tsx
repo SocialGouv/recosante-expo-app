@@ -73,7 +73,6 @@ export function Geolocation({ navigation }: { navigation: any }) {
               .catch((err) => {
                 console.log('err', err);
                 setIsLoading(false);
-                onNext();
               });
           }}
           viewClassName="bg-app-yellow p-4"
