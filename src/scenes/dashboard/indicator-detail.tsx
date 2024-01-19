@@ -38,6 +38,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const indicatorRange = IndicatorService.getDataVisualisationBySlug(
     indicator.slug,
   )?.range;
+  const indicatorColor = IndicatorService.getColorForValue(
+    indicator.slug,
+    currentDayIndicatorData?.summary.value ?? 0,
+  );
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
@@ -98,7 +102,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   className="text-wrap text-2xl uppercase text-black"
                   font="MarianneExtraBold"
                 >
-                  Short name
+                  {indicator.short_name}
                 </MyText>
 
                 <MyText
@@ -111,7 +115,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               <View
                 className="mx-auto items-center rounded-full px-6 py-1"
                 style={{
-                  backgroundColor: 'red', // TODO getColorFromValue(currentDayIndicatorData.summary.value)
+                  backgroundColor: indicatorColor,
                 }}
               >
                 <MyText font="MarianneBold" className="uppercase">
@@ -126,6 +130,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             <LineList
               values={currentDayIndicatorData.values}
               range={indicatorRange}
+              slug={indicator.slug}
             />
             <Title
               label={`Recommandation title: ${currentDayIndicatorData.summary.status}`}

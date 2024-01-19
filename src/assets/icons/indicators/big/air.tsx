@@ -1,8 +1,13 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-interface Props {}
+interface Props {
+  value: number | undefined;
+  color: string | undefined;
+}
 export function Air(props: Props) {
+  const color = props.color ?? '#D9D9EF';
+
   return (
     <Svg width={69} height={67} viewBox="0 0 69 67" fill="none" {...props}>
       <Path
@@ -11,7 +16,7 @@ export function Air(props: Props) {
       />
       <Path
         d="M38.603 39.984H54.85c6.9 0 12.707 5.202 13.447 12.04.75 6.927-3.958 13.35-10.787 14.71-6.892 1.375-13.75-2.656-15.715-9.31-.365-1.236-.5-2.563-.57-3.858-.092-1.623 1.16-2.859 2.736-2.89 1.563-.03 2.826 1.233 2.857 2.863.093 4.694 3.985 8.213 8.675 7.846 3.58-.281 6.551-3.082 7.137-6.641.7-4.256-2.162-8.187-6.215-9.003a9.572 9.572 0 00-1.852-.167c-10.988-.01-21.975-.006-32.963-.008-1.57 0-2.652-.864-2.959-2.353-.303-1.47.862-3.055 2.363-3.204.222-.023.448-.02.675-.02h16.923v-.005z"
-        fill="#FF797A"
+        fill={color}
       />
     </Svg>
   );

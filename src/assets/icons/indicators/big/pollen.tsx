@@ -1,8 +1,13 @@
 import * as React from 'react';
 import Svg, { Path, Ellipse } from 'react-native-svg';
 
-interface Props {}
+interface Props {
+  value: number | undefined;
+  color: string | undefined;
+}
 export function Pollen(props: Props) {
+  const color = props.color ?? '#D9D9EF';
+
   return (
     <Svg width={45} height={58} viewBox="0 0 45 58" fill="none" {...props}>
       <Path
@@ -12,7 +17,7 @@ export function Pollen(props: Props) {
       />
       <Path
         d="M24.402 51.207c0 3.443 3.004 6.293 6.784 6.293s6.783-2.85 6.783-6.293-3.004-6.293-6.783-6.293c-3.78 0-6.784 2.85-6.784 6.293z"
-        fill="#4FCBAD"
+        fill={color}
         stroke="#fff"
       />
       <Path
@@ -30,7 +35,7 @@ export function Pollen(props: Props) {
       />
       <Path
         d="M9.835 40.757c0 3.154 2.753 5.77 6.223 5.77 3.47 0 6.223-2.616 6.223-5.77 0-3.155-2.752-5.77-6.223-5.77-3.47 0-6.223 2.615-6.223 5.77z"
-        fill="#4FCBAD"
+        fill={color}
         stroke="#fff"
       />
     </Svg>

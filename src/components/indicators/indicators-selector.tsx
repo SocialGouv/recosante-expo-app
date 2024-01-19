@@ -25,27 +25,29 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
     props.onSubmit();
   }
   return (
-    <View className="flex h-full flex-row flex-wrap items-start ">
-      {props.indicators?.map((indicator) => {
-        const isFavorite = state?.slug === indicator.slug;
-        return (
-          <Button
-            onPress={() => {
-              handleSelectIndicator(indicator);
-            }}
-            viewClassName={cn(
-              `${isFavorite ? 'bg-app-yellow' : ''}
+    <View className="flex flex-col ">
+      <View className="flex  flex-row flex-wrap items-start ">
+        {props.indicators?.map((indicator) => {
+          const isFavorite = state?.slug === indicator.slug;
+          return (
+            <Button
+              onPress={() => {
+                handleSelectIndicator(indicator);
+              }}
+              viewClassName={cn(
+                `${isFavorite ? 'bg-app-yellow' : ''}
                border-white border-2 rounded-full  m-2  items-center flex`,
-            )}
-            textClassName="text-white text-base"
-            key={indicator.slug}
-            icon={IndicatorService.getIconBySlug(indicator.slug)}
-          >
-            {indicator.name}
-          </Button>
-        );
-      })}
-      {!(state?.slug == null) && (
+              )}
+              textClassName="text-white text-base"
+              key={indicator.slug}
+              icon={IndicatorService.getIconBySlug(indicator.slug)}
+            >
+              {indicator.name}
+            </Button>
+          );
+        })}
+      </View>
+      {state?.slug ? (
         <View className="mx-auto mt-2">
           <Button
             onPress={handleSubmit}
@@ -56,7 +58,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
             C'est parti !
           </Button>
         </View>
-      )}
+      ) : null}
     </View>
   );
 }

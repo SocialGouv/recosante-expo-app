@@ -1,14 +1,19 @@
 import { Pressable, View } from 'react-native';
-import { type IndicatorByPeriod } from '~/types/indicator';
+import {
+  type IndicatorsSlugEnum,
+  type IndicatorByPeriod,
+} from '~/types/indicator';
 import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
 import { useMemo } from 'react';
+import { IndicatorService } from '~/services/indicator';
 
 interface LineChartProps {
   values: IndicatorByPeriod['values'];
   range: number;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
+  slug: IndicatorsSlugEnum;
 }
 
 const MAX_LINE = 4;
@@ -22,7 +27,7 @@ export function LineList(props: LineChartProps) {
   const showSeeMore = sortedValues
     ? sortedValues.length > MAX_LINE && props.isPreviewMode
     : false;
-
+  if (!props.slug) return <></>;
   return (
     <View className="mt-3 flex space-y-2">
       {sortedValues
@@ -35,9 +40,10 @@ export function LineList(props: LineChartProps) {
               </MyText>
               <View className="w-full flex-1 ">
                 <LineChart
-                  color="red"
-                  // TODO
-                  // color={getColorFromValue(line.value)}
+                  color={IndicatorService.getColorForValue(
+                    props.slug,
+                    line.value,
+                  )}
                   value={line.value}
                   //   TODO: fix this
                   range={props.range + 1}
