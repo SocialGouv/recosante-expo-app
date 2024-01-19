@@ -54,7 +54,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   return (
     <>
       <View className="flex  items-center justify-start bg-app-gray px-4 py-4">
-        <View className="relative  mt-8 flex w-full items-end">
+        <View className="relative z-50 mt-8 flex w-full items-end">
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(RouteEnum.LOCATION);
