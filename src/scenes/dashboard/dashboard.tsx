@@ -77,7 +77,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
             <View className="flex flex-row items-center">
               <MyText
                 font="MarianneRegular"
-                className="text-md mt-2 uppercase text-app-gray-100"
+                className="text-md mt-2 max-w-[90%] uppercase text-app-gray-100"
               >
                 {address?.label ?? address?.city}
               </MyText>

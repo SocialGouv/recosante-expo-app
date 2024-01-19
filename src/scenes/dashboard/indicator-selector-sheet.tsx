@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import MyText from '~/components/ui/my-text';
 import { IndicatorsSelector } from '~/components/indicators/indicators-selector';
 import { type RouteEnum, type RootStackParamList } from '~/constants/route';
@@ -20,11 +20,8 @@ export function IndicatorSelectorSheet({
   const { indicators } = useIndicatorsList((state) => state);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose } = route.params;
-  useEffect(() => {
-    // bottomSheetRef.current?.expand();
-  }, []);
 
-  const snapPoints = useMemo(() => ['30%', '60%', '90%'], []);
+  const snapPoints = useMemo(() => ['30%', '65%', '90%'], []);
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
