@@ -118,11 +118,11 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               <View
                 className="mx-auto items-center rounded-full px-6 py-1"
                 style={{
-                  backgroundColor: currentDayIndicatorData.summary.color,
+                  backgroundColor: 'red' // TODO getColorFromValue(currentDayIndicatorData.summary.value)
                 }}
               >
                 <MyText font="MarianneBold" className="uppercase">
-                  {currentDayIndicatorData.summary.label}
+                  {currentDayIndicatorData.summary.status}
                 </MyText>
               </View>
             </View>
@@ -135,16 +135,16 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               range={indicatorRange}
             />
             <Title
-              label={`Recommandation title: ${currentDayIndicatorData.summary.label}`}
+              label={`Recommandation title: ${currentDayIndicatorData.summary.status}`}
             />
             <View className="mt-2 ">
               <MyText className=" text-xs">
-                {currentDayIndicatorData.summary.recommendation}
+                {currentDayIndicatorData.summary.recommendations?.[0]}
               </MyText>
             </View>
 
             <Title label="Nos recommandations" />
-            {indicator?.recommendations?.map((recommendation) => {
+            {currentDayIndicatorData.summary?.recommendations?.map((recommendation) => {
               return (
                 <View
                   key={recommendation}
@@ -159,10 +159,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
 
             <View className="mb-8">
-              {currentDayIndicatorData.values.map((value) => {
+              {currentDayIndicatorData.values?.map((value) => {
                 return (
-                  <View key={value.label}>
-                    <MyText className="capitalize">{value.label}</MyText>
+                  <View key={value.slug}>
+                    <MyText className="capitalize">{value.name}</MyText>
                     <MyText className="mb-4 mt-2 capitalize text-gray-500">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Voluptate molestias sequi quo soluta.

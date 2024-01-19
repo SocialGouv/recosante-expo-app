@@ -15,9 +15,7 @@ export interface IndicatorItem {
 
 export type IndicatorDay = 'j0' | 'j1';
 
-export type IndicatorsDto = Partial<
-  Record<IndicatorsSlugEnum, Indicator>
->;
+export type Indicators = Record<IndicatorsSlugEnum, Indicator>
 
 
 export interface IndicatorByPeriod {

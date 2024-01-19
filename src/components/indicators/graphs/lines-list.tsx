@@ -35,7 +35,9 @@ export function LineList(props: LineChartProps) {
               </MyText>
               <View className="w-full flex-1 ">
                 <LineChart
-                  color={line.color}
+                  color="red"
+                  // TODO
+                  // color={getColorFromValue(line.value)}
                   value={line.value}
                   //   TODO: fix this
                   range={props.range + 1}

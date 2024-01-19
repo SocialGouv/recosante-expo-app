@@ -1,12 +1,12 @@
 import { View, Pressable } from 'react-native';
-import { type IndicatorItem, type IndicatorDay } from '~/types/indicator';
+import { type IndicatorItem, type IndicatorDay, type Indicator } from '~/types/indicator';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
 import dayjs from 'dayjs';
 import { cn } from '~/utils/tailwind';
 import { Info } from '~/assets/icons/info';
 import { LineChartWithCursor } from './graphs/line-with-cursor';
-import { useIndicatorsDto } from '~/zustand/indicator/useIndicatorsDto';
+import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { useAddress } from '~/zustand/address/useAddress';
 import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
@@ -21,8 +21,8 @@ interface IndicatorPreviewProps {
 export function IndicatorPreview(props: IndicatorPreviewProps) {
   const { address } = useAddress((state) => state);
   const navigation = useNavigation();
-  const { indicatorsDto } = useIndicatorsDto((state) => state);
-  const currentIndicatorData = indicatorsDto[props.indicator.slug];
+  const { indicators } = useIndicators((state) => state);
+  const currentIndicatorData = indicators?.[props.indicator.slug];
 
   function handleSelect() {
     if (!currentIndicatorData) return;
@@ -41,7 +41,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     <View
       style={{
         borderColor: props.isFavorite
-          ? indicatorDataInCurrentDay?.summary.color
+          ? 'red' // TODO getColorFromValue(currentDayIndicatorData.summary.value)
           : 'transparent',
       }}
       className={cn(
@@ -55,11 +55,11 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View
             className=" -top-6  mx-auto items-center  rounded-full  px-6 py-1"
             style={{
-              backgroundColor: indicatorDataInCurrentDay?.summary.color,
+              backgroundColor: 'red' // TODO getColorFromValue(currentDayIndicatorData.summary.value)
             }}
           >
             <MyText font="MarianneBold" className="uppercase">
-              {indicatorDataInCurrentDay?.summary.label}
+              {indicatorDataInCurrentDay?.summary.status}
             </MyText>
           </View>
 
@@ -70,7 +70,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             {IndicatorService.getPicto({
               slug: props.indicator.slug,
               indicatorValue: indicatorDataInCurrentDay?.summary.value,
-              color: indicatorDataInCurrentDay?.summary.color,
+              color: 'red' // TODO getColorFromValue(currentDayIndicatorData.summary.value)
             })}
           </View>
 

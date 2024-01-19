@@ -5,14 +5,14 @@ import { LocationIcon } from '~/assets/icons/location';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { IndicatorsListPreview } from './indicators-list-preview';
 import API from '~/services/api';
-import { useIndicatorsDto } from '~/zustand/indicator/useIndicatorsDto';
+import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { RouteEnum } from '~/constants/route';
 import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
-  const { setIndicatorsDto } = useIndicatorsDto((state) => state);
+  const { setIndicators } = useIndicators((state) => state);
   const { address } = useAddress((state) => state);
   const [error, setError] = useState<string>('');
 
@@ -25,7 +25,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         setError(response.error);
         return;
       }
-      setIndicatorsDto(response.data);
+      setIndicators(response.data);
     });
     registerForPushNotificationsAsync({
       force: false,
