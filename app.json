@@ -15,7 +15,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "2"
+      "buildNumber": "3",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": ["recosante"]
+      }
     },
     "android": {
       "adaptiveIcon": {
