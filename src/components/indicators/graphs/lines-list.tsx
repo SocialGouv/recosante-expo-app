@@ -56,7 +56,7 @@ export function LineList(props: LineChartProps) {
       {showSeeMore ? (
         <Pressable onPress={props.onMorePress}>
           <MyText className="text-center uppercase text-black underline">
-            + d'allergènes
+            + voir plus
           </MyText>
         </Pressable>
       ) : null}

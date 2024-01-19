@@ -113,7 +113,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 </MyText>
               </View>
               <View
-                className="mx-auto items-center rounded-full px-6 py-1"
+                className="ml-auto items-center rounded-full px-6 py-1"
                 style={{
                   backgroundColor: indicatorColor,
                 }}

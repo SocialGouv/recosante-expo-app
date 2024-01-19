@@ -25,11 +25,11 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
     props.onSubmit();
   }
 
-  const indicatorsAvailableList = [
-    IndicatorsSlugEnum.weather_alert,
-    IndicatorsSlugEnum.pollen_allergy,
-    IndicatorsSlugEnum.bathing_water,
-  ];
+  // const indicatorsAvailableList = [
+  //   IndicatorsSlugEnum.weather_alert,
+  //   IndicatorsSlugEnum.pollen_allergy,
+  //   IndicatorsSlugEnum.bathing_water,
+  // ];
   return (
     <View className="flex flex-col ">
       <View className="flex  flex-row flex-wrap items-start ">
@@ -37,7 +37,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
           const isFavorite = state?.slug === indicator.slug;
           return (
             <Button
-              disabled={!indicatorsAvailableList.includes(indicator.slug)}
+              // disabled={!indicatorsAvailableList.includes(indicator.slug)}
               onPress={() => {
                 handleSelectIndicator(indicator);
               }}

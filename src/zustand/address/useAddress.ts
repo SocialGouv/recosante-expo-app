@@ -17,7 +17,6 @@ export const useAddress = create<LocationState>()(
     (set, _get) => ({
       address: null,
       setAddress: async (address) => {
-        set({ address });
         API.put({
           path: '/user',
           body: {
@@ -26,6 +25,8 @@ export const useAddress = create<LocationState>()(
             municipality_zip_code: address.postcode,
           },
           // TODO: handle error
+        }).then(() => {
+          set({ address });
         });
       },
       _hasHydrated: false,
