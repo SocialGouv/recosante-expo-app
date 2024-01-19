@@ -1,4 +1,3 @@
-
 export enum IndicatorsSlugEnum {
   indice_atmospheric = 'indice_atmospheric',
   indice_uv = 'indice_uv',
@@ -14,7 +13,6 @@ export interface IndicatorItem {
 }
 
 export type IndicatorDay = 'j0' | 'j1';
-
 
 export interface IndicatorByPeriod {
   id: string;

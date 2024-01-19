@@ -57,12 +57,12 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         <View className="relative mt-8 flex w-full items-end">
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate(RouteEnum.LOCATION)
+              navigation.navigate(RouteEnum.LOCATION);
             }}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <View className="w-fit rounded-full bg-app-primary p-3 text-sm text-white">
-            <LocationIcon />
+              <LocationIcon />
             </View>
           </TouchableOpacity>
         </View>

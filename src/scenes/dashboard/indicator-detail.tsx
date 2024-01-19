@@ -73,24 +73,23 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         }}
         enablePanDownToClose
       >
-          <View
-            className="left-0 right-0 flex items-center justify-center bg-app-primary"
-          >
-            <MyText font="MarianneBold" className=" text-2xl text-white">
-              {indicator.name}
-            </MyText>
-            <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
-              Mise à jour {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
-            </MyText>
-          </View>
-          <Pressable
-            onPress={() => {
-              closeBottomSheet();
-            }}
-            className="absolute right-2 top-0"
-          >
-            <Close />
-          </Pressable>
+        <View className="left-0 right-0 flex items-center justify-center bg-app-primary">
+          <MyText font="MarianneBold" className=" text-2xl text-white">
+            {indicator.name}
+          </MyText>
+          <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
+            Mise à jour{' '}
+            {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
+          </MyText>
+        </View>
+        <Pressable
+          onPress={() => {
+            closeBottomSheet();
+          }}
+          className="absolute right-2 top-0"
+        >
+          <Close />
+        </Pressable>
         <ScrollView className="flex flex-1 bg-app-gray">
           <View className="px-6 pt-6">
             <View className="mb-4 flex flex-row items-center justify-center">
@@ -112,7 +111,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               <View
                 className="mx-auto items-center rounded-full px-6 py-1"
                 style={{
-                  backgroundColor: 'red' // TODO getColorFromValue(currentDayIndicatorData.summary.value)
+                  backgroundColor: 'red', // TODO getColorFromValue(currentDayIndicatorData.summary.value)
                 }}
               >
                 <MyText font="MarianneBold" className="uppercase">
@@ -138,16 +137,18 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             </View>
 
             <Title label="Nos recommandations" />
-            {currentDayIndicatorData.summary?.recommendations?.map((recommendation) => {
-              return (
-                <View
-                  key={recommendation}
-                  className="mt-2 flex flex-row items-center rounded-md bg-white p-2"
-                >
-                  <MyText className=" text-xs">{recommendation}</MyText>
-                </View>
-              );
-            })}
+            {currentDayIndicatorData.summary?.recommendations?.map(
+              (recommendation) => {
+                return (
+                  <View
+                    key={recommendation}
+                    className="mt-2 flex flex-row items-center rounded-md bg-white p-2"
+                  >
+                    <MyText className=" text-xs">{recommendation}</MyText>
+                  </View>
+                );
+              },
+            )}
             <Title label="A propos" />
             <MyText className=" mt-2 ">{indicator?.about_title}</MyText>
             <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
@@ -166,8 +167,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               })}
             </View>
           </View>
-
-
         </ScrollView>
       </BottomSheet>
     </View>
