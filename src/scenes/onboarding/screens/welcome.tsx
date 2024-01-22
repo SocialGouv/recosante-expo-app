@@ -9,7 +9,7 @@ import { OnboardingRouteEnum } from '~/constants/route';
 
 export function Welcome({ navigation }: { navigation: any }) {
   return (
-    <View className="flex flex-1 items-center justify-around bg-app-primary">
+    <View className="flex flex-1 items-center justify-center bg-app-primary gap-y-8">
       <Skip
         onPress={() => {
           navigation.navigate(OnboardingRouteEnum.GEOLOCATION);
@@ -18,20 +18,22 @@ export function Welcome({ navigation }: { navigation: any }) {
       <Logo />
       <Illu_1 />
 
-      <MyText
-        font="MarianneExtraBold"
-        className="text-center text-xl text-white"
-      >
-        Connaitre son environnement {'\n'} Agir pour protéger sa santé
-      </MyText>
-      <View className="mt-4">
+      <View>
+        <MyText
+          font="MarianneBold"
+          className="text-center text-white"
+        >
+          Connaitre son environnement {'\n'} Agir pour protéger sa santé
+        </MyText>
+      </View>
+      <View>
         <Button
           onPress={() => {
             navigation.navigate(OnboardingRouteEnum.GEOLOCATION);
           }}
-          viewClassName="bg-app-yellow p-4"
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
           textClassName="text-black"
-          font="MarianneMedium"
+          font="MarianneBold"
         >
           C'est parti !
         </Button>

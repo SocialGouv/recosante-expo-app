@@ -12,7 +12,7 @@ const OnboardingStack = createNativeStackNavigator();
 export function Onboarding() {
   return (
     <SafeAreaView className="flex flex-1 bg-app-primary px-4">
-      <OnboardingStack.Navigator screenOptions={{ headerShown: false }}>
+      <OnboardingStack.Navigator screenOptions={{ fullScreenGestureEnabled: true, headerShown: false, animationTypeForReplace: 'push' }}>
         <OnboardingStack.Screen
           name={OnboardingRouteEnum.WELCOME}
           component={Welcome}
