@@ -29,14 +29,14 @@ export function LineList(props: LineChartProps) {
     : false;
   if (!props.slug) return <></>;
   return (
-    <View className="mt-3 flex space-y-2">
+    <View className="mt-6 flex space-y-2">
       {sortedValues
         ?.map((line) => {
           if (line.value === 0) return null;
           return (
             <View key={line.name} className="flex  flex-row">
               <MyText
-                className="text-muted-100 bottom-1 mr-3 min-w-[75px] text-[11px] capitalize"
+                className="bottom-1 mr-3 min-w-[75px] text-[11px] capitalize text-muted-100"
                 font="MarianneBold"
               >
                 {line.name}
@@ -58,7 +58,7 @@ export function LineList(props: LineChartProps) {
         .slice(0, props.isPreviewMode ? MAX_LINE : undefined)}
       {showSeeMore ? (
         <TouchableOpacity onPress={props.onMorePress}>
-          <MyText className="text-muted text-center text-[10px] uppercase underline">
+          <MyText className="text-center text-[10px] uppercase text-muted underline">
             Voir plus d'indicateurs {'>'}
           </MyText>
         </TouchableOpacity>

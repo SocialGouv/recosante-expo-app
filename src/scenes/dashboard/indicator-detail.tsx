@@ -9,7 +9,6 @@ import { useNavigation } from '@react-navigation/native';
 import type { RootStackParamList, RouteEnum } from '~/constants/route';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAddress } from '~/zustand/address/useAddress';
-import dayjs from 'dayjs';
 import { LineList } from '~/components/indicators/graphs/lines-list';
 import { IndicatorService } from '~/services/indicator';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -58,8 +57,19 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   }
 
   return (
-    <View className="flex-1 bg-black/80">
+    <View className="flex-1 ">
       <BottomSheet
+        style={{
+          shadowColor: '#000000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.4,
+          shadowRadius: 150,
+
+          elevation: 2,
+        }}
         ref={bottomSheetRef}
         index={2}
         snapPoints={snapPoints}
@@ -73,20 +83,26 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         }}
         handleStyle={{
           backgroundColor: '#3343BD',
-          borderTopLeftRadius: 50,
-          borderTopRightRadius: 50,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#ebeefa',
+          backgroundColor: '#3343BD',
         }}
         enablePanDownToClose
       >
-        <View className="flex items-center justify-center bg-app-primary p-2 pt-4">
-          <MyText font="MarianneBold" className="text-2xl uppercase text-white">
-            {indicator.short_name}
+        <View className="-mt-2 flex items-center justify-center bg-app-primary p-2">
+          <MyText
+            font="MarianneExtraBold"
+            className="text-sm uppercase text-white"
+          >
+            {indicator.name}
           </MyText>
-          <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
-            Mise à jour{' '}
+          <MyText
+            font="MarianneBold"
+            className="mt-2 pb-1 text-xs text-app-gray-100"
+          >
+            Mis à jour{' '}
             {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
           </MyText>
         </View>
@@ -99,19 +115,12 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         <ScrollView className="flex flex-1 bg-app-gray">
           <View className="px-6 pb-20 pt-6">
             <View className="mb-4 flex flex-row flex-wrap items-center justify-center">
-              <View className="flex basis-2/3">
+              <View className="mb-5 flex basis-2/3">
                 <MyText
                   className="text-wrap text-2xl uppercase text-black"
                   font="MarianneExtraBold"
                 >
                   {address?.city}
-                </MyText>
-
-                <MyText
-                  className="max-w-[80%] text-xs uppercase text-gray-500"
-                  font="MarianneRegular"
-                >
-                  {dayjs().format('dddd DD MMMM')}
                 </MyText>
               </View>
               <View
@@ -120,7 +129,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   backgroundColor: indicatorColor,
                 }}
               >
-                <MyText font="MarianneBold" className="uppercase">
+                <MyText
+                  font="MarianneExtraBold"
+                  className="text-[13px] uppercase text-dark"
+                >
                   {currentDayIndicatorData.summary.status}
                 </MyText>
               </View>
@@ -128,6 +140,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             <LineChartWithCursor
               value={currentDayIndicatorData.summary.value}
               slug={indicator.slug}
+              showCursor={true}
             />
             <LineList
               values={currentDayIndicatorData.values}
@@ -135,10 +148,12 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               slug={indicator.slug}
             />
             <Title
-              label={`${indicator.long_name}: ${currentDayIndicatorData.summary.status}`}
+              label={`${indicator.long_name ?? indicator.name}: ${
+                currentDayIndicatorData.summary.status
+              }`}
             />
             <View className="mt-2 ">
-              <MyText className=" text-xs">
+              <MyText className=" text-xs leading-5" font="MarianneRegular">
                 {currentDayIndicatorData.summary.recommendations?.[0]}
               </MyText>
             </View>
@@ -149,9 +164,9 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 return (
                   <View
                     key={recommendation}
-                    className="mt-2 flex flex-row items-center rounded-md bg-white p-2"
+                    className="mt-3 flex flex-row items-center rounded-2xl bg-white p-2 px-3"
                   >
-                    <MyText className=" text-xs">{recommendation}</MyText>
+                    <MyText className="text-xs">{recommendation}</MyText>
                   </View>
                 );
               },
@@ -174,7 +189,7 @@ interface TitleProps {
 }
 function Title(props: TitleProps) {
   return (
-    <MyText font="MarianneBold" className=" mt-8 text-sm uppercase">
+    <MyText font="MarianneExtraBold" className=" mt-6 text-xs uppercase">
       {props.label}
     </MyText>
   );

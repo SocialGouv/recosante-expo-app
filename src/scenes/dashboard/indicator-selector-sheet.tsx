@@ -49,13 +49,24 @@ export function IndicatorSelectorSheet({
   }
 
   return (
-    <View className="flex-1 bg-black/80">
+    <View className="flex-1">
       <BottomSheet
         // enableDynamicSizing={true}
         ref={bottomSheetRef}
         index={startIndex}
         snapPoints={snapPoints}
         enablePanDownToClose={enablePanDownToClose}
+        style={{
+          shadowColor: '#000000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.4,
+          shadowRadius: 150,
+
+          elevation: 2,
+        }}
         onClose={() => {
           closeBottomSheet();
         }}
