@@ -21,7 +21,7 @@ export function IndicatorSelectorSheet({
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose } = route.params;
 
-  const snapPoints = useMemo(() => ['30%', '90%', '100%'], []);
+  const snapPoints = useMemo(() => ['30%', '75%', '90%', '100%'], []);
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
@@ -42,18 +42,25 @@ export function IndicatorSelectorSheet({
         onClose={() => {
           closeBottomSheet();
         }}
+        backgroundStyle={{
+          borderTopRightRadius: 35,
+          borderTopLeftRadius: 35,
+        }}
         handleStyle={{
           backgroundColor: '#3343BD',
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
+          borderTopLeftRadius: 35,
+          borderTopRightRadius: 35,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#3343BD',
+          backgroundColor: 'white',
+          height: 7,
+          width: 83,
+          marginTop: 35,
         }}
       >
-        <View className="flex h-full w-full flex-1 bg-app-primary p-2">
-          <MyText className="mx-2 mb-4 text-white">
-            Sélectionnez votre indicateur favori&nbsp;?
+        <View className="flex h-full w-full flex-1 bg-app-primary p-2 pt-4">
+          <MyText className="mx-2 mb-4 text-xl text-white" font="MarianneBold">
+            Sélectionnez votre indicateur favori
           </MyText>
           <IndicatorsSelector
             onSubmit={closeBottomSheet}
