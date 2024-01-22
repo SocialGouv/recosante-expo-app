@@ -156,6 +156,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 );
               },
             )}
+            <MyText className="mt-2 text-xs opacity-50" font="MarianneLight">
+              Ces recommandations sont aggrégées par les différentes
+              administrations françaises
+            </MyText>
             <Title label={indicator?.about_title} />
             <MyText className="mt-2">{indicator?.about_description}</MyText>
           </View>
