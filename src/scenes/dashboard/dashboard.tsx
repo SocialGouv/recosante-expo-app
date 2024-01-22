@@ -70,14 +70,15 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           <MyText font="MarianneRegular" className="text-md text-black">
             Bonjour,
           </MyText>
-          <MyText font="MarianneBold" className="text-2xl text-black">
+          <MyText font="MarianneBold" className="text-lg text-black leading-5 mt-2">
             Découvrez {'\n'}vos indicateurs favoris !
           </MyText>
           {address?.city ? (
-            <View className="flex flex-row items-center">
+            <View className="flex flex-row items-center mt-2 -mb-4">
               <MyText
                 font="MarianneRegular"
-                className="text-md mt-2 max-w-[90%] uppercase text-app-gray-100"
+                className="text-xsmax-w-[90%] text-app-gray-100"
+                numberOfLines={1}
               >
                 {address?.label ?? address?.city}
               </MyText>
