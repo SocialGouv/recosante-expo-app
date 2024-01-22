@@ -15,7 +15,7 @@ export function LineChart(props: LineChartProps) {
   function createLine() {
     return (
       <View
-        className="h-3 rounded-full"
+        className="h-[9px] rounded-full"
         style={{
           backgroundColor: props.color ?? 'blue',
           width: `${(100 / props.range) * value}%`,
@@ -26,7 +26,7 @@ export function LineChart(props: LineChartProps) {
 
   return (
     <View className="relative flex">
-      <View className="h-3 rounded-full bg-app-gray-300 opacity-50"></View>
+      <View className="h-[9px] rounded-full bg-app-gray-300 opacity-50"></View>
 
       <View className="absolute  flex flex-row">{createLine()}</View>
     </View>

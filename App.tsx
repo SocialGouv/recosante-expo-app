@@ -17,6 +17,7 @@ Sentry.init({
   tracesSampleRate: 0.05,
 });
 initMatomo();
+
 function App() {
   const [fontsLoaded] = useFonts({
     MarianneBold: require('./src/assets/fonts/Marianne-Bold.otf'),
