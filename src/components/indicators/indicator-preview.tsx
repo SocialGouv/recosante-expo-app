@@ -78,12 +78,12 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             className={cn(
               props.isFavorite
                 ? 'flex-row justify-between px-4'
-                : 'mb-4 h-28 flex-col-reverse items-center',
+                : 'mb-4 h-28 flex-col-reverse items-center justify-between',
               'items-center',
             )}
           >
             <MyText
-              className="text-wrap text-md uppercase text-black"
+              className="text-wrap text-md text-center uppercase text-black"
               font="MarianneBold"
             >
               {props.indicator.name}
