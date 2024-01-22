@@ -20,6 +20,7 @@ module.exports = {
       colors: {
         muted: '#555555',
         'muted-100': '#9C9C9C',
+        dark: '#232323',
         app: {
           green: '#4FCBAD',
           gray: '#ECF1FB',

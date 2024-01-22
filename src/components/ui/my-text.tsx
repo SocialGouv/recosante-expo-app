@@ -63,7 +63,7 @@ export default styled(MyText);
 
 const styles = StyleSheet.create({
   default: {
-    // fontFamily: "MarianneRegular",
+    fontFamily: 'MarianneRegular',
     color: '#000',
   },
   MarianneBold: {

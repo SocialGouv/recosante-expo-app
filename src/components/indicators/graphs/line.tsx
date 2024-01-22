@@ -26,7 +26,7 @@ export function LineChart(props: LineChartProps) {
 
   return (
     <View className="relative flex">
-      <View className="h-[9px] rounded-full bg-app-gray-300 opacity-50"></View>
+      <View className="h-[9px] rounded-full bg-app-gray-300 "></View>
 
       <View className="absolute  flex flex-row">{createLine()}</View>
     </View>

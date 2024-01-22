@@ -76,7 +76,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View
             className={cn(
               props.isFavorite
-                ? 'flex-row justify-between '
+                ? 'flex-row justify-between pb-2 '
                 : 'mb-6 h-28 flex-col-reverse items-center',
               'items-center',
             )}
@@ -88,7 +88,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               )}
             >
               <MyText
-                className="text-wrap text-md text-muted uppercase "
+                className="text-wrap text-md uppercase text-muted "
                 font="MarianneBold"
               >
                 {props.indicator.name}
@@ -135,7 +135,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             />
           ) : null}
 
-          <MyText className="text-muted mt-4 text-[10px]">
+          <MyText className="mt-4 text-[10px] text-muted">
             {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
               'Pas de recommandations.'}
           </MyText>

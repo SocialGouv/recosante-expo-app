@@ -190,8 +190,14 @@ export function Navigators() {
               options={() => ({
                 headerShown: false,
                 presentation: 'transparentModal',
-                //  TODO/FIXME: animation non on enter, fade on exit
-                // animation: 'none',
+                customAnimationOnGestureEnd: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+                customAnimationOnGestureStart: {
+                  animation: 'fade',
+                  duration: 400,
+                },
               })}
             />
             <RootStack.Screen
@@ -200,8 +206,14 @@ export function Navigators() {
               options={() => ({
                 headerShown: false,
                 presentation: 'transparentModal',
-                //  TODO/FIXME: animation non on enter, fade on exit
-                // animation: 'none',
+                customAnimationOnGestureEnd: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+                customAnimationOnGestureStart: {
+                  animation: 'fade',
+                  duration: 400,
+                },
               })}
             />
           </RootStack.Navigator>
