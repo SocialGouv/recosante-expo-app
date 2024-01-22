@@ -2,12 +2,12 @@ import { View, TouchableOpacity } from 'react-native';
 import { type IndicatorItem, type IndicatorDay } from '~/types/indicator';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import { cn } from '~/utils/tailwind';
 import { Info } from '~/assets/icons/info';
 import { LineChartWithCursor } from './graphs/line-with-cursor';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
-import { useAddress } from '~/zustand/address/useAddress';
+// import { useAddress } from '~/zustand/address/useAddress';
 import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
 import { LineList } from './graphs/lines-list';
@@ -19,7 +19,7 @@ interface IndicatorPreviewProps {
 }
 
 export function IndicatorPreview(props: IndicatorPreviewProps) {
-  const { address } = useAddress((state) => state);
+  // const { address } = useAddress((state) => state);
   const navigation = useNavigation();
   const { indicators } = useIndicators((state) => state);
   const currentIndicatorData = indicators?.find(
@@ -43,14 +43,13 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     props.indicator.slug,
     indicatorDataInCurrentDay?.summary.value ?? 0,
   );
-
+  const showLineList =
+    props.isFavorite && indicatorDataInCurrentDay?.values?.length;
   if (!indicatorDataInCurrentDay) return <></>;
   return (
     <TouchableOpacity
       style={{
-        borderColor: props.isFavorite
-          ? indicatorColor // TODO getColorFromValue(currentDayIndicatorData.summary.value)
-          : 'transparent',
+        borderColor: props.isFavorite ? indicatorColor : 'transparent',
       }}
       className={cn(
         'mx-auto my-5 basis-[47%] rounded-2xl bg-white p-2',
@@ -63,10 +62,10 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View
             className="mx-auto -mt-6 items-center rounded-full px-6 py-1"
             style={{
-              backgroundColor: indicatorColor, // TODO getColorFromValue(currentDayIndicatorData.summary.value)
+              backgroundColor: indicatorColor,
             }}
           >
-            <MyText font="MarianneBold" className="uppercase">
+            <MyText font="MarianneBold" className="uppercase text-[#232323]">
               {indicatorDataInCurrentDay?.summary.status}
             </MyText>
           </View>
@@ -77,21 +76,28 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <View
             className={cn(
               props.isFavorite
-                ? 'flex-row justify-between px-4'
-                : 'mb-4 h-28 flex-col-reverse items-center justify-between',
+                ? 'flex-row justify-between '
+                : 'mb-6 h-28 flex-col-reverse items-center',
               'items-center',
             )}
           >
-            <MyText
-              className="text-wrap text-md text-center uppercase text-black"
-              font="MarianneBold"
-            >
-              {props.indicator.name}
-            </MyText>
             <View
               className={cn(
-                'flex items-center justify-center opacity-70',
-                props.isFavorite ? '' : 'mb-2',
+                'flex w-full flex-row items-center',
+                props.isFavorite ? 'w-fit' : '',
+              )}
+            >
+              <MyText
+                className="text-wrap text-md text-muted uppercase "
+                font="MarianneBold"
+              >
+                {props.indicator.name}
+              </MyText>
+            </View>
+            <View
+              className={cn(
+                'flex items-center justify-center  ',
+                props.isFavorite ? 'mr-6' : 'mb-6 ',
               )}
             >
               {IndicatorService.getPicto({
@@ -110,10 +116,10 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <LineChartWithCursor
             value={indicatorDataInCurrentDay?.summary.value}
             slug={currentIndicatorData?.slug}
-            withCursor={props.isFavorite}
+            showCursor={props.isFavorite}
           />
 
-          {props.isFavorite && indicatorDataInCurrentDay?.values?.length ? (
+          {showLineList ? (
             <LineList
               slug={currentIndicatorData?.slug}
               values={indicatorDataInCurrentDay?.values}
@@ -129,12 +135,10 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             />
           ) : null}
 
-          {currentIndicatorData?.slug != null ? (
-            <MyText className="mt-4 text-xs">
-              {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
-                'Pas de recommandations.'}
-            </MyText>
-          ) : null}
+          <MyText className="text-muted mt-4 text-[10px]">
+            {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
+              'Pas de recommandations.'}
+          </MyText>
         </View>
       </View>
     </TouchableOpacity>

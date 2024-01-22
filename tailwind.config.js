@@ -18,11 +18,12 @@ module.exports = {
         MarianneThinItalic: 'Marianne-ThinItalic',
       },
       colors: {
+        muted: '#555555',
+        'muted-100': '#9C9C9C',
         app: {
           green: '#4FCBAD',
           gray: '#ECF1FB',
           'gray-100': '#AEB1B7',
-          'gray-200': '#9C9C9C',
           'gray-300': '#D9D9EF',
           yellow: '#F2D072',
           primary: '#3343BD',

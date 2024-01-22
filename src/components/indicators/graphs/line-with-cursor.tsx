@@ -6,7 +6,7 @@ import { cn } from '~/utils/tailwind';
 interface LineChartProps {
   value?: number;
   slug: IndicatorsSlugEnum | undefined;
-  withCursor?: boolean;
+  showCursor?: boolean;
 }
 
 export function LineChartWithCursor(props: LineChartProps) {
@@ -31,11 +31,12 @@ export function LineChartWithCursor(props: LineChartProps) {
           borderStyle: 'solid',
           borderLeftWidth: 8,
           borderRightWidth: 8,
-          borderBottomWidth: 14,
+          borderBottomWidth: 12,
           borderLeftColor: 'transparent',
           borderRightColor: 'transparent',
           borderBottomColor: color[rangeForValue] ?? 'red',
           transform: 'rotate(180deg)',
+          marginBottom: 4,
         }}
       />
     );
@@ -49,7 +50,7 @@ export function LineChartWithCursor(props: LineChartProps) {
       }
       return (
         <View
-          className={cn('h-3', rounded())}
+          className={cn('h-[9px]', rounded())}
           style={{
             backgroundColor: color[i - 1],
             width: `${100 / range}%`,
@@ -62,9 +63,8 @@ export function LineChartWithCursor(props: LineChartProps) {
 
   return (
     <View className="flex">
-      {/* {props.withCursor && <Triangle />} */}
-      <Triangle />
-      <View className="mt-1 flex flex-row">{createLine()}</View>
+      {props.showCursor ? <Triangle /> : null}
+      <View className="flex flex-row">{createLine()}</View>
     </View>
   );
 }

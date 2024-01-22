@@ -35,7 +35,10 @@ export function LineList(props: LineChartProps) {
           if (line.value === 0) return null;
           return (
             <View key={line.name} className="flex  flex-row">
-              <MyText className="bottom-1 mr-3 min-w-[75px] capitalize text-app-gray-200">
+              <MyText
+                className="text-muted-100 bottom-1 mr-3 min-w-[75px] text-[11px] capitalize"
+                font="MarianneBold"
+              >
                 {line.name}
               </MyText>
               <View className="w-full flex-1 ">
@@ -55,7 +58,7 @@ export function LineList(props: LineChartProps) {
         .slice(0, props.isPreviewMode ? MAX_LINE : undefined)}
       {showSeeMore ? (
         <TouchableOpacity onPress={props.onMorePress}>
-          <MyText className="text-center text-xs text-black opacity-50">
+          <MyText className="text-muted text-center text-[10px] uppercase underline">
             Voir plus d'indicateurs {'>'}
           </MyText>
         </TouchableOpacity>

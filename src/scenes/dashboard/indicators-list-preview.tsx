@@ -29,7 +29,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
     return null;
   }
 
-  function IndicatorListView({ navigation, route }: any) {
+  function IndicatorListView({ route }: any) {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {props.favoriteIndicator ? (
@@ -60,11 +60,21 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           backgroundColor: '#ECF1FB',
           elevation: 0,
           shadowColor: '#000000',
-          shadowOffset: { width: 0, height: 2 }, // change this for more shadow
-          shadowOpacity: 0.3,
-          shadowRadius: 10,
+          shadowOffset: { width: 0, height: 10 }, // change this for more shadow
+          shadowOpacity: 0.1,
+          shadowRadius: 30,
         },
-        tabBarLabelStyle: { fontWeight: 'bold', fontSize: 12 },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          fontFamily: 'MarianneBold',
+          color: '#555555',
+          marginBottom: -12,
+        },
+
+        tabBarIndicatorStyle: {
+          backgroundColor: '#555555',
+          height: 2,
+        },
       }}
       className="shadow-md"
     >
@@ -88,5 +98,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    backgroundColor: '#ECF1FB',
   },
 });
