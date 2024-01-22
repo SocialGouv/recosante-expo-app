@@ -1,4 +1,4 @@
-import { View, Pressable } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { type IndicatorItem, type IndicatorDay } from '~/types/indicator';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
@@ -46,22 +46,22 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
   if (!indicatorDataInCurrentDay) return <></>;
   return (
-    <View
+    <TouchableOpacity
       style={{
         borderColor: props.isFavorite
           ? indicatorColor // TODO getColorFromValue(currentDayIndicatorData.summary.value)
           : 'transparent',
       }}
       className={cn(
-        '   mx-auto my-5 basis-[47%]  rounded-2xl bg-white p-2 ',
-        `${props.isFavorite ? 'mx-2 -mt-2 border-[3px] ' : ''}
-    }`,
+        'mx-auto my-5 basis-[47%] rounded-2xl bg-white p-2',
+        props.isFavorite && 'mx-2 -mt-2 border-[3px]',
       )}
+      onPress={handleSelect}
     >
       <View className="flex flex-row justify-between">
-        <View className=" flex w-full justify-center">
+        <View className="flex w-full justify-center">
           <View
-            className=" -top-6  mx-auto items-center  rounded-full  px-6 py-1"
+            className="mx-auto -mt-6 items-center rounded-full px-6 py-1"
             style={{
               backgroundColor: indicatorColor, // TODO getColorFromValue(currentDayIndicatorData.summary.value)
             }}
@@ -71,29 +71,42 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             </MyText>
           </View>
 
-          <Pressable className="-top-6 flex items-end" onPress={handleSelect}>
+          <View className="-mt-2 flex items-end">
             <Info />
-          </Pressable>
-          <View className="-top-6 flex items-center justify-center opacity-70">
-            {IndicatorService.getPicto({
-              slug: props.indicator.slug,
-              indicatorValue: indicatorDataInCurrentDay?.summary.value,
-              color: indicatorColor,
-            })}
           </View>
-
-          <MyText
-            className="text-wrap text-md uppercase text-black"
-            font="MarianneBold"
+          <View
+            className={cn(
+              props.isFavorite
+                ? 'flex-row justify-between px-4'
+                : 'mb-4 h-28 flex-col-reverse items-center',
+              'items-center',
+            )}
           >
-            {props.indicator.name}
-          </MyText>
-          <MyText
+            <MyText
+              className="text-wrap text-md uppercase text-black"
+              font="MarianneBold"
+            >
+              {props.indicator.name}
+            </MyText>
+            <View
+              className={cn(
+                'flex items-center justify-center opacity-70',
+                props.isFavorite ? '' : 'mb-2',
+              )}
+            >
+              {IndicatorService.getPicto({
+                slug: props.indicator.slug,
+                indicatorValue: indicatorDataInCurrentDay?.summary.value,
+                color: indicatorColor,
+              })}
+            </View>
+          </View>
+          {/* <MyText
             className=" mb-4 text-xs uppercase text-gray-500"
             font="MarianneRegular"
           >
             {address?.label} {dayjs().format('DD/MM')}
-          </MyText>
+          </MyText> */}
           <LineChartWithCursor
             value={indicatorDataInCurrentDay?.summary.value}
             slug={currentIndicatorData?.slug}
@@ -117,11 +130,12 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
           {currentIndicatorData?.slug != null ? (
             <MyText className="mt-4 text-xs">
-              {indicatorDataInCurrentDay.summary.recommendations?.[0] ?? 'Pas de recommandations.'}
+              {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
+                'Pas de recommandations.'}
             </MyText>
           ) : null}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
