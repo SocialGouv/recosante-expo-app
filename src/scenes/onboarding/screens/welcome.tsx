@@ -32,7 +32,7 @@ export function Welcome({ navigation }: { navigation: any }) {
           onPress={() => {
             navigation.navigate(OnboardingRouteEnum.GEOLOCATION);
           }}
-          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3 min-w-[200px]"
           textClassName="text-black"
           font="MarianneBold"
         >

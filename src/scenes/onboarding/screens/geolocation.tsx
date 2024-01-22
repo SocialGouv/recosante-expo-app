@@ -76,7 +76,7 @@ export function Geolocation({ navigation }: { navigation: any }) {
                 setIsLoading(false);
               });
           }}
-          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3 min-w-[200px]"
           textClassName="text-black"
           font="MarianneMedium"
         >
