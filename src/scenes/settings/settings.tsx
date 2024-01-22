@@ -5,6 +5,7 @@ import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function SettingsPage({ navigation }: { navigation: any }) {
   return (
@@ -30,7 +31,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
             })
           }
         />
-        {/* <View className="mt-12 border-b border-app-gray">
+        {__DEV__ && <View className="mt-12 border-b border-app-gray">
           <TextRow
             text="Dev mode / Clear Cookies"
             onPress={async () => {
@@ -40,7 +41,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
               navigation.navigate(RouteEnum.ONBOARDING);
             }}
           />
-        </View> */}
+        </View>}
 
         <Pressable
           onPress={() => {
