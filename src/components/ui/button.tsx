@@ -25,18 +25,21 @@ export default function Button({
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View
-        className={cn(`flex-col justify-center rounded-full px-4
-        py-2
-        ${disabled ? 'opacity-30' : 'opacity-100'}
-        ${icon ? 'flex flex-row' : 'flex-col'}
-        ${viewClassName}`)}
+        className={cn(
+          'flex-col justify-center rounded-full px-4 py-2',
+          disabled ? 'opacity-30' : 'opacity-100',
+          icon ? 'flex flex-row' : 'flex-col',
+          viewClassName,
+        )}
       >
         {icon ? (
-          <View className="mr-2 flex justify-center ">{icon}</View>
+          <View className={cn('mr-2 flex justify-center', textClassName)}>
+            {icon}
+          </View>
         ) : null}
         <MyText
           font={font}
-          className={` text-center text-xl text-white ${textClassName} border`}
+          className={cn('border text-center text-white', textClassName)}
         >
           {children}
         </MyText>

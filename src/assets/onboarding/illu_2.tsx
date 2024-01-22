@@ -3,7 +3,7 @@ import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
 export function Illu_2() {
   return (
-    <Svg width={258} height={183} viewBox="0 0 258 183" fill="none">
+    <Svg viewBox="0 0 258 183" fill="none" className="h-full w-full">
       <G clipPath="url(#clip0_176_1063)">
         <Path
           d="M108.832 181.699c-.412-4.708 1.923-9.56 5.856-12.178 3.938-2.619 9.311-2.903 13.501-.707 1.018-2.721 2.057-5.49 3.863-7.766 1.805-2.276 4.522-4.022 7.425-3.914v24.565h-30.645zM28.154 86.656l-15.66 31.57 4.677.177-13.27 25.09h6.97L0 165.783h60.76l-13.377-22.29 6.412-.278-12.82-25.074 4.736-.279-17.557-31.206z"
