@@ -24,24 +24,26 @@ export function SettingsPage({ navigation }: { navigation: any }) {
         <Title label="Indicateurs" />
 
         <TextRow
-          text="Votre indicateur favoris"
+          text="Votre indicateur favori"
           onPress={() =>
             navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
             })
           }
         />
-        {__DEV__ && <View className="mt-12 border-b border-app-gray">
-          <TextRow
-            text="Dev mode / Clear Cookies"
-            onPress={async () => {
-              await AsyncStorage.clear();
-              console.log('AsyncStorage cleared');
+        {__DEV__ && (
+          <View className="mt-12 border-b border-app-gray">
+            <TextRow
+              text="Dev mode / Clear Cookies"
+              onPress={async () => {
+                await AsyncStorage.clear();
+                console.log('AsyncStorage cleared');
 
-              navigation.navigate(RouteEnum.ONBOARDING);
-            }}
-          />
-        </View>}
+                navigation.navigate(RouteEnum.ONBOARDING);
+              }}
+            />
+          </View>
+        )}
 
         <Pressable
           onPress={() => {
