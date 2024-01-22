@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import {
   type IndicatorsSlugEnum,
   type IndicatorByPeriod,
@@ -54,11 +54,11 @@ export function LineList(props: LineChartProps) {
         })
         .slice(0, props.isPreviewMode ? MAX_LINE : undefined)}
       {showSeeMore ? (
-        <Pressable onPress={props.onMorePress}>
-          <MyText className="text-center uppercase text-black underline">
-            + voir plus
+        <TouchableOpacity onPress={props.onMorePress}>
+          <MyText className="text-center text-xs text-black opacity-50">
+            Voir plus d'indicateurs {'>'}
           </MyText>
-        </Pressable>
+        </TouchableOpacity>
       ) : null}
     </View>
   );
