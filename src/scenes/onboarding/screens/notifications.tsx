@@ -10,25 +10,28 @@ import API from '~/services/api';
 
 export function Notifications({ navigation }: { navigation: any }) {
   return (
-    <View className="flex flex-1 items-center justify-around bg-app-primary">
+    <View className="flex flex-1 items-center justify-center gap-y-8 bg-app-primary">
       <Skip onPress={() => navigation.navigate(RouteEnum.HOME)} />
-      <MyText
-        font="MarianneExtraBold"
-        className="text-center text-3xl text-white"
-      >
-        🔔 Accepter les {'\n'}
-        notification
-      </MyText>
-      <Illu_4 />
+      <View className="w-full">
+        <MyText
+          font="MarianneExtraBold"
+          className="text-center text-3xl text-white"
+        >
+          🔔 Accepter les {'\n'}
+          notification
+        </MyText>
+      </View>
+      <View className="h-1/3 w-full">
+        <Illu_4 />
+      </View>
 
-      <MyText
-        font="MarianneRegular"
-        className=" text-center text-xl text-white"
-      >
-        Activez les notifications pour recevoir des alertes et des
-        recommandations personnalisées, vous permettant de prendre des mesures
-        préventives en temps réel.
-      </MyText>
+      <View className="w-10/12">
+        <MyText font="MarianneMedium" className="text-center text-white">
+          Activez les notifications pour recevoir des alertes et des
+          recommandations personnalisées, vous permettant de prendre des mesures
+          préventives en temps réel.
+        </MyText>
+      </View>
       <View>
         <Button
           onPress={async () => {

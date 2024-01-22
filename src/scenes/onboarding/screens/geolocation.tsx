@@ -24,28 +24,32 @@ export function Geolocation({ navigation }: { navigation: any }) {
         path: '/user',
         body: { push_notif_token: JSON.stringify(token) },
       });
-      navigation.navigate(RouteEnum.HOME);
-    } else {
-      navigation.navigate(OnboardingRouteEnum.NOTIFICATIONS);
     }
+    navigation.navigate(OnboardingRouteEnum.NOTIFICATIONS);
   };
 
   return (
-    <View className="flex flex-1 items-center justify-around bg-app-primary">
+    <View className="flex flex-1 items-center justify-center gap-y-8 bg-app-primary">
       <Skip onPress={onNext} />
-      <MyText
-        font="MarianneExtraBold"
-        className="text-center text-3xl text-white"
-      >
-        📍 Activez la{'\n'} localisation
-      </MyText>
-      <Illu_2 />
+      <View className="w-full">
+        <MyText
+          font="MarianneExtraBold"
+          className="text-center text-3xl text-white"
+        >
+          📍 Activez la{'\n'} localisation
+        </MyText>
+      </View>
+      <View className="h-1/3 w-full">
+        <Illu_2 />
+      </View>
 
-      <MyText font="MarianneBold" className="text-center text-white">
-        Ainsi, nous pouvons vous fournir des informations précises sur la
-        qualité de l'air et les risques environnementaux spécifiques à votre
-        emplacement.
-      </MyText>
+      <View className="w-3/4">
+        <MyText font="MarianneMedium" className="text-center text-white">
+          Ainsi, nous pouvons vous fournir des informations précises sur la
+          qualité de l'air et les risques environnementaux spécifiques à votre
+          emplacement.
+        </MyText>
+      </View>
       <View>
         <Button
           disabled={isLoading}

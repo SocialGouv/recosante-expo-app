@@ -9,20 +9,21 @@ import { OnboardingRouteEnum } from '~/constants/route';
 
 export function Welcome({ navigation }: { navigation: any }) {
   return (
-    <View className="flex flex-1 items-center justify-center bg-app-primary gap-y-8">
+    <View className="flex flex-1 items-center justify-center gap-y-8 bg-app-primary">
       <Skip
         onPress={() => {
           navigation.navigate(OnboardingRouteEnum.GEOLOCATION);
         }}
       />
-      <Logo />
-      <Illu_1 />
+      <View className="h-16 w-full">
+        <Logo />
+      </View>
+      <View className="h-1/3 w-full">
+        <Illu_1 />
+      </View>
 
-      <View>
-        <MyText
-          font="MarianneBold"
-          className="text-center text-white"
-        >
+      <View className="w-full">
+        <MyText font="MarianneMedium" className="text-center text-white">
           Connaitre son environnement {'\n'} Agir pour protéger sa santé
         </MyText>
       </View>
