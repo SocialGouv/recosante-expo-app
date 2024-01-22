@@ -6,6 +6,7 @@ import { cn } from '~/utils/tailwind';
 interface LineChartProps {
   value?: number;
   slug: IndicatorsSlugEnum | undefined;
+  withCursor?: boolean;
 }
 
 export function LineChartWithCursor(props: LineChartProps) {
@@ -54,13 +55,14 @@ export function LineChartWithCursor(props: LineChartProps) {
             width: `${100 / range}%`,
           }}
           key={i}
-        ></View>
+        />
       );
     });
   }
 
   return (
     <View className="flex">
+      {/* {props.withCursor && <Triangle />} */}
       <Triangle />
       <View className="mt-1 flex flex-row">{createLine()}</View>
     </View>

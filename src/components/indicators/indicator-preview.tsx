@@ -110,6 +110,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           <LineChartWithCursor
             value={indicatorDataInCurrentDay?.summary.value}
             slug={currentIndicatorData?.slug}
+            withCursor={props.isFavorite}
           />
 
           {props.isFavorite && indicatorDataInCurrentDay?.values?.length ? (
