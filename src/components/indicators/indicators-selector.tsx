@@ -60,11 +60,11 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
         })}
       </View>
       {state?.slug ? (
-        <View className="mx-auto mt-2">
+        <View className="mx-auto mt-6">
           <Button
             onPress={handleSubmit}
-            viewClassName="bg-app-yellow px-4 py-3 mt-4"
-            textClassName="text-black"
+            viewClassName="bg-app-yellow px-8 pb-4 pt-3"
+            textClassName="text-black text-base"
             font="MarianneMedium"
           >
             C'est parti !
