@@ -56,9 +56,17 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
     <Tab.Navigator
       initialRouteName={tabsEnum.TODAY}
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#ECF1FB' },
-        tabBarLabelStyle: { fontWeight: 'bold' },
+        tabBarStyle: {
+          backgroundColor: '#ECF1FB',
+          elevation: 0,
+          shadowColor: '#000000',
+          shadowOffset: { width: 0, height: 2 }, // change this for more shadow
+          shadowOpacity: 0.3,
+          shadowRadius: 10,
+        },
+        tabBarLabelStyle: { fontWeight: 'bold', fontSize: 12 },
       }}
+      className="shadow-md"
     >
       <Tab.Screen
         name={tabsEnum.TODAY}
