@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Alert, Pressable, View } from 'react-native';
+import { ScrollView, Alert, TouchableOpacity, View } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
@@ -12,7 +12,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
     <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray px-4">
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        className="top-8 flex w-full flex-1"
+        className="mt-8 flex w-full flex-1"
       >
         <MyText font="MarianneBold" className=" text-3xl">
           Vos préférences
@@ -45,7 +45,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
           </View>
         )}
 
-        <Pressable
+        <TouchableOpacity
           onPress={() => {
             Alert.alert('TODO');
           }}
@@ -56,8 +56,8 @@ export function SettingsPage({ navigation }: { navigation: any }) {
           >
             nous contacter
           </MyText>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             Alert.alert('TODO');
           }}
@@ -68,7 +68,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
           >
             Mentions légales
           </MyText>
-        </Pressable>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,7 +79,7 @@ interface TitleProps {
 }
 function Title(props: TitleProps) {
   return (
-    <MyText font="MarianneBold" className=" mt-8 text-sm uppercase">
+    <MyText font="MarianneBold" className="mt-8 text-sm uppercase">
       {props.label}
     </MyText>
   );
@@ -91,24 +91,22 @@ interface TextRowProps {
 }
 function TextRow(props: TextRowProps) {
   return (
-    <View>
-      <Pressable
-        onPress={props.onPress}
-        hitSlop={{
-          top: 20,
-          bottom: 20,
-          left: 20,
-          right: 20,
-        }}
-        className="-mt-2 flex flex-row items-center justify-between pr-8"
-      >
-        <MyText font="MarianneRegular" className=" mt-4 text-lg ">
-          {props.text}
-        </MyText>
-        <View className="mt-4">
-          <Arrow />
-        </View>
-      </Pressable>
-    </View>
+    <TouchableOpacity
+      onPress={props.onPress}
+      hitSlop={{
+        top: 20,
+        bottom: 20,
+        left: 20,
+        right: 20,
+      }}
+      className="flex flex-row items-center justify-between py-4 pr-4"
+    >
+      <MyText font="MarianneRegular" className="text-lg ">
+        {props.text}
+      </MyText>
+      <View>
+        <Arrow />
+      </View>
+    </TouchableOpacity>
   );
 }

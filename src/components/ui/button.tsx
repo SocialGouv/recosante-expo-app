@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import MyText from './my-text';
 import type { Fonts } from './my-text';
 import { cn } from '~/utils/tailwind';
@@ -23,12 +23,12 @@ export default function Button({
   icon,
 }: ButtonProps) {
   return (
-    <Pressable onPress={onPress} disabled={disabled}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View
         className={cn(`flex-col justify-center rounded-full px-4
         py-2
         ${disabled ? 'opacity-30' : 'opacity-100'}
-        ${icon ? 'flex flex-row' : 'flex-col'} 
+        ${icon ? 'flex flex-row' : 'flex-col'}
         ${viewClassName}`)}
       >
         {icon ? (
@@ -41,6 +41,6 @@ export default function Button({
           {children}
         </MyText>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
