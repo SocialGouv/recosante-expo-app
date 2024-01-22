@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import * as Sentry from 'sentry-expo';
 import { Navigators } from './src/navigators';
 import { initMatomo } from '~/services/logEventsWithMatomo';
+import EnvironmentIndicator from '~/components/EnvironmentIndicator';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,10 +46,13 @@ function App() {
 // eslint-disable-next-line react/display-name
 export default function () {
   return (
-    <SafeAreaProvider>
-      <GestureHandlerRootView className="flex-1">
-        <App />
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+    <>
+      <SafeAreaProvider>
+        <GestureHandlerRootView className="flex-1">
+          <App />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+      <EnvironmentIndicator />
+    </>
   );
 }

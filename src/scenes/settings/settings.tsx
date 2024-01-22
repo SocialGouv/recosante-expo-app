@@ -38,7 +38,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
             })
           }
         />
-        {/* {__DEV__ && (
+        {__DEV__ && (
           <View className="mt-12 border-b border-app-gray">
             <TextRow
               text="Dev mode / Clear Cookies"
@@ -50,7 +50,7 @@ export function SettingsPage({ navigation }: { navigation: any }) {
               }}
             />
           </View>
-        )} */}
+        )}
 
         <View className="mt-16 w-full items-center">
           <TouchableOpacity onPress={() => {}}>
