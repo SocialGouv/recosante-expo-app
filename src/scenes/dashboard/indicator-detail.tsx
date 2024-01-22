@@ -97,7 +97,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           <Close />
         </Pressable>
         <ScrollView className="flex flex-1 bg-app-gray">
-          <View className="px-6 pt-6">
+          <View className="px-6 pb-20 pt-6">
             <View className="mb-4 flex flex-row flex-wrap items-center justify-center">
               <View className="flex basis-2/3">
                 <MyText
@@ -156,21 +156,8 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 );
               },
             )}
-            <Title label="A propos" />
-            <MyText className=" mt-2 ">{indicator?.about_title}</MyText>
-            <View className="mb-8">
-              {currentDayIndicatorData.values?.map((value) => {
-                return (
-                  <View key={value.slug}>
-                    <MyText className="capitalize">{value.name}</MyText>
-                    <MyText className="mb-4 mt-2 capitalize text-gray-500">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Voluptate molestias sequi quo soluta.
-                    </MyText>
-                  </View>
-                );
-              })}
-            </View>
+            <Title label={indicator?.about_title} />
+            <MyText className="mt-2">{indicator?.about_description}</MyText>
           </View>
         </ScrollView>
       </BottomSheet>
