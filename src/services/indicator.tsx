@@ -35,22 +35,22 @@ export namespace IndicatorService {
   //       throw new Error('No color found');
   //   }
   // }
-  export function getIconBySlug(slug: IndicatorsSlugEnum) {
+  export function getIconBySlug(slug: IndicatorsSlugEnum, selected: boolean) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <AirIcon />;
+        return <AirIcon selected={selected} />;
       case IndicatorsSlugEnum.indice_uv:
-        return <UltraVioletIcon />;
+        return <UltraVioletIcon selected={selected} />;
       case IndicatorsSlugEnum.pollen_allergy:
-        return <PollensIcon />;
+        return <PollensIcon selected={selected} />;
       case IndicatorsSlugEnum.weather_alert:
-        return <WeatherIcon />;
+        return <WeatherIcon selected={selected} />;
       case IndicatorsSlugEnum.episode_pollution_atmospheric:
-        return <AirIcon />;
+        return <AirIcon selected={selected} />;
       case IndicatorsSlugEnum.tap_water:
-        return <WaterIcon />;
+        return <WaterIcon selected={selected} />;
       case IndicatorsSlugEnum.bathing_water:
-        return <WaterIcon />;
+        return <WaterIcon selected={selected} />;
       default:
         throw new Error('No icon found');
     }
@@ -119,7 +119,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
           range: 5,
-          color: ['#46EFDF', '#45C39A', '#ECE333', '#FC373F', '#820026'],
+          color: ['#a2f3ed', '#5cc4a3', '#f9fb85', '#a24563', '#820026'],
           valuesInRange: [[1], [2], [3], [4], [5]],
         };
       case IndicatorsSlugEnum.indice_uv:

@@ -42,12 +42,17 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
                 handleSelectIndicator(indicator);
               }}
               viewClassName={cn(
-                `${isFavorite ? 'bg-app-yellow' : ''}
-               border-white border-2 rounded-full  m-2  items-center flex`,
+                isFavorite
+                  ? 'bg-app-yellow border-app-primary'
+                  : 'bg-app-primary border-white ',
+                'border-2 rounded-full m-2 items-center flex',
               )}
-              textClassName="text-white text-base"
+              textClassName={cn(
+                isFavorite ? 'text-app-primary' : 'text-white',
+                'text-base',
+              )}
               key={indicator.slug}
-              icon={IndicatorService.getIconBySlug(indicator.slug)}
+              icon={IndicatorService.getIconBySlug(indicator.slug, isFavorite)}
             >
               {indicator.name}
             </Button>
