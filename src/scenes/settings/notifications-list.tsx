@@ -47,18 +47,22 @@ export function NotificationsList() {
             className="mt-4 flex flex-row items-center justify-between rounded-lg bg-white p-4"
           >
             <View className="w-3/4">
-              <MyText font="MarianneBold" className=" text-lg">
-                {notification.label}
-              </MyText>
-              <MyText font="MarianneRegular" className=" text-sm">
-                {notification.description}
-              </MyText>
+              <View>
+                <MyText font="MarianneBold" className="">
+                  {notification.label}
+                </MyText>
+              </View>
+              <View className="mt-1">
+                <MyText
+                  font="MarianneRegular"
+                  className="text-xs text-gray-400"
+                >
+                  {notification.description}
+                </MyText>
+              </View>
             </View>
             <View className="">
               <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
                 onValueChange={() => {
                   toggleSwitch(notification.id);
                 }}

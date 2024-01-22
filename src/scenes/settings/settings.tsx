@@ -1,37 +1,44 @@
 import React from 'react';
-import { ScrollView, Alert, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  Alert,
+  TouchableOpacity,
+  View,
+  Platform,
+} from 'react-native';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import appJson from '~/../app.json';
 
 export function SettingsPage({ navigation }: { navigation: any }) {
   return (
-    <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray px-4">
+    <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray">
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        className="mt-8 flex w-full flex-1"
+        className="flex w-full flex-1 px-4 pb-20 pt-8"
+        contentContainerStyle={{ paddingBottom: 200 }}
       >
-        <MyText font="MarianneBold" className=" text-3xl">
+        <MyText font="MarianneBold" className="text-3xl">
           Vos préférences
         </MyText>
-        <MyText font="MarianneBold" className=" mt-4 text-sm uppercase">
-          Notifications
-        </MyText>
+        <Title label="Notifications" />
+
         <NotificationsList />
         <Title label="Indicateurs" />
 
         <TextRow
-          text="Votre indicateur favori"
+          text="Changer votre indicateur favori"
           onPress={() =>
             navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
             })
           }
         />
-        {__DEV__ && (
+        {/* {__DEV__ && (
           <View className="mt-12 border-b border-app-gray">
             <TextRow
               text="Dev mode / Clear Cookies"
@@ -43,32 +50,35 @@ export function SettingsPage({ navigation }: { navigation: any }) {
               }}
             />
           </View>
-        )}
+        )} */}
 
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert('TODO');
-          }}
-        >
-          <MyText
-            font="MarianneExtraBold"
-            className=" mt-8 text-xs uppercase underline"
+        <View className="mt-16 w-full items-center">
+          <TouchableOpacity onPress={() => {}}>
+            <MyText font="MarianneRegular" className="text-xs underline">
+              Nous contacter
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}}>
+            <MyText font="MarianneRegular" className="mt-4 text-xs underline">
+              Mentions légales
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert('TODO');
+            }}
+            className="opacity-30"
           >
-            nous contacter
-          </MyText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert('TODO');
-          }}
-        >
-          <MyText
-            font="MarianneRegular"
-            className=" mt-8 text-xs uppercase underline"
-          >
-            Mentions légales
-          </MyText>
-        </TouchableOpacity>
+            <MyText font="MarianneRegular" className="mt-4 text-xs">
+              Version {appJson.expo.version} (
+              {Platform.select({
+                ios: appJson.expo.ios.buildNumber,
+                android: `${appJson.expo.android.versionCode}`,
+              })}
+              )
+            </MyText>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,7 +89,7 @@ interface TitleProps {
 }
 function Title(props: TitleProps) {
   return (
-    <MyText font="MarianneBold" className="mt-8 text-sm uppercase">
+    <MyText font="MarianneExtraBold" className="mt-8 text-sm uppercase">
       {props.label}
     </MyText>
   );
@@ -101,7 +111,7 @@ function TextRow(props: TextRowProps) {
       }}
       className="flex flex-row items-center justify-between py-4 pr-4"
     >
-      <MyText font="MarianneRegular" className="text-lg ">
+      <MyText font="MarianneRegular" className="">
         {props.text}
       </MyText>
       <View>
