@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo } from 'react';
 import MyText from '~/components/ui/my-text';
@@ -13,6 +13,11 @@ type IndicatorSelectorSheetProps = NativeStackScreenProps<
   RouteEnum.INDICATORS_SELECTOR
 >;
 
+const minHeight = 600;
+const inPercentOfScreen = Math.round(
+  (minHeight / Dimensions.get('window').height) * 100,
+);
+
 export function IndicatorSelectorSheet({
   navigation,
   route,
@@ -21,7 +26,19 @@ export function IndicatorSelectorSheet({
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose } = route.params;
 
-  const snapPoints = useMemo(() => ['30%', '75%', '90%', '100%'], []);
+  const snapPoints = useMemo(
+    () =>
+      [inPercentOfScreen, 75, 90, 100, 30]
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map((snapPoint) => `${snapPoint}%`),
+    [],
+  );
+  const startIndex = useMemo(() => {
+    return snapPoints.findIndex(
+      (snapPoint) => snapPoint === `${inPercentOfScreen}%`,
+    );
+  }, [snapPoints]);
+  console.log({ snapPoints, startIndex });
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
@@ -36,7 +53,7 @@ export function IndicatorSelectorSheet({
       <BottomSheet
         // enableDynamicSizing={true}
         ref={bottomSheetRef}
-        index={1}
+        index={startIndex}
         snapPoints={snapPoints}
         enablePanDownToClose={enablePanDownToClose}
         onClose={() => {
