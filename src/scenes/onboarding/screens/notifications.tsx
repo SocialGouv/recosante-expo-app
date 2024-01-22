@@ -45,7 +45,7 @@ export function Notifications({ navigation }: { navigation: any }) {
               }
             });
           }}
-          viewClassName="bg-app-yellow p-4"
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
           textClassName="text-black"
           font="MarianneMedium"
         >

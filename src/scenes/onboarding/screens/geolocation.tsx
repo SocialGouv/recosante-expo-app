@@ -41,10 +41,7 @@ export function Geolocation({ navigation }: { navigation: any }) {
       </MyText>
       <Illu_2 />
 
-      <MyText
-        font="MarianneBold"
-        className="text-center text-white"
-      >
+      <MyText font="MarianneBold" className="text-center text-white">
         Ainsi, nous pouvons vous fournir des informations précises sur la
         qualité de l'air et les risques environnementaux spécifiques à votre
         emplacement.
@@ -75,7 +72,7 @@ export function Geolocation({ navigation }: { navigation: any }) {
                 setIsLoading(false);
               });
           }}
-          viewClassName="bg-app-yellow p-4"
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
           textClassName="text-black"
           font="MarianneMedium"
         >
