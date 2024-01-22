@@ -8,13 +8,21 @@ import { ShareService } from '~/services/share';
 
 export function SharePage({ navigation }: { navigation: any }) {
   return (
-    <ScrollView className="flex-1 bg-app-gray">
-      <SafeAreaView className="flex flex-1 items-center justify-start gap-y-6 bg-app-gray px-4 pt-12">
+    <SafeAreaView className="flex flex-1 items-center justify-start gap-y-6 bg-app-gray">
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        className="flex w-full flex-1 px-4 pb-20 pt-8"
+        contentContainerStyle={{
+          paddingBottom: 200,
+          alignItems: 'center',
+          gap: 20,
+        }}
+      >
         <View className="flex w-full">
-          <MyText font="MarianneBold" className=" text-3xl">
+          <MyText font="MarianneBold" className="text-3xl">
             Partagez l’app !
           </MyText>
-          <MyText font="MarianneRegular" className=" text-lg">
+          <MyText font="MarianneRegular" className="mt-4 text-lg">
             Pour agir ensemble en faveur de votre santé et de l'environnement.
           </MyText>
         </View>
@@ -44,7 +52,7 @@ export function SharePage({ navigation }: { navigation: any }) {
             </Pressable>
           </View>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
