@@ -13,7 +13,11 @@ export interface IndicatorItem {
 }
 
 export type IndicatorDay = 'j0' | 'j1';
-
+export type IndicatorByPeriodValues = Array<{
+  slug: string;
+  name: string;
+  value: number;
+}>;
 export interface IndicatorByPeriod {
   id: string;
   validity_start: string;
@@ -27,11 +31,7 @@ export interface IndicatorByPeriod {
     status_description?: string;
     recommendations?: string[];
   };
-  values?: Array<{
-    slug: string;
-    name: string;
-    value: number;
-  }>;
+  values?: IndicatorByPeriodValues;
 }
 
 export interface Indicator {

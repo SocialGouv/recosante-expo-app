@@ -117,9 +117,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
           {currentIndicatorData?.slug != null ? (
             <MyText className="mt-4 text-xs">
-              {IndicatorService.getDescriptionBySlug(
-                currentIndicatorData?.slug,
-              )}
+              {indicatorDataInCurrentDay.summary.recommendations?.[0] ?? 'Pas de recommandations.'}
             </MyText>
           ) : null}
         </View>
