@@ -58,7 +58,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   }
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-black/80">
       <BottomSheet
         ref={bottomSheetRef}
         index={2}
@@ -66,6 +66,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         onChange={handleSheetChanges}
         onClose={() => {
           closeBottomSheet();
+        }}
+        backgroundStyle={{
+          borderTopRightRadius: 35,
+          borderTopLeftRadius: 35,
         }}
         handleStyle={{
           backgroundColor: '#3343BD',
@@ -77,9 +81,9 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         }}
         enablePanDownToClose
       >
-        <View className="left-0 right-0 flex items-center justify-center bg-app-primary">
-          <MyText font="MarianneBold" className=" text-2xl text-white">
-            {indicator.name}
+        <View className="flex items-center justify-center bg-app-primary p-2 pt-4">
+          <MyText font="MarianneBold" className="text-2xl uppercase text-white">
+            {indicator.short_name}
           </MyText>
           <MyText font="MarianneRegular" className="pb-2 text-sm text-white">
             Mise à jour{' '}
@@ -87,29 +91,27 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           </MyText>
         </View>
         <Pressable
-          onPress={() => {
-            closeBottomSheet();
-          }}
+          onPress={closeBottomSheet}
           className="absolute right-2 top-0"
         >
           <Close />
         </Pressable>
         <ScrollView className="flex flex-1 bg-app-gray">
           <View className="px-6 pt-6">
-            <View className="mb-4 flex flex-row items-center justify-center">
-              <View>
+            <View className="mb-4 flex flex-row flex-wrap items-center justify-center">
+              <View className="flex basis-2/3">
                 <MyText
                   className="text-wrap text-2xl uppercase text-black"
                   font="MarianneExtraBold"
                 >
-                  {indicator.short_name}
+                  {address?.city}
                 </MyText>
 
                 <MyText
                   className="max-w-[80%] text-xs uppercase text-gray-500"
                   font="MarianneRegular"
                 >
-                  {address?.label} {dayjs().format('DD/MM')}
+                  {dayjs().format('dddd DD MMMM')}
                 </MyText>
               </View>
               <View
@@ -133,7 +135,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               slug={indicator.slug}
             />
             <Title
-              label={`Recommandation title: ${currentDayIndicatorData.summary.status}`}
+              label={`${indicator.long_name}: ${currentDayIndicatorData.summary.status}`}
             />
             <View className="mt-2 ">
               <MyText className=" text-xs">
@@ -156,8 +158,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             )}
             <Title label="A propos" />
             <MyText className=" mt-2 ">{indicator?.about_title}</MyText>
-            <MyText className="mb-8 mt-2 underline">En savoir plus</MyText>
-
             <View className="mb-8">
               {currentDayIndicatorData.values?.map((value) => {
                 return (

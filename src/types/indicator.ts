@@ -38,6 +38,7 @@ export interface Indicator {
   slug: IndicatorsSlugEnum;
   name: string;
   short_name: string;
+  long_name: string;
   municipality_insee_code: string;
   about_title: string;
   about_description: string;
