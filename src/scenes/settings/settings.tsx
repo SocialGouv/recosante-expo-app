@@ -11,18 +11,11 @@ import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RouteEnum, type RootStackParamList } from '~/constants/route';
+import { RouteEnum } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-type SettingsProps = BottomTabScreenProps<
-  // @ts-expect-error TODO
-  RootStackParamList,
-  RouteEnum.SETTINGS
->;
-
-export function SettingsPage({ navigation }: SettingsProps) {
+export function SettingsPage({ navigation }: any) {
   const [onVersionClicked, setOnVersionClicked] = useState(0);
 
   return (
@@ -42,47 +35,76 @@ export function SettingsPage({ navigation }: SettingsProps) {
 
         <TextRow
           text="Changer votre indicateur favori"
-          onPress={() =>
+          onPress={() => {
             navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
-            })
-          }
+            });
+          }}
         />
-        <View className="mt-16 w-full items-center">
-          <TouchableOpacity onPress={() => {}}>
-            <MyText font="MarianneRegular" className="text-xs underline">
-              Nous contacter
-            </MyText>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <MyText font="MarianneRegular" className="mt-4 text-xs underline">
-              Mentions légales
-            </MyText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if (onVersionClicked < 5) {
-                setOnVersionClicked((c) => c + 1);
-              } else {
-                AsyncStorage.clear();
-                const resetAction = CommonActions.reset({
-                  index: 0,
-                  routes: [{ name: RouteEnum.ONBOARDING }],
-                });
-                navigation.dispatch(resetAction);
-              }
-            }}
-            className="opacity-30"
-          >
-            <MyText font="MarianneRegular" className="mt-4 text-xs">
-              Version {appJson.expo.version} (
-              {Platform.select({
-                ios: appJson.expo.ios.buildNumber,
-                android: `${appJson.expo.android.versionCode}`,
-              })}
-              )
-            </MyText>
-          </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            if (onVersionClicked < 5) {
+              setOnVersionClicked((c) => c + 1);
+            } else {
+              AsyncStorage.clear();
+              const resetAction = CommonActions.reset({
+                index: 0,
+                routes: [{ name: RouteEnum.ONBOARDING }],
+              });
+              navigation.dispatch(resetAction);
+            }
+          }}
+          className="opacity-30"
+        >
+          {__DEV__ && (
+            <View className="mt-12 border-b border-app-gray">
+              <TextRow
+                text="Dev mode / Clear Cookies"
+                onPress={async () => {
+                  await AsyncStorage.clear();
+                  console.log('AsyncStorage cleared');
+
+                  navigation.navigate(RouteEnum.ONBOARDING);
+                }}
+              />
+            </View>
+          )}
+        </TouchableOpacity>
+        <View>
+          <View className="mt-16 flex w-full flex-row  items-start justify-between space-x-2 px-4">
+            <TouchableOpacity onPress={() => {}} className="border-b pb-1">
+              <MyText font="MarianneRegular">Nous contacter</MyText>
+            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate(RouteEnum.LEGAL);
+                }}
+                className="border-b pb-1"
+              >
+                <MyText font="MarianneRegular">Mentions légales</MyText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert('TODO');
+                }}
+                className=" opacity-30"
+              >
+                <MyText
+                  font="MarianneRegularItalic"
+                  className=" mt-2 text-right text-xs"
+                >
+                  Version {appJson.expo.version} (
+                  {Platform.select({
+                    ios: appJson.expo.ios.buildNumber,
+                    android: `${appJson.expo.android.versionCode}`,
+                  })}
+                  )
+                </MyText>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
