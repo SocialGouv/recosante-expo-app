@@ -9,6 +9,7 @@ import { Uv } from '~/assets/icons/indicators/big/uv';
 import { Pollen } from '~/assets/icons/indicators/big/pollen';
 import { Weather } from '~/assets/icons/indicators/big/weather';
 import { Swimming } from '~/assets/icons/indicators/big/swimming';
+import { Atmo } from '~/assets/icons/indicators/big/atmo';
 
 export namespace IndicatorService {
   // export function getColorByLabel(
@@ -66,7 +67,7 @@ export namespace IndicatorService {
   }) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <Uv value={indicatorValue} color={color} />;
+        return <Atmo value={indicatorValue} />;
       case IndicatorsSlugEnum.indice_uv:
         return <Uv value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
@@ -82,27 +83,6 @@ export namespace IndicatorService {
       default:
         console.log('No picto found');
       // throw new Error('No picto found');
-    }
-  }
-
-  export function getDescriptionBySlug(slug: IndicatorsSlugEnum) {
-    switch (slug) {
-      case IndicatorsSlugEnum.indice_atmospheric:
-        return 'Appliquez une crème solaire et portez des vêtements protecteurs pour vous protéger du soleil.';
-      case IndicatorsSlugEnum.indice_uv:
-        return "En cas d'allergie diagnostiquée, penser à prendre le traitement prescrit par votre médecin.";
-      case IndicatorsSlugEnum.pollen_allergy:
-        return 'Anticipez les variations météorologiques en portant des vêtements adaptés à tout changement de température.';
-      case IndicatorsSlugEnum.weather_alert:
-        return "En cas d'allergie diagnostiquée, penser à prendre le traitement prescrit par votre médecin.";
-      case IndicatorsSlugEnum.episode_pollution_atmospheric:
-        return "En cas d'allergie diagnostiquée, penser à prendre le traitement prescrit par votre médecin.";
-      case IndicatorsSlugEnum.tap_water:
-        return 'Anticipez les variations météorologiques en portant des vêtements adaptés à tout changement de température.';
-      case IndicatorsSlugEnum.bathing_water:
-        return 'Anticipez les variations météorologiques en portant des vêtements adaptés à tout changement de température.';
-      default:
-        throw new Error(`No description found for ${slug as string}`);
     }
   }
 
