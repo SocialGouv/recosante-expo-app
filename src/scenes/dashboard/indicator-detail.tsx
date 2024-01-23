@@ -74,11 +74,13 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
       }}
       handleStyle={{
         backgroundColor: '#3343BD',
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+        borderTopLeftRadius: 35,
+        borderTopRightRadius: 35,
       }}
       handleIndicatorStyle={{
-        backgroundColor: '#3343BD',
+        backgroundColor: 'white',
+        height: 7,
+        width: 83,
       }}
       enablePanDownToClose
     >

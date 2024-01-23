@@ -105,13 +105,19 @@ export function LocationPage(props: LocationPageProps) {
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
       onClose={closeBottomSheet}
+      backgroundStyle={{
+        borderTopRightRadius: 35,
+        borderTopLeftRadius: 35,
+      }}
       handleStyle={{
         backgroundColor: '#3343BD',
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
+        borderTopLeftRadius: 35,
+        borderTopRightRadius: 35,
       }}
       handleIndicatorStyle={{
-        backgroundColor: '#3343BD',
+        backgroundColor: 'white',
+        height: 7,
+        width: 83,
       }}
     >
       <View className="items-start justify-start bg-app-primary p-4">
@@ -119,14 +125,16 @@ export function LocationPage(props: LocationPageProps) {
           onPress={() => {
             closeBottomSheet();
           }}
-          className="absolute -top-0 right-2"
+          className="absolute right-2"
         >
           <Close />
         </Pressable>
-        <MyText font="MarianneBold" className="mb-4   text-xl text-white">
-          Rechercher
-        </MyText>
-        <View className="flex-row items-start justify-start bg-app-primary  ">
+        <View className="mb-4">
+          <MyText font="MarianneBold" className="text-xl text-white">
+            Rechercher
+          </MyText>
+        </View>
+        <View className="flex-row items-start justify-start bg-app-primary">
           <TextInput
             placeholder="Rechercher une adresse"
             value={query}
