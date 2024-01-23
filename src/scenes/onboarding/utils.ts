@@ -9,7 +9,13 @@ import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
 import { capture } from '~/services/sentry';
 
-export function useOnboardingNavigation() {
+export function useOnboardingNavigation(): {
+  onboardingScreen: OnboardingRouteEnum | RouteEnum.HOME;
+  skipVisible: boolean;
+  onSkip: () => void;
+  isLoading: boolean;
+  onNext: () => void;
+} {
   const [onboardingScreen, setOnboardingScreen] = useState<
     OnboardingRouteEnum | RouteEnum.HOME
   >(OnboardingRouteEnum.WELCOME);

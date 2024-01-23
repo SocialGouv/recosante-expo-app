@@ -54,11 +54,7 @@ export function Stepper(props: StepperProps) {
         <View className="absolute -right-4 bottom-0 h-full w-4 bg-app-primary" />
       </View>
       <View className="m-2 min-w-[200px] justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3">
-        <View>
-          <MyText font="MarianneBold" className="border text-center text-black">
-            {props.children}
-          </MyText>
-        </View>
+        <View className="items-center justify-center">{props.children}</View>
       </View>
     </TouchableOpacity>
   );

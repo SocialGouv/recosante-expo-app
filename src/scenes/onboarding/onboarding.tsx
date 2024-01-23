@@ -1,17 +1,16 @@
-import { View } from 'react-native';
+import { useMemo } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Welcome } from './screens/welcome';
 import { Geolocation } from './screens/geolocation';
 import { Notifications } from './screens/notifications';
-
 import { OnboardingRouteEnum } from '~/constants/route';
 import Button from '~/components/ui/button';
-
 import { cn } from '~/utils/tailwind';
 import { useOnboardingNavigation } from './utils';
 import { Stepper } from './Stepper';
-import { useMemo } from 'react';
+import MyText from '~/components/ui/my-text';
 
 const OnboardingStack = createStackNavigator();
 export function Onboarding() {
@@ -69,7 +68,16 @@ export function Onboarding() {
         </OnboardingStack.Navigator>
         <View className="mx-auto my-8 flex w-screen flex-row justify-center">
           <Stepper step={step} onPress={onNext} disabled={isLoading}>
-            {isLoading ? 'Chargement' : "C'est parti !"}
+            {isLoading ? (
+              <ActivityIndicator size="small" color="black" />
+            ) : (
+              <MyText
+                font="MarianneBold"
+                className="border text-center text-black"
+              >
+                C'est parti !
+              </MyText>
+            )}
           </Stepper>
         </View>
       </View>
