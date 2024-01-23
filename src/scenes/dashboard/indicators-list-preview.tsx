@@ -76,7 +76,6 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           height: 2,
         },
       }}
-      className="shadow-md"
     >
       <Tab.Screen
         name={tabsEnum.TODAY}

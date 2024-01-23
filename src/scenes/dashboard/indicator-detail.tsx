@@ -56,131 +56,117 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     return <> </>;
   }
 
+  // TODO FIXME: transition of background is not smooth
+  // find a fucking way
   return (
-    <View className="flex-1 ">
-      <BottomSheet
-        style={{
-          shadowColor: '#000000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.4,
-          shadowRadius: 150,
-
-          elevation: 2,
-        }}
-        ref={bottomSheetRef}
-        index={2}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        onClose={() => {
-          closeBottomSheet();
-        }}
-        backgroundStyle={{
-          borderTopRightRadius: 35,
-          borderTopLeftRadius: 35,
-        }}
-        handleStyle={{
-          backgroundColor: '#3343BD',
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: '#3343BD',
-        }}
-        enablePanDownToClose
-      >
-        <View className="-mt-2 flex items-center justify-center bg-app-primary p-2">
-          <MyText
-            font="MarianneExtraBold"
-            className="text-sm uppercase text-white"
-          >
-            {indicator.name}
-          </MyText>
-          <MyText
-            font="MarianneBold"
-            className="mt-2 pb-1 text-xs text-app-gray-100"
-          >
-            Mis à jour{' '}
-            {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
-          </MyText>
-        </View>
-        <Pressable
-          onPress={closeBottomSheet}
-          className="absolute right-2 top-0"
+    // <View className="flex-1 bg-black/50">
+    <BottomSheet
+      ref={bottomSheetRef}
+      index={2}
+      snapPoints={snapPoints}
+      onChange={handleSheetChanges}
+      onClose={closeBottomSheet}
+      backgroundStyle={{
+        borderTopRightRadius: 35,
+        borderTopLeftRadius: 35,
+      }}
+      handleStyle={{
+        backgroundColor: '#3343BD',
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+      }}
+      handleIndicatorStyle={{
+        backgroundColor: '#3343BD',
+      }}
+      enablePanDownToClose
+    >
+      <View className="-mt-2 flex items-center justify-center bg-app-primary p-2">
+        <MyText
+          font="MarianneExtraBold"
+          className="text-sm uppercase text-white"
         >
-          <Close />
-        </Pressable>
-        <ScrollView className="flex flex-1 bg-app-gray">
-          <View className="px-6 pb-20 pt-6">
-            <View className="mb-4 flex flex-row flex-wrap items-center justify-center">
-              <View className="mb-5 flex basis-2/3">
-                <MyText
-                  className="text-wrap text-2xl uppercase text-black"
-                  font="MarianneExtraBold"
-                >
-                  {address?.city}
-                </MyText>
-              </View>
-              <View
-                className="ml-auto items-center rounded-full px-6 py-1"
-                style={{
-                  backgroundColor: indicatorColor,
-                }}
+          {indicator.name}
+        </MyText>
+        <MyText
+          font="MarianneBold"
+          className="mt-2 pb-1 text-xs text-app-gray-100"
+        >
+          Mis à jour{' '}
+          {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
+        </MyText>
+      </View>
+      <Pressable onPress={closeBottomSheet} className="absolute right-2 top-0">
+        <Close />
+      </Pressable>
+      <ScrollView className="flex flex-1 bg-app-gray">
+        <View className="px-6 pb-20 pt-6">
+          <View className="mb-4 flex flex-row flex-wrap items-center justify-center">
+            <View className="mb-5 flex basis-2/3">
+              <MyText
+                className="text-wrap text-2xl uppercase text-black"
+                font="MarianneExtraBold"
               >
-                <MyText
-                  font="MarianneExtraBold"
-                  className="text-[13px] uppercase text-dark"
-                >
-                  {currentDayIndicatorData.summary.status}
-                </MyText>
-              </View>
-            </View>
-            <LineChartWithCursor
-              value={currentDayIndicatorData.summary.value}
-              slug={indicator.slug}
-              showCursor={true}
-            />
-            <LineList
-              values={currentDayIndicatorData.values}
-              range={indicatorRange}
-              slug={indicator.slug}
-            />
-            <Title
-              label={`${indicator.long_name ?? indicator.name}: ${
-                currentDayIndicatorData.summary.status
-              }`}
-            />
-            <View className="mt-2 ">
-              <MyText className=" text-xs leading-5" font="MarianneRegular">
-                {currentDayIndicatorData.summary.recommendations?.[0]}
+                {address?.city}
               </MyText>
             </View>
-
-            <Title label="Nos recommandations" />
-            {currentDayIndicatorData.summary?.recommendations?.map(
-              (recommendation) => {
-                return (
-                  <View
-                    key={recommendation}
-                    className="mt-3 flex flex-row items-center rounded-2xl bg-white p-2 px-3"
-                  >
-                    <MyText className="text-xs">{recommendation}</MyText>
-                  </View>
-                );
-              },
-            )}
-            <MyText className="mt-2 text-xs opacity-50" font="MarianneLight">
-              Ces recommandations sont aggrégées par les différentes
-              administrations françaises
-            </MyText>
-            <Title label={indicator?.about_title} />
-            <MyText className="mt-2">{indicator?.about_description}</MyText>
+            <View
+              className="ml-auto items-center rounded-full px-6 py-1"
+              style={{
+                backgroundColor: indicatorColor,
+              }}
+            >
+              <MyText
+                font="MarianneExtraBold"
+                className="text-[13px] uppercase text-dark"
+              >
+                {currentDayIndicatorData.summary.status}
+              </MyText>
+            </View>
           </View>
-        </ScrollView>
-      </BottomSheet>
-    </View>
+          <LineChartWithCursor
+            value={currentDayIndicatorData.summary.value}
+            slug={indicator.slug}
+            showCursor={true}
+          />
+          <LineList
+            values={currentDayIndicatorData.values}
+            range={indicatorRange}
+            slug={indicator.slug}
+          />
+          <Title
+            label={`${indicator.long_name ?? indicator.name}: ${
+              currentDayIndicatorData.summary.status
+            }`}
+          />
+          <View className="mt-2 ">
+            <MyText className=" text-xs leading-5" font="MarianneRegular">
+              {currentDayIndicatorData.summary.recommendations?.[0]}
+            </MyText>
+          </View>
+
+          <Title label="Nos recommandations" />
+          {currentDayIndicatorData.summary?.recommendations?.map(
+            (recommendation) => {
+              return (
+                <View
+                  key={recommendation}
+                  className="mt-3 flex flex-row items-center rounded-2xl bg-white p-2 px-3"
+                >
+                  <MyText className="text-xs">{recommendation}</MyText>
+                </View>
+              );
+            },
+          )}
+          <MyText className="mt-2 text-xs opacity-50" font="MarianneLight">
+            Ces recommandations sont aggrégées par les différentes
+            administrations françaises
+          </MyText>
+          <Title label={indicator?.about_title} />
+          <MyText className="mt-2">{indicator?.about_description}</MyText>
+        </View>
+      </ScrollView>
+    </BottomSheet>
+    // </View>
   );
 }
 

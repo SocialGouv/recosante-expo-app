@@ -38,7 +38,6 @@ export function IndicatorSelectorSheet({
       (snapPoint) => snapPoint === `${inPercentOfScreen}%`,
     );
   }, [snapPoints]);
-  console.log({ snapPoints, startIndex });
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
@@ -48,54 +47,43 @@ export function IndicatorSelectorSheet({
     }, 500);
   }
 
+  // TODO FIXME: transition of background is not smooth
+  // find a fucking way
   return (
-    <View className="flex-1">
-      <BottomSheet
-        // enableDynamicSizing={true}
-        ref={bottomSheetRef}
-        index={startIndex}
-        snapPoints={snapPoints}
-        enablePanDownToClose={enablePanDownToClose}
-        style={{
-          shadowColor: '#000000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.4,
-          shadowRadius: 150,
-
-          elevation: 2,
-        }}
-        onClose={() => {
-          closeBottomSheet();
-        }}
-        backgroundStyle={{
-          borderTopRightRadius: 35,
-          borderTopLeftRadius: 35,
-        }}
-        handleStyle={{
-          backgroundColor: '#3343BD',
-          borderTopLeftRadius: 35,
-          borderTopRightRadius: 35,
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: 'white',
-          height: 7,
-          width: 83,
-          marginTop: 35,
-        }}
-      >
-        <View className="flex h-full w-full flex-1 bg-app-primary p-2 pt-4">
-          <MyText className="mx-2 mb-4 text-xl text-white" font="MarianneBold">
-            Sélectionnez votre indicateur favori
-          </MyText>
-          <IndicatorsSelector
-            onSubmit={closeBottomSheet}
-            indicators={indicators}
-          />
-        </View>
-      </BottomSheet>
-    </View>
+    // <View className="flex-1 bg-black/50">
+    <BottomSheet
+      // enableDynamicSizing={true}
+      ref={bottomSheetRef}
+      index={startIndex}
+      snapPoints={snapPoints}
+      enablePanDownToClose={enablePanDownToClose}
+      onClose={closeBottomSheet}
+      backgroundStyle={{
+        borderTopRightRadius: 35,
+        borderTopLeftRadius: 35,
+      }}
+      handleStyle={{
+        backgroundColor: '#3343BD',
+        borderTopLeftRadius: 35,
+        borderTopRightRadius: 35,
+      }}
+      handleIndicatorStyle={{
+        backgroundColor: 'white',
+        height: 7,
+        width: 83,
+        marginTop: 35,
+      }}
+    >
+      <View className="flex h-full w-full flex-1 bg-app-primary p-2 pt-4">
+        <MyText className="mx-2 mb-4 text-xl text-white" font="MarianneBold">
+          Sélectionnez votre indicateur favori
+        </MyText>
+        <IndicatorsSelector
+          onSubmit={closeBottomSheet}
+          indicators={indicators}
+        />
+      </View>
+    </BottomSheet>
+    // </View>
   );
 }

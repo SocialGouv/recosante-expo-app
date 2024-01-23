@@ -99,25 +99,12 @@ export function LocationPage(props: LocationPageProps) {
 
   return (
     <BottomSheet
-      style={{
-        shadowColor: '#000000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.4,
-        shadowRadius: 150,
-
-        elevation: 2,
-      }}
       enablePanDownToClose={true}
       ref={bottomSheetRef}
       index={2}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
-      onClose={() => {
-        closeBottomSheet();
-      }}
+      onClose={closeBottomSheet}
       handleStyle={{
         backgroundColor: '#3343BD',
         borderTopLeftRadius: 50,
