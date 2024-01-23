@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
-import * as Application from 'expo-application';
+import appJson from '~/../app.json';
 import { getRoute } from './navigation';
 import { API_SCHEME, API_HOST } from '../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -39,7 +39,11 @@ class ApiService {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          appversion: Application.nativeBuildVersion,
+          appversion: appJson.expo.version,
+          appbuild: Platform.select({
+            ios: `${appJson.expo.ios.buildNumber}`,
+            android: `${appJson.expo.android.versionCode}`,
+          }),
           appdevice: Platform.OS,
           currentroute: getRoute(),
           authorization: matomo_id,
