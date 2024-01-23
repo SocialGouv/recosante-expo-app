@@ -102,17 +102,17 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
       </Pressable>
       <ScrollView className="flex flex-1 bg-app-gray">
         <View className="px-6 pb-20 pt-6">
-          <View className="mb-4 flex flex-row flex-wrap items-center justify-center">
-            <View className="mb-5 flex basis-2/3">
+          <View className="mb-4 flex flex-row flex-wrap items-start justify-start">
+            {/* <View className="mb-5 flex basis-2/3">
               <MyText
                 className="text-wrap text-2xl uppercase text-black"
                 font="MarianneExtraBold"
               >
                 {address?.city}
               </MyText>
-            </View>
+            </View> */}
             <View
-              className="ml-auto items-center rounded-full px-6 py-1"
+              className="items-center rounded-full px-6 py-1"
               style={{
                 backgroundColor: indicatorColor,
               }}
@@ -160,8 +160,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             },
           )}
           <MyText className="mt-2 text-xs opacity-50" font="MarianneLight">
-            Ces recommandations sont aggrégées par les différentes
-            administrations françaises
+            Ces recommandations sont issues du Gouvernement Francais.
           </MyText>
           <Title label={indicator?.about_title} />
           <MyText className="mt-2">{indicator?.about_description}</MyText>
