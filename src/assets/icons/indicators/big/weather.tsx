@@ -63,9 +63,9 @@ export function Weather(props: Props) {
 
   return (
     <Svg
-      width={props.size}
-      height={(props.size * 64) / 110}
       viewBox="0 0 110 64"
+      height={props.size}
+      width={((props.size * 110) / 64) * 0.8} // too big if full width
       fill="none"
       {...props}
     >

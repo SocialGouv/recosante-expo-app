@@ -16,7 +16,7 @@ export function Uv(props: Props) {
 
   return (
     <Svg
-      className="h-16 w-auto -rotate-90 overflow-visible"
+      className="w-auto -rotate-90 overflow-visible"
       viewBox="0 0 48 48"
       width={props.size}
       height={props.size}

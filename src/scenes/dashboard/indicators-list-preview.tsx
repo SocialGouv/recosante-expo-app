@@ -61,8 +61,8 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           elevation: 0,
           shadowColor: '#000000',
           shadowOffset: { width: 0, height: 10 }, // change this for more shadow
-          shadowOpacity: 0.3,
-          shadowRadius: 30,
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
         },
         tabBarLabelStyle: {
           fontSize: 14,

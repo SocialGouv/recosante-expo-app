@@ -79,7 +79,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             className={cn(
               props.isFavorite
                 ? 'flex-row justify-between pb-2 '
-                : 'mb-6 mt-3 h-28 flex-col-reverse items-center justify-between',
+                : 'mb-6 mt-3 flex-col-reverse items-center justify-between',
               'items-center',
             )}
           >

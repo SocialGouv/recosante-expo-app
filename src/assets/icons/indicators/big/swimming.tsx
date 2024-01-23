@@ -57,8 +57,8 @@ export function Swimming(props: Props) {
 
   return (
     <Svg
-      width={props.size}
-      height={(props.size * 72) / 75}
+      height={props.size}
+      width={(props.size * 91) / 75}
       viewBox="0 0 91 75"
       fill="none"
       {...props}
