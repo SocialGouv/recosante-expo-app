@@ -10,7 +10,7 @@ import { IndicatorService } from '~/services/indicator';
 
 interface LineChartProps {
   values: IndicatorByPeriod['values'];
-  range: number;
+  maxValue: number;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
   slug: IndicatorsSlugEnum;
@@ -52,8 +52,7 @@ export function LineList(props: LineChartProps) {
                     line.value,
                   )}
                   value={line.value}
-                  //   TODO: fix this
-                  range={props.range + 1}
+                  maxValue={props.maxValue}
                 />
               </View>
             </View>

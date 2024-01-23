@@ -81,17 +81,19 @@ export namespace IndicatorService {
 
   type DataVisualisation = {
     range: number;
+    maxValue: number;
     color: string[];
     valuesInRange?: number[][];
   };
   export function getDataVisualisationBySlug(
     slug: IndicatorsSlugEnum,
   ): DataVisualisation {
-    if (!slug) return { range: 0, color: [] };
+    if (!slug) return { range: 0, maxValue: 0, color: [] };
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
           range: 6,
+          maxValue: 6,
           color: [
             '#b1f3ef',
             '#73c8ae',
@@ -105,6 +107,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_uv:
         return {
           range: 5,
+          maxValue: 11,
           color: ['#b1f3ef', '#73c8ae', '#ee817e', '#a7546d', '#965f9b'],
           valuesInRange: [
             [1, 2],
@@ -117,6 +120,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.pollen_allergy:
         return {
           range: 4,
+          maxValue: 4,
           // TODO: not valid colors
           color: ['#00A3FF', '#FC373F', '#820026', '#6D50C6'],
           valuesInRange: [[1], [2], [3], [4]],
@@ -124,12 +128,14 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.weather_alert:
         return {
           range: 4,
+          maxValue: 4,
           color: ['#419240', '#D1C74B', '#E05E45', '#FC373F'],
           valuesInRange: [[1], [2], [3], [4]],
         };
       case IndicatorsSlugEnum.episode_pollution_atmospheric:
         return {
           range: 6,
+          maxValue: 6,
           // TODO: not valid colors
           color: [
             '#419240',
@@ -144,6 +150,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.tap_water:
         return {
           range: 2,
+          maxValue: 2,
           // TODO: not valid colors
           color: ['#00A3FF', '#FC373F'],
           valuesInRange: [[1], [2]],
@@ -151,6 +158,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.bathing_water:
         return {
           range: 4,
+          maxValue: 4,
           // TODO: not valid colors
           color: ['#00A3FF', '#FC373F', '#419240', '#6D50C6'],
           valuesInRange: [[1], [2], [3], [4]],

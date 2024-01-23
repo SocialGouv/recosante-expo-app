@@ -3,7 +3,7 @@ import { View } from 'react-native';
 interface LineChartProps {
   value?: number;
   color?: string;
-  range: number;
+  maxValue: number;
 }
 
 export function LineChart(props: LineChartProps) {
@@ -12,12 +12,11 @@ export function LineChart(props: LineChartProps) {
     return <></>;
   }
 
-  const width = Math.round((value / props.range) * 100);
+  const width = Math.round((value / props.maxValue) * 100);
 
   return (
     <View className="relative flex">
-      <View className="h-[9px] rounded-full bg-app-gray-300 "></View>
-      <View className="absolute flex w-full flex-row">
+      <View className="h-[9px] overflow-hidden rounded-full bg-app-gray-300">
         <View
           className="h-[9px] rounded-full"
           style={{
