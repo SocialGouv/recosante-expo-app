@@ -10,6 +10,7 @@ export enum RouteEnum {
   ONBOARDING = 'ONBOARDING',
   LOCATION = 'LOCATION',
   SHARE = 'SHARE',
+  LEGAL = 'LEGAL',
 }
 
 export interface RootStackParamList {

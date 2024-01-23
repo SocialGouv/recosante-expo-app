@@ -9,9 +9,9 @@ import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
 
 export function useOnboardingNavigation() {
-  const [onboardingScreen, setOnboardingScreen] = useState<OnboardingRouteEnum | RouteEnum.HOME>(
-    OnboardingRouteEnum.WELCOME,
-  );
+  const [onboardingScreen, setOnboardingScreen] = useState<
+    OnboardingRouteEnum | RouteEnum.HOME
+  >(OnboardingRouteEnum.WELCOME);
   const [skipVisible, setSkipVisible] = useState<boolean>(false);
 
   const { setAddress } = useAddress((state) => state);
@@ -37,7 +37,6 @@ export function useOnboardingNavigation() {
       navigate(OnboardingRouteEnum.NOTIFICATIONS);
     }
   }
-
 
   async function onSkip() {
     switch (onboardingScreen) {
@@ -66,10 +65,7 @@ export function useOnboardingNavigation() {
         setIsLoading(true);
         const location = await LocationService.requestLocation();
         if (!location) {
-          Alert.alert(
-            'Erreur',
-            'Impossible de trouver votre position',
-          );
+          Alert.alert('Erreur', 'Impossible de trouver votre position');
           return;
         }
         LocationService.getAdressByCoordinates(
@@ -93,7 +89,7 @@ export function useOnboardingNavigation() {
           force: true,
           expo: true,
         }).then((token) => {
-          setOnboardingScreen(RouteEnum.HOME)
+          setOnboardingScreen(RouteEnum.HOME);
           navigate(RouteEnum.HOME);
           if (token) {
             API.put({

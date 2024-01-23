@@ -26,6 +26,7 @@ import { IndicatorSelectorSheet } from './scenes/dashboard/indicator-selector-sh
 import { useIndicatorsList } from './zustand/indicator/useIndicatorsList';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { IndicatorDetail } from './scenes/dashboard/indicator-detail';
+import { LegalPage } from './scenes/legal/legal';
 
 interface TabBarLabelProps {
   children: React.ReactNode;
@@ -203,6 +204,22 @@ export function Navigators() {
             <RootStack.Screen
               name={RouteEnum.LOCATION}
               component={LocationPage}
+              options={() => ({
+                headerShown: false,
+                presentation: 'transparentModal',
+                customAnimationOnGestureEnd: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+                customAnimationOnGestureStart: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+              })}
+            />
+            <RootStack.Screen
+              name={RouteEnum.LEGAL}
+              component={LegalPage}
               options={() => ({
                 headerShown: false,
                 presentation: 'transparentModal',
