@@ -91,7 +91,7 @@ export function IndicatorSelectorSheet({
             logEvent({
               category: eventCategory,
               action: 'FAVORITE_INDICATOR_SELECTED',
-              name: favoriteIndicator,
+              name: favoriteIndicator.toLocaleUpperCase(),
             });
             closeBottomSheet();
           }}

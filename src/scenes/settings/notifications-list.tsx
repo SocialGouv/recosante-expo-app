@@ -33,7 +33,7 @@ export function NotificationsList() {
       logEvent({
         category: 'SETTINGS',
         action: 'NOTIFICATION',
-        name: id,
+        name: id.toLocaleUpperCase(),
         value: 0,
       });
       setSelectedNotifications(
@@ -43,7 +43,7 @@ export function NotificationsList() {
       logEvent({
         category: 'SETTINGS',
         action: 'NOTIFICATION',
-        name: id,
+        name: id.toLocaleUpperCase(),
         value: 1,
       });
       setSelectedNotifications([...selectedNotifications, id]);

@@ -8,9 +8,7 @@ import { Navigators } from './src/navigators';
 import { initMatomo } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/EnvironmentIndicator';
 
-LogBox.ignoreLogs([
-  'ABI49_0_0RCTView has a shadow set but cannot calculate shadow efficiently',
-]);
+LogBox.ignoreAllLogs(true);
 
 SplashScreen.preventAutoHideAsync();
 

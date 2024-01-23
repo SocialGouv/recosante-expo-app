@@ -8,8 +8,8 @@ import { DayEnum } from '~/types/day';
 const Tab = createMaterialTopTabNavigator();
 
 const tabsEnum = {
-  TODAY: "Aujourd'hui",
-  TOMORROW: 'Demain',
+  TODAY: 'TODAY',
+  TOMORROW: 'TOMORROW',
 };
 
 interface IndicatorsListPreviewProps {
@@ -79,11 +79,13 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
     >
       <Tab.Screen
         name={tabsEnum.TODAY}
+        options={{ tabBarLabel: "Aujourd'hui" }}
         component={IndicatorListView}
         initialParams={{ day: DayEnum.TODAY }}
       />
       <Tab.Screen
         name={tabsEnum.TOMORROW}
+        options={{ tabBarLabel: 'Demain' }}
         component={IndicatorListView}
         initialParams={{ day: DayEnum.TOMORROW }}
       />

@@ -77,7 +77,7 @@ class _Matomo {
         return;
       }
       if (__DEV__) {
-        console.log('MATOMO', params);
+        console.log('MATOMO', JSON.stringify(params));
         return;
       }
       const res = await fetch(encodeURI(url));

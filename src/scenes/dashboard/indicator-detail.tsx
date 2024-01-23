@@ -116,7 +116,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             logEvent({
               category: 'INDICATOR_DETAIL',
               action: 'SCROLL',
-              name: indicator.slug,
+              name: indicator.slug.toLocaleUpperCase(),
             });
           }
           if (isCloseToBottom(nativeEvent) && !hasScrollToEnd.current) {
@@ -124,7 +124,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             logEvent({
               category: 'INDICATOR_DETAIL',
               action: 'SCROLL_TO_BOTTOM',
-              name: indicator.slug,
+              name: indicator.slug.toLocaleUpperCase(),
             });
           }
         }}

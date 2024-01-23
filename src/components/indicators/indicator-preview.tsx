@@ -33,7 +33,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     logEvent({
       category: 'DASHBOARD',
       action: 'INDICATOR_SELECTED',
-      name: props.indicator.slug,
+      name: props.indicator.slug.toLocaleUpperCase(),
       value: props.isFavorite ? 1 : 0,
     });
     // @ts-expect-error TODO

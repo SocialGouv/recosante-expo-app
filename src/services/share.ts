@@ -21,7 +21,7 @@ export namespace ShareService {
           logEvent({
             category: 'SHARE_APP',
             action: 'SHARED',
-            name: result?.activityType,
+            name: result?.activityType.toLocaleUpperCase(),
           });
         } else {
           logEvent({
