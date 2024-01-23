@@ -100,12 +100,12 @@ export namespace IndicatorService {
         return {
           range: 6,
           color: [
-            '#a2f3ed',
-            '#5cc4a3',
-            '#f9fb85',
-            '#a24563',
-            '#820026',
-            '#914e94',
+            '#b1f3ef',
+            '#73c8ae',
+            '#fef799',
+            '#ee817e',
+            '#a7546d',
+            '#965f9b',
           ],
           valuesInRange: [[1], [2], [3], [4], [5], [6]],
         };
@@ -170,7 +170,7 @@ export namespace IndicatorService {
     const { valuesInRange, color } = getDataVisualisationBySlug(slug);
     const index = valuesInRange?.findIndex((range) => range.includes(value));
     if (value === 0) {
-      return '#D9D9EF';
+      return '#D9D9ED';
       // TODO:fix this "!"
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     } else return color[index!];

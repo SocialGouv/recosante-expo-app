@@ -9,14 +9,14 @@ export function Atmo(props: Props) {
   const topFill = useMemo(() => {
     switch (props.value) {
       case 3:
-        return '#f9fb85';
+        return '#fef799';
       case 4:
-        return '#f17172';
+        return '#ee817e';
       case 5:
-        return '#a24563';
+        return '#a7546d';
       case 6:
       case 8:
-        return '#914e94';
+        return '#965f9b';
       default:
         return '#D9D9EF';
     }
@@ -24,27 +24,29 @@ export function Atmo(props: Props) {
   const middleFill = useMemo(() => {
     switch (props.value) {
       case 5:
-        return '#a24563';
+        return '#a7546d';
       case 6:
       case 8:
-        return '#914e94';
+        return '#965f9b';
       default:
         return '#D9D9EF';
     }
   }, [props.value]);
   const bottomFill = useMemo(() => {
     switch (props.value) {
+      case 1:
+        return '#b1f3ef';
       case 2:
         return '#5cc4a3';
       case 3:
-        return '#f9fb85';
+        return '#fef799';
       case 4:
-        return '#f17172';
+        return '#ee817e';
       case 5:
-        return '#a24563';
+        return '#a7546d';
       case 6:
       case 8:
-        return '#914e94';
+        return '#965f9b';
       default:
         return '#D9D9EF';
     }
