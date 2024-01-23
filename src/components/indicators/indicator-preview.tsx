@@ -40,7 +40,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const indicatorMaxValue =
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
 
-  // const indicatorValue = 3;
+  // const indicatorValue = 4;
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
   const indicatorColor = valuesToColor[indicatorValue];

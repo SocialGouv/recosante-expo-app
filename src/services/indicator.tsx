@@ -61,12 +61,12 @@ export namespace IndicatorService {
   }) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <Atmo size={100} value={indicatorValue} selected={undefined} />;
+        return <Atmo size={80} value={indicatorValue} selected={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
-        return <Uv size={80} value={indicatorValue} color={color} />;
+        return <Uv size={70} value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
         return (
-          <Pollens size={80} value={indicatorValue} selected={undefined} />
+          <Pollens size={70} value={indicatorValue} selected={undefined} />
         );
       case IndicatorsSlugEnum.weather_alert:
         return (

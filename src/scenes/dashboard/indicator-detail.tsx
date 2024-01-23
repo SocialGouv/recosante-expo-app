@@ -12,6 +12,7 @@ import { useAddress } from '~/zustand/address/useAddress';
 import { LineList } from '~/components/indicators/graphs/lines-list';
 import { IndicatorService } from '~/services/indicator';
 import { ScrollView } from 'react-native-gesture-handler';
+import Markdown from 'react-native-markdown-display';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -158,7 +159,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             Ces recommandations sont issues du Gouvernement Francais.
           </MyText>
           <Title label={indicator?.about_title} />
-          <MyText className="mt-2">{indicator?.about_description}</MyText>
+          <MyText className="mt-2">
+            {' '}
+            <Markdown>{indicator?.about_description}</Markdown>
+          </MyText>
         </View>
       </ScrollView>
     </BottomSheet>
