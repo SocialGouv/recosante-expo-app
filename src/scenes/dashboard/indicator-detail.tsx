@@ -28,6 +28,8 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const isOpenedRef = useRef(false);
   const { indicator, day } = props.route.params;
   const currentDayIndicatorData = indicator?.[day];
+  const indicatorValue = currentDayIndicatorData?.summary.value ?? 0;
+
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
       isOpenedRef.current = false;
@@ -39,7 +41,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   )?.range;
   const indicatorColor = IndicatorService.getColorForValue(
     indicator.slug,
-    currentDayIndicatorData?.summary.value ?? 0,
+    indicatorValue,
   );
 
   function closeBottomSheet() {
@@ -124,7 +126,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             </View>
           </View>
           <LineChartWithCursor
-            value={currentDayIndicatorData.summary.value}
+            value={indicatorValue}
             slug={indicator.slug}
             showCursor={true}
           />

@@ -34,14 +34,15 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
       day: props.day,
     });
   }
-
+  const slug = props.indicator.slug;
   const indicatorDataInCurrentDay = currentIndicatorData?.[props.day];
-  const indicatorRange = IndicatorService.getDataVisualisationBySlug(
-    props.indicator.slug,
-  )?.range;
+  const indicatorRange =
+    IndicatorService.getDataVisualisationBySlug(slug)?.range;
+
+  const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const indicatorColor = IndicatorService.getColorForValue(
-    props.indicator.slug,
-    indicatorDataInCurrentDay?.summary.value ?? 0,
+    slug,
+    indicatorValue,
   );
   const showLineList =
     props.isFavorite && indicatorDataInCurrentDay?.values?.length;
@@ -102,7 +103,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             >
               {IndicatorService.getPicto({
                 slug: props.indicator.slug,
-                indicatorValue: indicatorDataInCurrentDay?.summary.value,
+                indicatorValue,
                 color: indicatorColor,
               })}
             </View>
@@ -114,7 +115,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             {address?.label} {dayjs().format('DD/MM')}
           </MyText> */}
           <LineChartWithCursor
-            value={indicatorDataInCurrentDay?.summary.value}
+            value={indicatorValue}
             slug={currentIndicatorData?.slug}
             showCursor={props.isFavorite}
           />

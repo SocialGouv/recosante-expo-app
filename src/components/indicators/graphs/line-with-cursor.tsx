@@ -11,14 +11,13 @@ interface LineChartProps {
 
 export function LineChartWithCursor(props: LineChartProps) {
   if (!props.slug) return null;
-  const value = props.value ?? 2;
   const { color, range, valuesInRange } =
     IndicatorService.getDataVisualisationBySlug(props.slug);
   const rangeForValue =
-    valuesInRange?.findIndex((range) => range.includes(value)) ?? 0;
+    valuesInRange?.findIndex((range) => range.includes(props.value)) ?? 0;
   const trianglePosition = (110 / range) * rangeForValue;
 
-  if (value === 0) {
+  if (props.value === 0) {
     return <></>;
   }
   function Triangle() {

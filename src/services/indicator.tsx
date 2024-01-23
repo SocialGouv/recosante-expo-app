@@ -99,8 +99,15 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
           range: 5,
-          color: ['#a2f3ed', '#5cc4a3', '#f9fb85', '#a24563', '#820026'],
-          valuesInRange: [[1], [2], [3], [4], [5]],
+          color: [
+            '#a2f3ed',
+            '#5cc4a3',
+            '#f9fb85',
+            '#a24563',
+            '#820026',
+            '#914e94',
+          ],
+          valuesInRange: [[1], [2], [3], [4], [5], [6]],
         };
       case IndicatorsSlugEnum.indice_uv:
         return {
