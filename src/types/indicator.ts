@@ -7,6 +7,7 @@ export enum IndicatorsSlugEnum {
 }
 export interface IndicatorItem {
   name: string;
+  short_name: string;
   slug: IndicatorsSlugEnum;
 }
 

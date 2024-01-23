@@ -38,12 +38,12 @@ export namespace IndicatorService {
         return <Atmo size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
         return (
-          <Uv size={30} value={11} color={selected ? '#3343BD' : '#D9D9EF'} />
+          <Uv size={28} value={11} color={selected ? '#3343BD' : '#D9D9EF'} />
         );
       case IndicatorsSlugEnum.pollen_allergy:
         return <Pollens size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.weather_alert:
-        return <WeatherIcon selected={selected} />;
+        return <Weather size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.bathing_water:
         return <WaterIcon selected={selected} />;
       default:
@@ -63,13 +63,15 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_atmospheric:
         return <Atmo size={100} value={indicatorValue} selected={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
-        return <Uv size={60} value={indicatorValue} color={color} />;
+        return <Uv size={80} value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
         return (
           <Pollens size={80} value={indicatorValue} selected={undefined} />
         );
       case IndicatorsSlugEnum.weather_alert:
-        return <Weather value={indicatorValue} color={color} />;
+        return (
+          <Weather size={100} value={indicatorValue} selected={undefined} />
+        );
       case IndicatorsSlugEnum.bathing_water:
         return <Swimming value={indicatorValue} color={color} />;
       default:
@@ -145,10 +147,11 @@ export namespace IndicatorService {
           maxValue: 4,
           valuesToColor: {
             0: '#D9D9EF',
-            1: '#b1f3ef',
-            2: '#73c8ae',
-            3: '#fef799',
-            4: '#ee817e',
+            1: '#73c8ae',
+            2: '#fef799',
+            3: '#ee817e',
+            4: '#a7546d',
+            5: '#965f9b',
           },
         };
       case IndicatorsSlugEnum.bathing_water:

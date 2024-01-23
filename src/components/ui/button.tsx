@@ -33,7 +33,9 @@ export default function Button({
         )}
       >
         {icon ? (
-          <View className={cn('mr-2 flex justify-center', textClassName)}>
+          <View
+            className={cn('mr-2 flex h-8 w-8 justify-center', textClassName)}
+          >
             {icon}
           </View>
         ) : null}
