@@ -112,7 +112,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_uv:
         return {
           range: 5,
-          color: ['#419240', '#D1C74B', '#E05E45', '#B43C4E', '#6D50C6'],
+          color: ['#b1f3ef', '#73c8ae', '#ee817e', '#a7546d', '#965f9b'],
           valuesInRange: [
             [1, 2],
             [3, 4, 5],
@@ -170,7 +170,7 @@ export namespace IndicatorService {
     const { valuesInRange, color } = getDataVisualisationBySlug(slug);
     const index = valuesInRange?.findIndex((range) => range.includes(value));
     if (value === 0) {
-      return '#D9D9ED';
+      return '#D9D9EF';
       // TODO:fix this "!"
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     } else return color[index!];

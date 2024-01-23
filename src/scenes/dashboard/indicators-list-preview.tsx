@@ -61,7 +61,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           elevation: 0,
           shadowColor: '#000000',
           shadowOffset: { width: 0, height: 10 }, // change this for more shadow
-          shadowOpacity: 0.1,
+          shadowOpacity: 0.3,
           shadowRadius: 30,
         },
         tabBarLabelStyle: {
@@ -70,12 +70,12 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           color: '#555555',
           marginBottom: -12,
         },
-
         tabBarIndicatorStyle: {
           backgroundColor: '#555555',
           height: 2,
         },
       }}
+      className="shadow-sm"
     >
       <Tab.Screen
         name={tabsEnum.TODAY}
