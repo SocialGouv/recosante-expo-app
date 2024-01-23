@@ -29,9 +29,6 @@ export function LineList(props: LineChartProps) {
     : false;
   if (!props.slug) return <></>;
 
-  console.log('sortedValues', sortedValues);
-  console.log('props', JSON.stringify(props, null, 2));
-
   return (
     <View className="mt-6 flex space-y-2">
       {sortedValues

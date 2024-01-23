@@ -36,9 +36,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     }
   }, []);
 
-  const indicatorRange = IndicatorService.getDataVisualisationBySlug(
-    indicator.slug,
-  )?.range;
   const indicatorColor = IndicatorService.getColorForValue(
     indicator.slug,
     indicatorValue,
@@ -131,7 +128,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           />
           <LineList
             values={currentDayIndicatorData.values}
-            range={indicatorRange}
             slug={indicator.slug}
           />
           <Title

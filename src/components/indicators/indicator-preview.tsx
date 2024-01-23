@@ -41,7 +41,6 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
 
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
-  // const indicatorValue = 9;
   const indicatorColor = IndicatorService.getColorForValue(
     slug,
     indicatorValue,

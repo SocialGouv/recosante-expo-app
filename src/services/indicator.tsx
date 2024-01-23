@@ -80,19 +80,26 @@ export namespace IndicatorService {
   }
 
   type DataVisualisation = {
-    range: number;
     maxValue: number;
-    color: string[];
-    valuesInRange?: number[][];
+    valuesToColor: Record<number, string>;
   };
   export function getDataVisualisationBySlug(
     slug: IndicatorsSlugEnum,
   ): DataVisualisation {
-    if (!slug) return { range: 0, maxValue: 0, color: [] };
+    if (!slug)
+      return {
+        maxValue: 0,
+        valuesToColor: {
+          0: '#D9D9EF',
+          1: '#00A3FF',
+          2: '#FC373F',
+          3: '#820026',
+          4: '#6D50C6',
+        },
+      };
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
-          range: 6,
           maxValue: 6,
           color: [
             '#b1f3ef',
@@ -102,78 +109,71 @@ export namespace IndicatorService {
             '#a7546d',
             '#965f9b',
           ],
-          valuesInRange: [[1], [2], [3], [4], [5], [6]],
+          valuesToColor: {
+            1: '#b1f3ef',
+            2: '#73c8ae',
+            3: '#fef799',
+            4: '#ee817e',
+            5: '#a7546d',
+            6: '#965f9b',
+          },
         };
       case IndicatorsSlugEnum.indice_uv:
         return {
-          range: 5,
           maxValue: 11,
-          color: ['#b1f3ef', '#73c8ae', '#ee817e', '#a7546d', '#965f9b'],
-          valuesInRange: [
-            [1, 2],
-            [3, 4, 5],
-            [6, 7],
-            [8, 9, 10],
-            [11, 12, 13, 14, 15, 16],
-          ],
+          valuesToColor: {
+            1: '#b1f3ef',
+            2: '#b1f3ef',
+            3: '#73c8ae',
+            4: '#73c8ae',
+            5: '#73c8ae',
+            6: '#ee817e',
+            7: '#ee817e',
+            8: '#a7546d',
+            9: '#a7546d',
+            10: '#a7546d',
+            11: '#965f9b', // could be until 16 but we show only until 11
+          },
         };
       case IndicatorsSlugEnum.pollen_allergy:
         return {
-          range: 4,
           maxValue: 4,
-          // TODO: not valid colors
-          color: ['#00A3FF', '#FC373F', '#820026', '#6D50C6'],
-          valuesInRange: [[1], [2], [3], [4]],
+          valuesToColor: {
+            1: '#b1f3ef',
+            2: '#73c8ae',
+            3: '#fef799',
+            4: '#ee817e',
+          },
         };
       case IndicatorsSlugEnum.weather_alert:
         return {
-          range: 4,
           maxValue: 4,
-          color: ['#419240', '#D1C74B', '#E05E45', '#FC373F'],
-          valuesInRange: [[1], [2], [3], [4]],
-        };
-      case IndicatorsSlugEnum.episode_pollution_atmospheric:
-        return {
-          range: 6,
-          maxValue: 6,
-          // TODO: not valid colors
-          color: [
-            '#419240',
-            '#D1C74B',
-            '#E05E45',
-            '#FC373F',
-            '#820026',
-            '#6D50C6',
-          ],
-          valuesInRange: [[1], [2], [3], [4], [5], [6]],
-        };
-      case IndicatorsSlugEnum.tap_water:
-        return {
-          range: 2,
-          maxValue: 2,
-          // TODO: not valid colors
-          color: ['#00A3FF', '#FC373F'],
-          valuesInRange: [[1], [2]],
+          valuesToColor: {
+            1: '#b1f3ef',
+            2: '#73c8ae',
+            3: '#fef799',
+            4: '#ee817e',
+          },
         };
       case IndicatorsSlugEnum.bathing_water:
         return {
-          range: 4,
           maxValue: 4,
-          // TODO: not valid colors
-          color: ['#00A3FF', '#FC373F', '#419240', '#6D50C6'],
-          valuesInRange: [[1], [2], [3], [4]],
+          valuesToColor: {
+            1: '#00A3FF',
+            2: '#FC373F',
+            3: '#820026',
+            4: '#6D50C6',
+          },
         };
       default:
         throw new Error(`No range found for ${slug as string}`);
     }
   }
   export function getColorForValue(slug: IndicatorsSlugEnum, value: number) {
-    const { valuesInRange, color } = getDataVisualisationBySlug(slug);
-    const index = valuesInRange?.findIndex((range) => range.includes(value));
+    const { valuesToColor } = getDataVisualisationBySlug(slug);
     if (value === 0) {
       return '#D9D9EF';
-      // TODO:fix this "!"
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } else return color[index!];
+    }
+    return valuesToColor[value];
   }
 }
