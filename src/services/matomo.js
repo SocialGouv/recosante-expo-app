@@ -47,7 +47,6 @@ class _Matomo {
       ...this.computeCustomDimensions(this.dimensions),
     };
     if (idsite) params.idsite = idsite;
-    console.log('params: ', params);
     return Object.keys(params).reduce((paramString, key, index) => {
       const computedParam = `${key}=${params[key]}`;
       if (index === 0) return computedParam;
@@ -78,7 +77,7 @@ class _Matomo {
         return;
       }
       if (__DEV__) {
-        console.log(params, this.dimensions);
+        console.log('MATOMO', params);
         return;
       }
       const res = await fetch(encodeURI(url));

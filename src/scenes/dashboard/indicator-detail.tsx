@@ -8,11 +8,11 @@ import { DateService } from '~/services/date';
 import { useNavigation } from '@react-navigation/native';
 import type { RootStackParamList, RouteEnum } from '~/constants/route';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useAddress } from '~/zustand/address/useAddress';
 import { LineList } from '~/components/indicators/graphs/lines-list';
 import { IndicatorService } from '~/services/indicator';
 import { ScrollView } from 'react-native-gesture-handler';
 import Markdown from 'react-native-markdown-display';
+import { logEvent } from '~/services/logEventsWithMatomo';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -22,11 +22,12 @@ type IndicatorSelectorSheetProps = NativeStackScreenProps<
 
 export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const { address } = useAddress((state) => state);
 
   const navigation = useNavigation();
   const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
   const isOpenedRef = useRef(false);
+  const hasScrollToEnd = useRef(false);
+  const hasScroll = useRef(false);
   const { indicator, day } = props.route.params;
   const currentDayIndicatorData = indicator?.[day];
   const indicatorValue = currentDayIndicatorData?.summary.value ?? 0;
@@ -54,6 +55,16 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
 
   if (!currentDayIndicatorData) {
     return <> </>;
+  }
+
+  function isCloseToBottom({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }: any) {
+    return (
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - 100
+    ); // almost to bottom
   }
 
   return (
@@ -97,7 +108,28 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
       <Pressable onPress={closeBottomSheet} className="absolute right-2 top-0">
         <Close />
       </Pressable>
-      <ScrollView className="flex flex-1 bg-app-gray">
+      <ScrollView
+        className="flex flex-1 bg-app-gray"
+        onScroll={({ nativeEvent }) => {
+          if (!hasScroll.current) {
+            hasScroll.current = true;
+            logEvent({
+              category: 'INDICATOR_DETAIL',
+              action: 'SCROLL',
+              name: indicator.slug,
+            });
+          }
+          if (isCloseToBottom(nativeEvent) && !hasScrollToEnd.current) {
+            hasScrollToEnd.current = true;
+            logEvent({
+              category: 'INDICATOR_DETAIL',
+              action: 'SCROLL_TO_BOTTOM',
+              name: indicator.slug,
+            });
+          }
+        }}
+        scrollEventThrottle={400}
+      >
         <View className="px-6 pb-20 pt-6">
           <View className="mb-4 flex flex-row flex-wrap items-start justify-start">
             {/* <View className="mb-5 flex basis-2/3">

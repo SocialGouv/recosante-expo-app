@@ -25,6 +25,7 @@ import { LocationIcon } from '~/assets/icons/location';
 import { cn } from '~/utils/tailwind';
 import { Close } from '~/assets/icons/close';
 import { Illu } from '~/assets/location/illu';
+import { logEvent } from '~/services/logEventsWithMatomo';
 
 interface LocationPageProps {
   navigation: any;
@@ -150,6 +151,12 @@ export function LocationPage(props: LocationPageProps) {
             value={query}
             className=" flex h-12 w-4/5 items-start justify-start rounded-md bg-white px-4 text-xl"
             onChange={getSuggestions}
+            onFocus={() => {
+              logEvent({
+                category: 'LOCATION',
+                action: 'TYPE_ADDRESS',
+              });
+            }}
           />
           <Pressable
             onPress={cancelQuery}
@@ -172,6 +179,10 @@ export function LocationPage(props: LocationPageProps) {
         <View className="w-full   border-b  border-gray-300 p-4">
           <Pressable
             onPress={async () => {
+              logEvent({
+                category: 'LOCATION',
+                action: 'SELECT_GEOLOCATION',
+              });
               Location.requestForegroundPermissionsAsync().then(
                 async ({ status }) => {
                   if (status !== 'granted') {
@@ -264,6 +275,10 @@ export function LocationPage(props: LocationPageProps) {
             >
               <Pressable
                 onPress={() => {
+                  logEvent({
+                    category: 'LOCATION',
+                    action: 'SELECT_ADDRESS',
+                  });
                   handleSelect(address);
                 }}
               >

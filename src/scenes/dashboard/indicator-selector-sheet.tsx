@@ -6,6 +6,7 @@ import { IndicatorsSelector } from '~/components/indicators/indicators-selector'
 import { type RouteEnum, type RootStackParamList } from '~/constants/route';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { logEvent } from '~/services/logEventsWithMatomo';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -24,7 +25,7 @@ export function IndicatorSelectorSheet({
 }: IndicatorSelectorSheetProps) {
   const { indicators } = useIndicatorsList((state) => state);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const { enablePanDownToClose } = route.params;
+  const { enablePanDownToClose, eventCategory } = route.params;
 
   const snapPoints = useMemo(
     () =>
@@ -86,7 +87,14 @@ export function IndicatorSelectorSheet({
           Sélectionnez votre indicateur favori
         </MyText>
         <IndicatorsSelector
-          onSubmit={closeBottomSheet}
+          onSubmit={(favoriteIndicator) => {
+            logEvent({
+              category: eventCategory,
+              action: 'FAVORITE_INDICATOR_SELECTED',
+              name: favoriteIndicator,
+            });
+            closeBottomSheet();
+          }}
           indicators={indicators}
         />
       </View>

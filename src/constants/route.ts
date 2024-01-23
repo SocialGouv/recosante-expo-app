@@ -22,6 +22,7 @@ export interface RootStackParamList {
   [RouteEnum.SHARE]: undefined;
   [RouteEnum.INDICATORS_SELECTOR]: {
     enablePanDownToClose: boolean;
+    eventCategory: 'ONBOARDING' | 'SETTINGS'
   };
   [RouteEnum.INDICATOR_DETAIL]: {
     indicator: Indicator;

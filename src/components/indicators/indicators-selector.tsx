@@ -8,7 +8,7 @@ import Button from '../ui/button';
 
 interface IndicatorsSelectorProps {
   indicators: IndicatorItem[] | null;
-  onSubmit: () => void;
+  onSubmit: (slug: string) => void;
 }
 export function IndicatorsSelector(props: IndicatorsSelectorProps) {
   const { setFavoriteIndicator, favoriteIndicator } = useIndicatorsList(
@@ -22,7 +22,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
 
   function handleSubmit() {
     setFavoriteIndicator(state);
-    props.onSubmit();
+    props.onSubmit(state?.slug ?? '');
   }
 
   // const indicatorsAvailableList = [

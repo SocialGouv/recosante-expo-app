@@ -8,6 +8,7 @@ import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
 import { capture } from '~/services/sentry';
+import { logEvent } from '~/services/logEventsWithMatomo';
 
 export function useOnboardingNavigation(): {
   onboardingScreen: OnboardingRouteEnum | RouteEnum.HOME;
@@ -35,10 +36,12 @@ export function useOnboardingNavigation(): {
         path: '/user',
         body: { push_notif_token: JSON.stringify(token) },
       });
-      // setOnboardingScreen(RouteEnum.HOME);
-      // navigate(RouteEnum.HOME);
-      setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
-      navigate(OnboardingRouteEnum.NOTIFICATIONS);
+      logEvent({
+        category: 'ONBOARDING',
+        action: 'COMPLETED',
+      });
+      setOnboardingScreen(RouteEnum.HOME);
+      navigate(RouteEnum.HOME);
     } else {
       setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
       navigate(OnboardingRouteEnum.NOTIFICATIONS);
@@ -48,9 +51,23 @@ export function useOnboardingNavigation(): {
   async function onSkip() {
     switch (onboardingScreen) {
       case OnboardingRouteEnum.GEOLOCATION:
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'SKIP',
+          name: 'GEOLOCATION',
+        });
         onNextAfterGeolocation();
         break;
       case OnboardingRouteEnum.NOTIFICATIONS:
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'SKIP',
+          name: 'NOTIFICATIONS',
+        });
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'COMPLETED',
+        });
         setOnboardingScreen(RouteEnum.HOME);
         navigate(RouteEnum.HOME);
         break;
@@ -69,6 +86,10 @@ export function useOnboardingNavigation(): {
         });
         break;
       case OnboardingRouteEnum.GEOLOCATION:
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'ENABLE_GEOLOCATION',
+        });
         setIsLoading(true);
         const location = await LocationService.requestLocation();
         if (!location) {
@@ -96,6 +117,10 @@ export function useOnboardingNavigation(): {
           force: true,
           expo: true,
         }).then((token) => {
+          logEvent({
+            category: 'ONBOARDING',
+            action: 'ENABLE_NOTIFICATIONS',
+          });
           setOnboardingScreen(RouteEnum.HOME);
           navigate(RouteEnum.HOME);
           if (token) {
@@ -104,6 +129,10 @@ export function useOnboardingNavigation(): {
               body: { push_notif_token: JSON.stringify(token) },
             });
           }
+          logEvent({
+            category: 'ONBOARDING',
+            action: 'COMPLETED',
+          });
         });
         break;
       default:

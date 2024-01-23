@@ -1,5 +1,6 @@
 import { Switch, View } from 'react-native';
 import MyText from '~/components/ui/my-text';
+import { logEvent } from '~/services/logEventsWithMatomo';
 import { type NotificationType } from '~/types/notification';
 import { useNotification } from '~/zustand/notification/useNotification';
 
@@ -29,10 +30,22 @@ export function NotificationsList() {
   );
   function toggleSwitch(id: string) {
     if (selectedNotifications?.includes(id)) {
+      logEvent({
+        category: 'SETTINGS',
+        action: 'NOTIFICATION',
+        name: id,
+        value: 0,
+      });
       setSelectedNotifications(
         selectedNotifications.filter((item) => item !== id),
       );
     } else {
+      logEvent({
+        category: 'SETTINGS',
+        action: 'NOTIFICATION',
+        name: id,
+        value: 1,
+      });
       setSelectedNotifications([...selectedNotifications, id]);
     }
   }

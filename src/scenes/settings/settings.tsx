@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
-import { initMatomo } from '~/services/logEventsWithMatomo';
+import { initMatomo, logEvent } from '~/services/logEventsWithMatomo';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
 
@@ -43,15 +43,20 @@ export function SettingsPage({ navigation }: any) {
           onPress={() => {
             navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
+              eventCategory: 'SETTINGS',
             });
           }}
         />
         <View>
           <View className="mt-16 flex w-full flex-row  items-start justify-between space-x-2 px-4">
             <TouchableOpacity
-              onPress={() =>
-                Linking.openURL('mailto:contact@recosante.beta.gouv.fr')
-              }
+              onPress={() => {
+                logEvent({
+                  category: 'SETTINGS',
+                  action: 'CONTACT_US_BY_EMAIL',
+                });
+                Linking.openURL('mailto:contact@recosante.beta.gouv.fr');
+              }}
               className="border-b pb-1"
             >
               <MyText font="MarianneRegular">Nous contacter</MyText>

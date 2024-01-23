@@ -1,4 +1,4 @@
-// import NetInfo from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 import * as Sentry from '@sentry/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Matomo from './matomo';
@@ -44,11 +44,11 @@ export async function initMatomo() {
   // });
 }
 
-// const checkNetwork = async () => {
-//   const networkState = await NetInfo.fetch();
-//   if (!networkState.isConnected) return false;
-//   return true;
-// };
+const checkNetwork = async () => {
+  const networkState = await NetInfo.fetch();
+  if (!networkState.isConnected) return false;
+  return true;
+};
 
 interface LogEventProps {
   category: string;
@@ -62,23 +62,23 @@ export const logEvent = async ({
   name,
   value,
 }: LogEventProps): Promise<void> => {
-  // try {
-  //   const canSend = await checkNetwork();
-  //   if (!canSend) throw new Error('no network');
-  //   // TODO: type Matomo.logEvent
-  //   // @ts-ignore
-  //   Matomo.logEvent({ category, action, name, value });
-  //   const body = {
-  //     event: { category, action, name, value },
-  //     userId: Matomo.userId,
-  //     dimensions: Matomo.dimensions,
-  //   };
-  //   API.post({
-  //     path: '/event',
-  //     body,
-  //   });
-  // } catch (e) {
-  //   console.log('logEvent error', e);
-  //   console.log('logEvent error', { category, action, name, value });
-  // }
+  try {
+    const canSend = await checkNetwork();
+    if (!canSend) throw new Error('no network');
+    // TODO: type Matomo.logEvent
+    // @ts-ignore
+    Matomo.logEvent({ category, action, name, value });
+    const body = {
+      event: { category, action, name, value },
+      userId: Matomo.userId,
+      dimensions: Matomo.dimensions,
+    };
+    API.post({
+      path: '/event',
+      body,
+    });
+  } catch (e) {
+    console.log('logEvent error', e);
+    console.log('logEvent error', { category, action, name, value });
+  }
 };

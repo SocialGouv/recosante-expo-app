@@ -57,6 +57,7 @@ function Home(props: HomeProps) {
     if (!favoriteIndicator) {
       props.navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
         enablePanDownToClose: false,
+        eventCategory: 'ONBOARDING',
       });
     }
   }, []);

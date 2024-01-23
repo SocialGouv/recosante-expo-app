@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
 import { LineList } from './graphs/lines-list';
 import { LineChart } from './graphs/line';
+import { logEvent } from '~/services/logEventsWithMatomo';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
@@ -29,6 +30,12 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
   function handleSelect() {
     if (!currentIndicatorData) return;
+    logEvent({
+      category: 'DASHBOARD',
+      action: 'INDICATOR_SELECTED',
+      name: props.indicator.slug,
+      value: props.isFavorite ? 1 : 0,
+    });
     // @ts-expect-error TODO
     navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
       indicator: currentIndicatorData,
