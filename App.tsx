@@ -1,3 +1,4 @@
+import { LogBox } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
@@ -6,6 +7,10 @@ import * as Sentry from 'sentry-expo';
 import { Navigators } from './src/navigators';
 import { initMatomo } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/EnvironmentIndicator';
+
+LogBox.ignoreLogs([
+  'ABI49_0_0RCTView has a shadow set but cannot calculate shadow efficiently',
+]);
 
 SplashScreen.preventAutoHideAsync();
 
