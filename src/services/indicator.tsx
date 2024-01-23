@@ -4,7 +4,6 @@ import { PollensIcon } from '~/assets/icons/indicators/pollens';
 import { WaterIcon } from '~/assets/icons/indicators/water';
 import { UltraVioletIcon } from '~/assets/icons/indicators/ultra-violet';
 import { WeatherIcon } from '~/assets/icons/indicators/weather';
-import { Air } from '~/assets/icons/indicators/big/air';
 import { Uv } from '~/assets/icons/indicators/big/uv';
 import { Pollen } from '~/assets/icons/indicators/big/pollen';
 import { Weather } from '~/assets/icons/indicators/big/weather';
@@ -39,17 +38,13 @@ export namespace IndicatorService {
   export function getIconBySlug(slug: IndicatorsSlugEnum, selected: boolean) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <AirIcon selected={selected} />;
+        return <Atmo size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
         return <UltraVioletIcon selected={selected} />;
       case IndicatorsSlugEnum.pollen_allergy:
         return <PollensIcon selected={selected} />;
       case IndicatorsSlugEnum.weather_alert:
         return <WeatherIcon selected={selected} />;
-      case IndicatorsSlugEnum.episode_pollution_atmospheric:
-        return <AirIcon selected={selected} />;
-      case IndicatorsSlugEnum.tap_water:
-        return <WaterIcon selected={selected} />;
       case IndicatorsSlugEnum.bathing_water:
         return <WaterIcon selected={selected} />;
       default:
@@ -67,17 +62,13 @@ export namespace IndicatorService {
   }) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <Atmo value={indicatorValue} />;
+        return <Atmo size={60} value={indicatorValue} selected={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
         return <Uv value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
         return <Pollen value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.weather_alert:
         return <Weather value={indicatorValue} color={color} />;
-      case IndicatorsSlugEnum.episode_pollution_atmospheric:
-        return <Air value={indicatorValue} color={color} />;
-      case IndicatorsSlugEnum.tap_water:
-        return <Swimming value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.bathing_water:
         return <Swimming value={indicatorValue} color={color} />;
       default:
