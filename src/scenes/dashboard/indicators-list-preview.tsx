@@ -75,7 +75,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           height: 2,
         },
       }}
-      className="shadow-sm"
+      className="bg-white shadow-sm"
     >
       <Tab.Screen
         name={tabsEnum.TODAY}
