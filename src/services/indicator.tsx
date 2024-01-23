@@ -40,7 +40,9 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_atmospheric:
         return <Atmo size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
-        return <UltraVioletIcon selected={selected} />;
+        return (
+          <Uv size={30} value={11} color={selected ? '#3343BD' : '#D9D9EF'} />
+        );
       case IndicatorsSlugEnum.pollen_allergy:
         return <PollensIcon selected={selected} />;
       case IndicatorsSlugEnum.weather_alert:
@@ -64,7 +66,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_atmospheric:
         return <Atmo size={60} value={indicatorValue} selected={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
-        return <Uv value={indicatorValue} color={color} />;
+        return <Uv size={60} value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
         return <Pollen value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.weather_alert:
