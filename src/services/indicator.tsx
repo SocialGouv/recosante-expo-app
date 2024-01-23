@@ -101,15 +101,8 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
           maxValue: 6,
-          color: [
-            '#b1f3ef',
-            '#73c8ae',
-            '#fef799',
-            '#ee817e',
-            '#a7546d',
-            '#965f9b',
-          ],
           valuesToColor: {
+            0: '#D9D9EF',
             1: '#b1f3ef',
             2: '#73c8ae',
             3: '#fef799',
@@ -122,6 +115,7 @@ export namespace IndicatorService {
         return {
           maxValue: 11,
           valuesToColor: {
+            0: '#D9D9EF',
             1: '#b1f3ef',
             2: '#b1f3ef',
             3: '#73c8ae',
@@ -139,6 +133,7 @@ export namespace IndicatorService {
         return {
           maxValue: 4,
           valuesToColor: {
+            0: '#D9D9EF',
             1: '#b1f3ef',
             2: '#73c8ae',
             3: '#fef799',
@@ -149,6 +144,7 @@ export namespace IndicatorService {
         return {
           maxValue: 4,
           valuesToColor: {
+            0: '#D9D9EF',
             1: '#b1f3ef',
             2: '#73c8ae',
             3: '#fef799',
@@ -159,6 +155,7 @@ export namespace IndicatorService {
         return {
           maxValue: 4,
           valuesToColor: {
+            0: '#D9D9EF',
             1: '#00A3FF',
             2: '#FC373F',
             3: '#820026',
@@ -168,12 +165,5 @@ export namespace IndicatorService {
       default:
         throw new Error(`No range found for ${slug as string}`);
     }
-  }
-  export function getColorForValue(slug: IndicatorsSlugEnum, value: number) {
-    const { valuesToColor } = getDataVisualisationBySlug(slug);
-    if (value === 0) {
-      return '#D9D9EF';
-    }
-    return valuesToColor[value];
   }
 }

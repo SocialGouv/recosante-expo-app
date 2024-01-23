@@ -41,10 +41,9 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
 
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
-  const indicatorColor = IndicatorService.getColorForValue(
-    slug,
-    indicatorValue,
-  );
+  const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
+  const indicatorColor = valuesToColor[indicatorValue];
+
   const showLineList =
     props.isFavorite && indicatorDataInCurrentDay?.values?.length;
   if (!indicatorDataInCurrentDay) return <></>;
@@ -133,7 +132,6 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             <LineList
               slug={currentIndicatorData?.slug}
               values={indicatorDataInCurrentDay?.values}
-              maxValue={indicatorMaxValue}
               isPreviewMode
               onMorePress={() => {
                 // @ts-expect-error TODO

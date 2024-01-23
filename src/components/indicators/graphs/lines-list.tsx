@@ -10,7 +10,6 @@ import { IndicatorService } from '~/services/indicator';
 
 interface LineChartProps {
   values: IndicatorByPeriod['values'];
-  maxValue: number;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
   slug: IndicatorsSlugEnum;
@@ -28,6 +27,8 @@ export function LineList(props: LineChartProps) {
     ? sortedValues.length > MAX_LINE && props.isPreviewMode
     : false;
   if (!props.slug) return <></>;
+  const { valuesToColor, maxValue } =
+    IndicatorService.getDataVisualisationBySlug(props.slug);
 
   return (
     <View className="mt-6 flex space-y-2">
@@ -44,12 +45,9 @@ export function LineList(props: LineChartProps) {
               </MyText>
               <View className="w-full flex-1 ">
                 <LineChart
-                  color={IndicatorService.getColorForValue(
-                    props.slug,
-                    line.value,
-                  )}
+                  color={valuesToColor[line.value]}
                   value={line.value}
-                  maxValue={props.maxValue}
+                  maxValue={maxValue}
                 />
               </View>
             </View>

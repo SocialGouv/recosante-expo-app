@@ -36,10 +36,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     }
   }, []);
 
-  const indicatorColor = IndicatorService.getColorForValue(
+  const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(
     indicator.slug,
-    indicatorValue,
   );
+  const indicatorColor = valuesToColor[indicatorValue];
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
