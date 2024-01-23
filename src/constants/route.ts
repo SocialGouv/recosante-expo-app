@@ -17,6 +17,7 @@ export interface RootStackParamList {
     isOnboarding: true;
   };
   [RouteEnum.HOME]: undefined;
+  [RouteEnum.SETTINGS]: undefined;
   [RouteEnum.SHARE]: undefined;
   [RouteEnum.INDICATORS_SELECTOR]: {
     enablePanDownToClose: boolean;

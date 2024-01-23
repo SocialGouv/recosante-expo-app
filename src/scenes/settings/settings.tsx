@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   Alert,
@@ -6,15 +6,25 @@ import {
   View,
   Platform,
 } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RouteEnum } from '~/constants/route';
+import { RouteEnum, type RootStackParamList } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-export function SettingsPage({ navigation }: { navigation: any }) {
+type SettingsProps = BottomTabScreenProps<
+  // @ts-expect-error TODO
+  RootStackParamList,
+  RouteEnum.SETTINGS
+>;
+
+export function SettingsPage({ navigation }: SettingsProps) {
+  const [onVersionClicked, setOnVersionClicked] = useState(0);
+
   return (
     <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray">
       <ScrollView
@@ -38,20 +48,6 @@ export function SettingsPage({ navigation }: { navigation: any }) {
             })
           }
         />
-        {__DEV__ && (
-          <View className="mt-12 border-b border-app-gray">
-            <TextRow
-              text="Dev mode / Clear Cookies"
-              onPress={async () => {
-                await AsyncStorage.clear();
-                console.log('AsyncStorage cleared');
-
-                navigation.navigate(RouteEnum.ONBOARDING);
-              }}
-            />
-          </View>
-        )}
-
         <View className="mt-16 w-full items-center">
           <TouchableOpacity onPress={() => {}}>
             <MyText font="MarianneRegular" className="text-xs underline">
@@ -65,7 +61,16 @@ export function SettingsPage({ navigation }: { navigation: any }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Alert.alert('TODO');
+              if (onVersionClicked < 5) {
+                setOnVersionClicked((c) => c + 1);
+              } else {
+                AsyncStorage.clear();
+                const resetAction = CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: RouteEnum.ONBOARDING }],
+                });
+                navigation.dispatch(resetAction);
+              }
             }}
             className="opacity-30"
           >
