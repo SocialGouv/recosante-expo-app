@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { ScrollView, TouchableOpacity, View, Platform } from 'react-native';
+import {
+  ScrollView,
+  TouchableOpacity,
+  View,
+  Platform,
+  Linking,
+} from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
@@ -42,7 +48,12 @@ export function SettingsPage({ navigation }: any) {
         />
         <View>
           <View className="mt-16 flex w-full flex-row  items-start justify-between space-x-2 px-4">
-            <TouchableOpacity onPress={() => {}} className="border-b pb-1">
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('mailto:contact@recosante.beta.gouv.fr')
+              }
+              className="border-b pb-1"
+            >
               <MyText font="MarianneRegular">Nous contacter</MyText>
             </TouchableOpacity>
             <View>
