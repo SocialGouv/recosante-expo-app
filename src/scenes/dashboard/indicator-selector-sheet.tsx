@@ -50,7 +50,7 @@ export function IndicatorSelectorSheet({
   // TODO FIXME: transition of background is not smooth
   // find a fucking way
   return (
-    // <View className="flex-1 bg-black/50">
+    // <View className="flex-1 bg-black/60">
     <BottomSheet
       // enableDynamicSizing={true}
       ref={bottomSheetRef}
