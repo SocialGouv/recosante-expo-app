@@ -40,6 +40,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const indicatorMaxValue =
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
 
+  // const indicatorValue = 3;
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
   const indicatorColor = valuesToColor[indicatorValue];
@@ -78,7 +79,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             className={cn(
               props.isFavorite
                 ? 'flex-row justify-between pb-2 '
-                : 'mb-6 h-28 flex-col-reverse items-center',
+                : 'mb-6 mt-3 h-36 flex-col-reverse items-center justify-between',
               'items-center',
             )}
           >
@@ -97,7 +98,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             </View>
             <View
               className={cn(
-                'flex items-center justify-center  ',
+                'flex items-center justify-center',
                 props.isFavorite ? 'mr-6' : 'mb-6 ',
               )}
             >

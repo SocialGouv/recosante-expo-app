@@ -1,11 +1,8 @@
 import { IndicatorsSlugEnum } from '~/types/indicator';
-import { AirIcon } from '~/assets/icons/indicators/air';
-import { PollensIcon } from '~/assets/icons/indicators/pollens';
 import { WaterIcon } from '~/assets/icons/indicators/water';
-import { UltraVioletIcon } from '~/assets/icons/indicators/ultra-violet';
 import { WeatherIcon } from '~/assets/icons/indicators/weather';
 import { Uv } from '~/assets/icons/indicators/big/uv';
-import { Pollen } from '~/assets/icons/indicators/big/pollen';
+import { Pollens } from '~/assets/icons/indicators/big/pollens';
 import { Weather } from '~/assets/icons/indicators/big/weather';
 import { Swimming } from '~/assets/icons/indicators/big/swimming';
 import { Atmo } from '~/assets/icons/indicators/big/atmo';
@@ -44,7 +41,7 @@ export namespace IndicatorService {
           <Uv size={30} value={11} color={selected ? '#3343BD' : '#D9D9EF'} />
         );
       case IndicatorsSlugEnum.pollen_allergy:
-        return <PollensIcon selected={selected} />;
+        return <Pollens size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.weather_alert:
         return <WeatherIcon selected={selected} />;
       case IndicatorsSlugEnum.bathing_water:
@@ -64,11 +61,13 @@ export namespace IndicatorService {
   }) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <Atmo size={60} value={indicatorValue} selected={undefined} />;
+        return <Atmo size={100} value={indicatorValue} selected={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
         return <Uv size={60} value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
-        return <Pollen value={indicatorValue} color={color} />;
+        return (
+          <Pollens size={80} value={indicatorValue} selected={undefined} />
+        );
       case IndicatorsSlugEnum.weather_alert:
         return <Weather value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.bathing_water:
@@ -138,6 +137,7 @@ export namespace IndicatorService {
             2: '#73c8ae',
             3: '#fef799',
             4: '#ee817e',
+            5: '#a7546d',
           },
         };
       case IndicatorsSlugEnum.weather_alert:
