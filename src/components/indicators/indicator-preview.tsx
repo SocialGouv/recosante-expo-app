@@ -11,6 +11,7 @@ import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
 import { LineList } from './graphs/lines-list';
+import { LineChart } from './graphs/line';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
@@ -114,11 +115,19 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
           >
             {address?.label} {dayjs().format('DD/MM')}
           </MyText> */}
-          <LineChartWithCursor
-            value={indicatorValue}
-            slug={currentIndicatorData?.slug}
-            showCursor={props.isFavorite}
-          />
+          {props.isFavorite ? (
+            <LineChartWithCursor
+              value={indicatorValue}
+              slug={currentIndicatorData?.slug}
+              showCursor={props.isFavorite}
+            />
+          ) : (
+            <LineChart
+              color={indicatorColor}
+              value={indicatorValue}
+              range={indicatorRange}
+            />
+          )}
 
           {showLineList ? (
             <LineList
