@@ -7,6 +7,7 @@ import { navigate } from '~/services/navigation';
 import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
+import { capture } from '~/services/sentry';
 
 export function useOnboardingNavigation() {
   const [onboardingScreen, setOnboardingScreen] = useState<
@@ -80,7 +81,7 @@ export function useOnboardingNavigation() {
             onNextAfterGeolocation();
           })
           .catch((err) => {
-            console.log('err', err);
+            capture(err, { extra: { location, method: 'get localisation onboarding' } });
             setIsLoading(false);
           });
         break;

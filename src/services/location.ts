@@ -27,7 +27,12 @@ export namespace LocationService {
       );
       return;
     }
-    return await Location.getCurrentPositionAsync({});
+    const lastKnownPosition = await Location.getLastKnownPositionAsync();
+    if (lastKnownPosition) return lastKnownPosition;
+    const currentPosition = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced
+    });
+    return currentPosition;
   }
 
   export function formatPropertyToAddress(property: Property): Address {
