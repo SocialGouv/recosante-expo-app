@@ -98,7 +98,7 @@ export namespace IndicatorService {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
-          range: 5,
+          range: 6,
           color: [
             '#a2f3ed',
             '#5cc4a3',
