@@ -41,9 +41,8 @@ export function LegalPage(props: LocationPageProps) {
           width: 0,
           height: 2,
         },
-        shadowOpacity: 0.4,
+        shadowOpacity: 1,
         shadowRadius: 150,
-
         elevation: 2,
       }}
       enablePanDownToClose={true}

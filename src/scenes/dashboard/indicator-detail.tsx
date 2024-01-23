@@ -58,10 +58,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     return <> </>;
   }
 
-  // TODO FIXME: transition of background is not smooth
-  // find a fucking way
   return (
-    // <View className="flex-1 bg-black/50">
     <BottomSheet
       ref={bottomSheetRef}
       index={2}
@@ -169,7 +166,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         </View>
       </ScrollView>
     </BottomSheet>
-    // </View>
   );
 }
 

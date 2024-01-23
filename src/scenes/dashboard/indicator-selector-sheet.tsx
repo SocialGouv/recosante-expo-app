@@ -47,12 +47,19 @@ export function IndicatorSelectorSheet({
     }, 500);
   }
 
-  // TODO FIXME: transition of background is not smooth
-  // find a fucking way
   return (
-    // <View className="flex-1 bg-black/60">
     <BottomSheet
       // enableDynamicSizing={true}
+      style={{
+        shadowColor: '#000000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 150,
+        elevation: 2,
+      }}
       ref={bottomSheetRef}
       index={startIndex}
       snapPoints={snapPoints}
@@ -84,6 +91,5 @@ export function IndicatorSelectorSheet({
         />
       </View>
     </BottomSheet>
-    // </View>
   );
 }
