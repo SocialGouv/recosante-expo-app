@@ -45,7 +45,7 @@ export namespace IndicatorService {
       case IndicatorsSlugEnum.weather_alert:
         return <Weather size={30} selected={selected} value={undefined} />;
       case IndicatorsSlugEnum.bathing_water:
-        return <WaterIcon selected={selected} />;
+        return <Swimming size={30} selected={selected} value={undefined} />;
       default:
         throw new Error('No icon found');
     }
@@ -73,7 +73,9 @@ export namespace IndicatorService {
           <Weather size={100} value={indicatorValue} selected={undefined} />
         );
       case IndicatorsSlugEnum.bathing_water:
-        return <Swimming value={indicatorValue} color={color} />;
+        return (
+          <Swimming size={100} value={indicatorValue} selected={undefined} />
+        );
       default:
         console.log('No picto found');
       // throw new Error('No picto found');
@@ -159,10 +161,10 @@ export namespace IndicatorService {
           maxValue: 4,
           valuesToColor: {
             0: '#D9D9EF',
-            1: '#00A3FF',
-            2: '#FC373F',
-            3: '#820026',
-            4: '#6D50C6',
+            1: '#b1f3ef',
+            2: '#73c8ae',
+            3: '#ee817e',
+            4: '#a7546d',
           },
         };
       default:
