@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  Alert,
-  TouchableOpacity,
-  View,
-  Platform,
-} from 'react-native';
+import { ScrollView, TouchableOpacity, View, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
@@ -14,9 +8,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
+import { initMatomo } from '~/services/logEventsWithMatomo';
+import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
+import { useIndicators } from '~/zustand/indicator/useIndicators';
 
 export function SettingsPage({ navigation }: any) {
   const [onVersionClicked, setOnVersionClicked] = useState(0);
+  const resetIndicatorsList = useIndicatorsList((state) => state.reset);
+  const resetIndicators = useIndicators((state) => state.reset);
 
   return (
     <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray">
@@ -41,36 +40,6 @@ export function SettingsPage({ navigation }: any) {
             });
           }}
         />
-
-        <TouchableOpacity
-          onPress={() => {
-            if (onVersionClicked < 5) {
-              setOnVersionClicked((c) => c + 1);
-            } else {
-              AsyncStorage.clear();
-              const resetAction = CommonActions.reset({
-                index: 0,
-                routes: [{ name: RouteEnum.ONBOARDING }],
-              });
-              navigation.dispatch(resetAction);
-            }
-          }}
-          className="opacity-30"
-        >
-          {__DEV__ && (
-            <View className="mt-12 border-b border-app-gray">
-              <TextRow
-                text="Dev mode / Clear Cookies"
-                onPress={async () => {
-                  await AsyncStorage.clear();
-                  console.log('AsyncStorage cleared');
-
-                  navigation.navigate(RouteEnum.ONBOARDING);
-                }}
-              />
-            </View>
-          )}
-        </TouchableOpacity>
         <View>
           <View className="mt-16 flex w-full flex-row  items-start justify-between space-x-2 px-4">
             <TouchableOpacity onPress={() => {}} className="border-b pb-1">
@@ -86,8 +55,20 @@ export function SettingsPage({ navigation }: any) {
                 <MyText font="MarianneRegular">Mentions légales</MyText>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => {
-                  Alert.alert('TODO');
+                onPress={async () => {
+                  if (onVersionClicked < 5) {
+                    setOnVersionClicked((c) => c + 1);
+                  } else {
+                    await AsyncStorage.clear();
+                    await initMatomo();
+                    resetIndicatorsList();
+                    const resetAction = CommonActions.reset({
+                      index: 0,
+                      routes: [{ name: RouteEnum.ONBOARDING }],
+                    });
+                    navigation.dispatch(resetAction);
+                    resetIndicators();
+                  }
                 }}
                 className=" opacity-30"
               >

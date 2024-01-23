@@ -12,6 +12,7 @@ interface State {
   setIndicators: (indicators: IndicatorItem[]) => void;
   _hasHydrated: boolean;
   setHasHydrated: (hydrationState: boolean) => void;
+  reset: () => void;
 }
 
 export const useIndicatorsList = create<State>()(
@@ -22,7 +23,6 @@ export const useIndicatorsList = create<State>()(
       setIndicators: async (indicators) => {
         set({ indicators });
       },
-
       setFavoriteIndicator: async (favoriteIndicator) => {
         set({ favoriteIndicator });
         API.put({
@@ -37,6 +37,13 @@ export const useIndicatorsList = create<State>()(
       setHasHydrated: (hydrationState) => {
         set({
           _hasHydrated: hydrationState,
+        });
+      },
+      reset: () => {
+        set({ indicators: [], favoriteIndicator: null })
+        API.get({ path: '/indicators/list' }).then((response) => {
+          const indicators = response.data as IndicatorItem[];
+          set({ indicators });
         });
       },
     }),
