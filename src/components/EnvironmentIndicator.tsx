@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, StyleSheet, SafeAreaView } from 'react-native';
 import { APP_ENV } from '~/config';
+import API from '~/services/api';
 
 const EnvironmentIndicator = () => {
-  if (APP_ENV === 'production') return null;
+  const [environment, setEnvironment] = React.useState(APP_ENV);
+  useEffect(() => {
+    // the init consist of knowing the environment of the app
+    // preproduction or production
+    API.get({ path: '/environment' }).then((envResponse) => {
+      if (APP_ENV !== 'local' && envResponse.ok) {
+        API.host = envResponse.data.api_host;
+        setEnvironment(envResponse.data.environment);
+      }
+    });
+  }, []);
 
+  if (environment === 'production') return null;
   return (
     <SafeAreaView style={styles.container}>
       <Text allowFontScaling={false} style={styles.text}>
-        {APP_ENV}
+        {environment}
       </Text>
     </SafeAreaView>
   );

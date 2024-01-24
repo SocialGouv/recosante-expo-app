@@ -18,8 +18,10 @@ export const checkNetwork = async (test = false) => {
 };
 
 class ApiService {
+  scheme = API_SCHEME;
+  host = API_HOST;
   getUrl = (path, query) => {
-    const url = new URL(path, `${API_SCHEME}://${API_HOST}`);
+    const url = new URL(path, `${this.scheme}://${this.host}`);
     Object.keys(query).forEach((key) =>
       url.searchParams.append(key, query[key]),
     );
@@ -82,7 +84,6 @@ class ApiService {
       };
     }
   };
-
   get = async (args) => this.execute({ method: 'GET', ...args });
   post = async (args) => this.execute({ method: 'POST', ...args });
   put = async (args) => this.execute({ method: 'PUT', ...args });
