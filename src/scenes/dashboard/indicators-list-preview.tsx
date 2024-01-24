@@ -69,13 +69,14 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         tabBarLabelStyle: {
           fontSize: 14,
           fontFamily: 'MarianneBold',
-          color: '#555555',
           marginBottom: -12,
         },
         tabBarIndicatorStyle: {
           backgroundColor: '#555555',
           height: 2,
         },
+        tabBarActiveTintColor: '#555555',
+        tabBarInactiveTintColor: '#AEB1B7',
       }}
     >
       <Tab.Screen
