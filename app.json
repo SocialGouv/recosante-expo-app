@@ -11,16 +11,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#3643b6"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "5",
+      "buildNumber": "7",
       "config": {
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["recosante"]
+        "LSApplicationQueriesSchemes": [
+          "recosante"
+        ]
       }
     },
     "android": {
