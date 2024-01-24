@@ -40,7 +40,7 @@ export const useIndicatorsList = create<State>()(
         });
       },
       reset: () => {
-        set({ indicators: [], favoriteIndicator: null })
+        set({ indicators: [], favoriteIndicator: null });
         API.get({ path: '/indicators/list' }).then((response) => {
           const indicators = response.data as IndicatorItem[];
           set({ indicators });

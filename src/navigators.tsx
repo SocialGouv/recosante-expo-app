@@ -71,8 +71,7 @@ function Home(props: HomeProps) {
         tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.5)',
         tabBarShowLabel: false,
         tabBarStyle: {
-          paddingHorizontal: 5,
-          paddingVertical: 0,
+          paddingHorizontal: 20,
           paddingBottom: -10,
           backgroundColor: '#3343BD',
           borderTopWidth: 0,
@@ -93,8 +92,8 @@ function Home(props: HomeProps) {
           tabBarLabel: (props) => (
             <TabBarLabel {...props}>Dashboard</TabBarLabel>
           ),
-          tabBarIcon: ({ size, color, focused }) => (
-            <HomeIcon size={size} color={color} focused={focused} />
+          tabBarIcon: ({ color, focused }) => (
+            <HomeIcon size={20} color={color} focused={focused} />
           ),
         }}
         component={DashboardPage}
@@ -105,8 +104,8 @@ function Home(props: HomeProps) {
           tabBarLabel: (props) => (
             <TabBarLabel {...props}>Partager</TabBarLabel>
           ),
-          tabBarIcon: ({ size, color, focused }) => (
-            <ShareIcon size={size} color={color} focused={focused} />
+          tabBarIcon: ({ color, focused }) => (
+            <ShareIcon size={20} color={color} focused={focused} />
           ),
         }}
         component={SharePage}
@@ -118,8 +117,8 @@ function Home(props: HomeProps) {
           tabBarLabel: (props) => (
             <TabBarLabel {...props}>Paramètres</TabBarLabel>
           ),
-          tabBarIcon: ({ size, color, focused }) => (
-            <SettingsIcon size={size} color={color} focused={focused} />
+          tabBarIcon: ({ color, focused }) => (
+            <SettingsIcon size={20} color={color} focused={focused} />
           ),
         }}
       />

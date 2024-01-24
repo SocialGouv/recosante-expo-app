@@ -28,14 +28,12 @@ export default function Button({
         className={cn(
           'flex-col justify-center rounded-full px-4 py-2',
           disabled ? 'opacity-30' : 'opacity-100',
-          icon ? 'flex flex-row' : 'flex-col',
+          icon ? 'flex flex-row space-x-2' : 'flex-col',
           viewClassName,
         )}
       >
         {icon ? (
-          <View
-            className={cn('mr-2 flex h-8 w-8 justify-center', textClassName)}
-          >
+          <View className={cn('flex h-8  justify-center', textClassName)}>
             {icon}
           </View>
         ) : null}

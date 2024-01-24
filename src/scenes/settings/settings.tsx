@@ -30,7 +30,7 @@ export function SettingsPage({ navigation }: any) {
         className="flex w-full flex-1 px-4 pb-20 pt-8"
         contentContainerStyle={{ paddingBottom: 200 }}
       >
-        <MyText font="MarianneBold" className="text-3xl">
+        <MyText font="MarianneBold" className="text-2xl">
           Vos préférences
         </MyText>
         <Title label="Notifications" />
@@ -59,7 +59,7 @@ export function SettingsPage({ navigation }: any) {
               }}
               className="border-b pb-1"
             >
-              <MyText font="MarianneRegular">Nous contacter</MyText>
+              <MyText font="MarianneBold">Nous contacter</MyText>
             </TouchableOpacity>
             <View>
               <TouchableOpacity
@@ -68,7 +68,7 @@ export function SettingsPage({ navigation }: any) {
                 }}
                 className="border-b pb-1"
               >
-                <MyText font="MarianneRegular">Mentions légales</MyText>
+                <MyText font="MarianneBold">Mentions légales</MyText>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={async () => {
@@ -113,7 +113,7 @@ interface TitleProps {
 }
 function Title(props: TitleProps) {
   return (
-    <MyText font="MarianneExtraBold" className="mt-8 text-sm uppercase">
+    <MyText font="MarianneExtraBold" className="mt-8 text-xs uppercase">
       {props.label}
     </MyText>
   );
@@ -135,7 +135,7 @@ function TextRow(props: TextRowProps) {
       }}
       className="flex flex-row items-center justify-between py-4 pr-4"
     >
-      <MyText font="MarianneRegular" className="">
+      <MyText font="MarianneRegular" className="text-[14px]">
         {props.text}
       </MyText>
       <View>

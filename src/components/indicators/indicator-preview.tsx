@@ -2,12 +2,10 @@ import { View, TouchableOpacity } from 'react-native';
 import { type IndicatorItem, type IndicatorDay } from '~/types/indicator';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
-// import dayjs from 'dayjs';
 import { cn } from '~/utils/tailwind';
 import { Info } from '~/assets/icons/info';
 import { LineChartWithCursor } from './graphs/line-with-cursor';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
-// import { useAddress } from '~/zustand/address/useAddress';
 import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
 import { LineList } from './graphs/lines-list';
@@ -21,7 +19,6 @@ interface IndicatorPreviewProps {
 }
 
 export function IndicatorPreview(props: IndicatorPreviewProps) {
-  // const { address } = useAddress((state) => state);
   const navigation = useNavigation();
   const { indicators } = useIndicators((state) => state);
   const currentIndicatorData = indicators?.find(
@@ -62,7 +59,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
       }}
       className={cn(
         'mx-auto my-5 basis-[47%] rounded-2xl bg-white p-2',
-        props.isFavorite && 'mx-2 -mt-2 border-[3px]',
+        props.isFavorite && ' -mt-2 border-[3px]',
       )}
       onPress={handleSelect}
     >
@@ -74,12 +71,15 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               backgroundColor: indicatorColor,
             }}
           >
-            <MyText font="MarianneBold" className="uppercase text-[#232323]">
+            <MyText
+              font="MarianneExtraBold"
+              className="uppercase text-[#232323]"
+            >
               {indicatorDataInCurrentDay?.summary.status}
             </MyText>
           </View>
 
-          <View className="-mt-2 flex items-end">
+          <View className="flex items-end">
             <Info />
           </View>
           <View
@@ -118,12 +118,6 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               })}
             </View>
           </View>
-          {/* <MyText
-            className=" mb-4 text-xs uppercase text-gray-500"
-            font="MarianneRegular"
-          >
-            {address?.label} {dayjs().format('DD/MM')}
-          </MyText> */}
           {props.isFavorite ? (
             <LineChartWithCursor
               value={indicatorValue}

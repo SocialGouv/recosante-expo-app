@@ -108,7 +108,9 @@ export function useOnboardingNavigation(): {
             onNextAfterGeolocation();
           })
           .catch((err) => {
-            capture(err, { extra: { location, method: 'get localisation onboarding' } });
+            capture(err, {
+              extra: { location, method: 'get localisation onboarding' },
+            });
             setIsLoading(false);
           });
         break;

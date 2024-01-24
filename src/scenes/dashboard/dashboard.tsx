@@ -85,7 +85,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
               >
                 {address?.label ?? address?.city}
               </MyText>
-              <View className="relative -bottom-1 ml-2 ">
+              <View className=" ml-2">
                 <LocationIcon color="#AEB1B7" />
               </View>
             </View>

@@ -25,11 +25,6 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
     props.onSubmit(state?.slug ?? '');
   }
 
-  // const indicatorsAvailableList = [
-  //   IndicatorsSlugEnum.weather_alert,
-  //   IndicatorsSlugEnum.pollen_allergy,
-  //   IndicatorsSlugEnum.bathing_water,
-  // ];
   return (
     <View className="flex flex-col ">
       <View className="flex  flex-row flex-wrap items-start ">
@@ -37,7 +32,6 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
           const isFavorite = state?.slug === indicator.slug;
           return (
             <Button
-              // disabled={!indicatorsAvailableList.includes(indicator.slug)}
               onPress={() => {
                 handleSelectIndicator(indicator);
               }}
@@ -49,7 +43,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
               )}
               textClassName={cn(
                 isFavorite ? 'text-app-primary' : 'text-white',
-                'text-base',
+                'text-[15px]',
               )}
               key={indicator.slug}
               icon={IndicatorService.getIconBySlug(indicator.slug, isFavorite)}
@@ -65,7 +59,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
             onPress={handleSubmit}
             viewClassName="bg-app-yellow px-8 pb-4 pt-3"
             textClassName="text-black text-base"
-            font="MarianneMedium"
+            font="MarianneBold"
           >
             C'est parti !
           </Button>

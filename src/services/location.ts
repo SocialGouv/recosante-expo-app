@@ -30,7 +30,7 @@ export namespace LocationService {
     const lastKnownPosition = await Location.getLastKnownPositionAsync();
     if (lastKnownPosition) return lastKnownPosition;
     const currentPosition = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Balanced
+      accuracy: Location.Accuracy.Balanced,
     });
     return currentPosition;
   }

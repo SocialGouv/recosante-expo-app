@@ -131,25 +131,26 @@ export function LocationPage(props: LocationPageProps) {
         width: 83,
       }}
     >
-      <View className="items-start justify-start bg-app-primary p-4">
-        <Pressable
-          onPress={() => {
-            closeBottomSheet();
-          }}
-          className="absolute right-2"
-        >
-          <Close />
-        </Pressable>
-        <View className="mb-4">
-          <MyText font="MarianneBold" className="text-xl text-white">
+      <View className="items-start justify-start bg-app-primary p-4 pb-7">
+        <View className="mb-4 flex w-full flex-row justify-between">
+          <MyText font="MarianneBold" className="text-2xl text-white">
             Rechercher
           </MyText>
+          <Pressable
+            onPress={() => {
+              closeBottomSheet();
+            }}
+            className=""
+          >
+            <Close />
+          </Pressable>
         </View>
         <View className="flex-row items-start justify-start bg-app-primary">
           <TextInput
-            placeholder="Rechercher une adresse"
+            placeholderTextColor="#3343BD"
+            placeholder="Rechercher un lieu, ville"
             value={query}
-            className=" flex h-12 w-4/5 items-start justify-start rounded-md bg-white px-4 text-xl"
+            className="h-12 w-4/5 rounded-full bg-white px-4 text-[16px] placeholder:text-[16px]"
             onChange={getSuggestions}
             onFocus={() => {
               logEvent({
@@ -176,7 +177,7 @@ export function LocationPage(props: LocationPageProps) {
       </View>
 
       <View className="flex items-start justify-start bg-app-gray">
-        <View className="w-full   border-b  border-gray-300 p-4">
+        <View className="w-full  p-4">
           <Pressable
             onPress={async () => {
               logEvent({
@@ -226,8 +227,8 @@ export function LocationPage(props: LocationPageProps) {
             <LocationIcon color="black" />
 
             <MyText
-              font="MarianneRegular"
-              className="ml-4 w-fit text-lg text-black"
+              font="MarianneBold"
+              className="ml-4 w-fit text-[14px] text-black"
             >
               Utiliser ma géolocalisation
             </MyText>
@@ -245,11 +246,11 @@ export function LocationPage(props: LocationPageProps) {
           </View>
         ) : null}
         {status === 'idle' ? (
-          <View className="mt-8 h-full w-full">
+          <View className="mt-16 h-full w-full">
             <Illu />
             <MyText
-              font="MarianneRegular"
-              className="mt-4 px-4 text-center text-lg text-gray-700"
+              font="MarianneMedium"
+              className="mt-4 px-12 text-center text-[14px] text-gray-700"
             >
               Optimisez votre expérience en activant la géolocalisation afin
               d’améliorer votre utilisation de l'application.
@@ -257,11 +258,11 @@ export function LocationPage(props: LocationPageProps) {
           </View>
         ) : null}
         {status === 'no_result' ? (
-          <View className="mt-8 h-full w-full">
+          <View className="mt-16 h-full w-full">
             <Illu />
             <MyText
-              font="MarianneRegular"
-              className="mt-4 px-4 text-center text-lg text-gray-700"
+              font="MarianneMedium"
+              className="mt-4 px-4 text-center text-[14px] text-gray-700"
             >
               Aucun résultat n'a été trouvé pour cette recherche.
             </MyText>

@@ -6,7 +6,7 @@ export function Illu() {
   return (
     <View className="h-56 w-full">
       <Image
-        className="h-full w-full"
+        className="h-[80%] w-full"
         source={require('./no-result.png')}
         contentFit="contain"
         transition={1000}
