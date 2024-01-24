@@ -94,6 +94,7 @@ export function useOnboardingNavigation(): {
         const location = await LocationService.requestLocation();
         if (!location) {
           Alert.alert('Erreur', 'Impossible de trouver votre position');
+          setIsLoading(false);
           return;
         }
         LocationService.getAdressByCoordinates(
@@ -101,9 +102,9 @@ export function useOnboardingNavigation(): {
           location.coords.longitude,
         )
           .then((adress) => {
+            setIsLoading(false);
             if (adress) {
               setAddress(adress);
-              setIsLoading(false);
             }
             onNextAfterGeolocation();
           })

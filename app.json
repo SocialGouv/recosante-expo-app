@@ -52,14 +52,12 @@
         }
       ],
       [
-        [
-          "expo-build-properties",
-          {
-            "android": {
-              "enableProguardInReleaseBuilds": true
-            }
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true
           }
-        ]
+        }
       ]
     ],
     "hooks": {

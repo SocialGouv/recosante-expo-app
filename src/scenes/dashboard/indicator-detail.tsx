@@ -90,7 +90,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
       }}
       enablePanDownToClose
     >
-      <View className="-mt-2 flex items-center justify-center bg-app-primary p-2">
+      <View className="flex items-center justify-center border-t-2 border-app-primary bg-app-primary px-2 pb-2">
         <MyText
           font="MarianneExtraBold"
           className="text-sm uppercase text-white"
@@ -191,10 +191,9 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             Ces recommandations sont issues du Gouvernement Francais.
           </MyText>
           <Title label={indicator?.about_title} />
-          <MyText className="mt-2">
-            {' '}
+          <View className="mt-2 w-full overflow-hidden">
             <Markdown>{indicator?.about_description}</Markdown>
-          </MyText>
+          </View>
         </View>
       </ScrollView>
     </BottomSheet>

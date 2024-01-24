@@ -131,7 +131,7 @@ export function LocationPage(props: LocationPageProps) {
         width: 83,
       }}
     >
-      <View className="items-start justify-start bg-app-primary p-4 pb-7">
+      <View className="items-start justify-start border-t border-app-primary bg-app-primary p-4 pb-7">
         <View className="mb-4 flex w-full flex-row justify-between">
           <MyText font="MarianneBold" className="text-2xl text-white">
             Rechercher

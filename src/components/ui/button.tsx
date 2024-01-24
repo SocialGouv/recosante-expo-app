@@ -39,7 +39,7 @@ export default function Button({
         ) : null}
         <MyText
           font={font}
-          className={cn('border text-center text-white', textClassName)}
+          className={cn('text-center text-white', textClassName)}
         >
           {children}
         </MyText>

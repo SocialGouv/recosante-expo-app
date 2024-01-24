@@ -35,7 +35,7 @@ export function Onboarding() {
       <View
         className={cn(
           !skipVisible ? 'opacity-0' : 'opacity-100',
-          'mb-8 flex w-full flex-row justify-end',
+          'mb-8 flex w-full flex-row justify-end bg-app-primary',
         )}
       >
         <Button
@@ -71,10 +71,7 @@ export function Onboarding() {
             {isLoading ? (
               <ActivityIndicator size="small" color="black" />
             ) : (
-              <MyText
-                font="MarianneBold"
-                className="border text-center text-black"
-              >
+              <MyText font="MarianneBold" className="text-center text-black">
                 C'est parti !
               </MyText>
             )}

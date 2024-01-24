@@ -1,4 +1,4 @@
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo } from 'react';
 import MyText from '~/components/ui/my-text';
@@ -43,7 +43,9 @@ export function IndicatorSelectorSheet({
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     setTimeout(() => {
-      navigation.goBack();
+      if (Platform.OS === 'ios') {
+        navigation.goBack();
+      }
     }, 500);
   }
 
@@ -80,8 +82,8 @@ export function IndicatorSelectorSheet({
         marginTop: 35,
       }}
     >
-      <View className="flex h-full w-full flex-1 bg-app-primary p-2 pt-4">
-        <MyText className="mx-2 mb-4  text-white" font="MarianneBold">
+      <View className="flex h-full w-full flex-1 border-t border-app-primary bg-app-primary p-2 pt-4">
+        <MyText className="mx-2 mb-4 text-white" font="MarianneBold">
           {isSettingsPage
             ? 'Séléctionnez votre indicateur favori'
             : 'Découvrez votre tableau de bord personnalisé'}

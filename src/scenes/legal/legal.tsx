@@ -68,7 +68,7 @@ export function LegalPage(props: LocationPageProps) {
         width: 83,
       }}
     >
-      <View className="-mt-2 flex items-center justify-center bg-app-primary p-2 pb-6">
+      <View className="-mt-2 flex items-center justify-center border-t border-app-primary bg-app-primary p-2 pb-6">
         <MyText font="MarianneBold" className="text-xl text-white">
           Mentions légales
         </MyText>

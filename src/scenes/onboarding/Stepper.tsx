@@ -12,9 +12,8 @@ type StepperProps = {
 
 export function Stepper(props: StepperProps) {
   return (
-    <TouchableOpacity
+    <View
       className={cn('relative', props.disabled ? 'opacity-30' : 'opacity-100')}
-      onPress={props.onPress}
     >
       <View
         className={cn(
@@ -53,9 +52,13 @@ export function Stepper(props: StepperProps) {
         <View className="absolute -top-4 left-0 h-4 w-full bg-app-primary" />
         <View className="absolute -right-4 bottom-0 h-full w-4 bg-app-primary" />
       </View>
-      <View className="m-2 min-w-[200px] justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3">
+      <TouchableOpacity
+        onPress={props.onPress}
+        activeOpacity={0.8}
+        className="z-50 m-2 min-w-[200px] justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3"
+      >
         <View className="items-center justify-center">{props.children}</View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 }
