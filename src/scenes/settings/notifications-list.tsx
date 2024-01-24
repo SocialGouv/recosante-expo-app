@@ -57,11 +57,11 @@ export function NotificationsList() {
         return (
           <View
             key={notification.id}
-            className="mt-4 flex flex-row items-center justify-between rounded-lg bg-white p-4"
+            className="mt-4 flex flex-row items-center justify-between rounded-2xl bg-white  p-4"
           >
             <View className="w-3/4">
               <View>
-                <MyText font="MarianneBold" className="">
+                <MyText font="MarianneBold" className="text-sm">
                   {notification.label}
                 </MyText>
               </View>
@@ -76,6 +76,7 @@ export function NotificationsList() {
             </View>
             <View className="">
               <Switch
+                style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
                 onValueChange={() => {
                   toggleSwitch(notification.id);
                 }}

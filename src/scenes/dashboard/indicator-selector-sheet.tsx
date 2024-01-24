@@ -26,7 +26,7 @@ export function IndicatorSelectorSheet({
   const { indicators } = useIndicatorsList((state) => state);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose, eventCategory } = route.params;
-
+  const isSettingsPage = eventCategory === 'SETTINGS';
   const snapPoints = useMemo(
     () =>
       [inPercentOfScreen, 75, 90, 100, 30]
@@ -43,14 +43,12 @@ export function IndicatorSelectorSheet({
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     setTimeout(() => {
-      // to make animation smoother
       navigation.goBack();
     }, 500);
   }
 
   return (
     <BottomSheet
-      // enableDynamicSizing={true}
       style={{
         shadowColor: '#000000',
         shadowOffset: {
@@ -83,8 +81,10 @@ export function IndicatorSelectorSheet({
       }}
     >
       <View className="flex h-full w-full flex-1 bg-app-primary p-2 pt-4">
-        <MyText className="mx-2 mb-4 text-xl text-white" font="MarianneBold">
-          Sélectionnez votre indicateur favori
+        <MyText className="mx-2 mb-4  text-white" font="MarianneBold">
+          {isSettingsPage
+            ? 'Séléctionnez votre indicateur favori'
+            : 'Découvrez votre tableau de bord personnalisé'}
         </MyText>
         <IndicatorsSelector
           onSubmit={(favoriteIndicator) => {

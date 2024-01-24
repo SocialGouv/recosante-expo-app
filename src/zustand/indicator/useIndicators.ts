@@ -13,6 +13,6 @@ export const useIndicators = create<State>()((set, _get) => ({
     set({ indicators });
   },
   reset: () => {
-    set({ indicators: [] })
-  }
+    set({ indicators: [] });
+  },
 }));

@@ -19,10 +19,10 @@ export function SharePage({ navigation }: { navigation: any }) {
         }}
       >
         <View className="flex w-full">
-          <MyText font="MarianneBold" className="text-3xl">
-            Partagez l’app !
+          <MyText font="MarianneBold" className="text-2xl">
+            Partagez l’app{'\n'}ou vos indicateurs !
           </MyText>
-          <MyText font="MarianneRegular" className="mt-4 text-lg">
+          <MyText font="MarianneRegular" className="mt-4 text-[14px]">
             Pour agir ensemble en faveur de votre santé et de l'environnement.
           </MyText>
         </View>
@@ -30,7 +30,10 @@ export function SharePage({ navigation }: { navigation: any }) {
           <Illu />
         </View>
         <View>
-          <MyText font="MarianneRegular" className="px-4 text-center text-lg">
+          <MyText
+            font="MarianneRegular"
+            className="px-8 text-center text-[14px]"
+          >
             Vous tenez à eux !{'\n'} Permettez à vos proches de recevoir des
             <MyText font="MarianneBold"> informations essentielles</MyText> pour
             <MyText font="MarianneBold">
@@ -39,18 +42,19 @@ export function SharePage({ navigation }: { navigation: any }) {
             </MyText>
           </MyText>
         </View>
-        <View className="flex flex-row space-x-6">
-          <View>
-            <Pressable
-              className="mb-4 flex flex-row items-center justify-center space-x-4 rounded-full bg-app-yellow p-6"
-              onPress={async () => {
-                await ShareService.shareApp();
-              }}
-            >
-              <ShareLink />
-              <MyText font="MarianneBold">Partager l’application</MyText>
-            </Pressable>
-          </View>
+
+        <View className="mt-8">
+          <Pressable
+            className=" flex flex-row items-center justify-center space-x-4 rounded-full bg-app-yellow p-4 px-6"
+            onPress={async () => {
+              await ShareService.shareApp();
+            }}
+          >
+            <ShareLink />
+            <MyText font="MarianneBold" className="text-[15px]">
+              Partager l’application
+            </MyText>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>

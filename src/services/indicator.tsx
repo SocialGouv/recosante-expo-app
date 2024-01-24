@@ -1,6 +1,4 @@
 import { IndicatorsSlugEnum } from '~/types/indicator';
-import { WaterIcon } from '~/assets/icons/indicators/water';
-import { WeatherIcon } from '~/assets/icons/indicators/weather';
 import { Uv } from '~/assets/icons/indicators/big/uv';
 import { Pollens } from '~/assets/icons/indicators/big/pollens';
 import { Weather } from '~/assets/icons/indicators/big/weather';
@@ -8,30 +6,6 @@ import { Swimming } from '~/assets/icons/indicators/big/swimming';
 import { Atmo } from '~/assets/icons/indicators/big/atmo';
 
 export namespace IndicatorService {
-  // export function getColorByLabel(
-  //   label: LabelEnum | undefined,
-  // ): IndicatorColorEnum {
-  //   if (!label) return IndicatorColorEnum.NUL;
-  //   switch (label) {
-  //     case LabelEnum.EXTREME:
-  //       return IndicatorColorEnum.EXTREME;
-  //     case LabelEnum.ABSOLUE:
-  //       return IndicatorColorEnum.ABSOLUE;
-  //     case LabelEnum.MAUVAIS:
-  //       return IndicatorColorEnum.MAUVAIS;
-  //     case LabelEnum.MODEREE:
-  //       return IndicatorColorEnum.MODEREE;
-  //     case LabelEnum.MOYEN:
-  //       return IndicatorColorEnum.MOYEN;
-  //     case LabelEnum.BON:
-  //       return IndicatorColorEnum.BON;
-  //     case LabelEnum.NUL:
-  //       return IndicatorColorEnum.NUL;
-  //     default:
-  //       return IndicatorColorEnum.NUL;
-  //       throw new Error('No color found');
-  //   }
-  // }
   export function getIconBySlug(slug: IndicatorsSlugEnum, selected: boolean) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
@@ -61,20 +35,20 @@ export namespace IndicatorService {
   }) {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-        return <Atmo size={80} value={indicatorValue} selected={undefined} />;
+        return <Atmo size={60} value={indicatorValue} selected={undefined} />;
       case IndicatorsSlugEnum.indice_uv:
-        return <Uv size={80} value={indicatorValue} color={color} />;
+        return <Uv size={60} value={indicatorValue} color={color} />;
       case IndicatorsSlugEnum.pollen_allergy:
         return (
-          <Pollens size={80} value={indicatorValue} selected={undefined} />
+          <Pollens size={60} value={indicatorValue} selected={undefined} />
         );
       case IndicatorsSlugEnum.weather_alert:
         return (
-          <Weather size={80} value={indicatorValue} selected={undefined} />
+          <Weather size={60} value={indicatorValue} selected={undefined} />
         );
       case IndicatorsSlugEnum.bathing_water:
         return (
-          <Swimming size={80} value={indicatorValue} selected={undefined} />
+          <Swimming size={60} value={indicatorValue} selected={undefined} />
         );
       default:
         console.log('No picto found');
@@ -89,7 +63,7 @@ export namespace IndicatorService {
   export function getDataVisualisationBySlug(
     slug: IndicatorsSlugEnum,
   ): DataVisualisation {
-    if (!slug)
+    if (!slug) {
       return {
         maxValue: 0,
         valuesToColor: {
@@ -100,6 +74,7 @@ export namespace IndicatorService {
           4: '#6D50C6',
         },
       };
+    }
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {

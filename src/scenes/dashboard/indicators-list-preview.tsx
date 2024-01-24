@@ -75,17 +75,20 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           height: 2,
         },
       }}
-      className="bg-white shadow-sm"
     >
       <Tab.Screen
         name={tabsEnum.TODAY}
-        options={{ tabBarLabel: "Aujourd'hui" }}
+        options={{
+          tabBarLabel: "Aujourd'hui",
+        }}
         component={IndicatorListView}
         initialParams={{ day: DayEnum.TODAY }}
       />
       <Tab.Screen
         name={tabsEnum.TOMORROW}
-        options={{ tabBarLabel: 'Demain' }}
+        options={{
+          tabBarLabel: 'Demain',
+        }}
         component={IndicatorListView}
         initialParams={{ day: DayEnum.TOMORROW }}
       />
@@ -94,8 +97,8 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
 }
 const styles = StyleSheet.create({
   contentContainer: {
-    marginTop: 20,
-    paddingVertical: 20,
+    paddingVertical: 40,
+    paddingHorizontal: 21,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
