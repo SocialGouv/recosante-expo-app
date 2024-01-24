@@ -32,19 +32,21 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   function IndicatorListView({ route }: any) {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        {props.favoriteIndicator ? (
-          <IndicatorPreview
-            day={route.params.day}
-            indicator={props.favoriteIndicator}
-            isFavorite
-          />
-        ) : null}
-        <View className=" mx-1 flex flex-1  flex-row flex-wrap pb-24">
-          {filteredIndicators?.map((indicator) => (
+        <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
+          {props.favoriteIndicator ? (
+            <IndicatorPreview
+              day={route.params.day}
+              indicator={props.favoriteIndicator}
+              isFavorite
+              index={0}
+            />
+          ) : null}
+          {filteredIndicators?.map((indicator, index) => (
             <IndicatorPreview
               day={route.params.day}
               key={indicator.slug}
               indicator={indicator}
+              index={index}
             />
           ))}
         </View>
@@ -97,8 +99,6 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
 }
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingVertical: 40,
-    paddingHorizontal: 21,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

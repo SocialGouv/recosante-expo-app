@@ -16,6 +16,7 @@ interface IndicatorPreviewProps {
   indicator: IndicatorItem;
   isFavorite?: boolean;
   day: IndicatorDay;
+  index: number;
 }
 
 export function IndicatorPreview(props: IndicatorPreviewProps) {
@@ -54,103 +55,108 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   if (!indicatorDataInCurrentDay) return <></>;
   return (
     <TouchableOpacity
-      style={{
-        borderColor: props.isFavorite ? indicatorColor : 'transparent',
-      }}
       className={cn(
-        'mx-auto my-5 basis-[47%] rounded-2xl bg-white p-2',
-        props.isFavorite && ' -mt-2 border-[3px]',
+        'my-5',
+        props.isFavorite ? 'mx-5 -mt-2' : 'basis-[50%] flex-row px-1.5',
+        props.isFavorite ? '' : props.index % 2 === 0 ? 'pl-5' : 'pr-5',
       )}
       onPress={handleSelect}
     >
-      <View className="flex flex-row justify-between">
-        <View className="flex w-full justify-center">
-          <View
-            className="mx-auto -mt-6 items-center rounded-full px-6 py-1"
-            style={{
-              backgroundColor: indicatorColor,
-            }}
-          >
-            <MyText
-              font="MarianneExtraBold"
-              className="uppercase text-[#232323]"
-            >
-              {indicatorDataInCurrentDay?.summary.status}
-            </MyText>
-          </View>
-
-          <View className="flex items-end">
-            <Info />
-          </View>
-          <View
-            className={cn(
-              props.isFavorite
-                ? 'flex-row justify-between pb-2 '
-                : 'mb-6 mt-3 flex-col-reverse items-center justify-between',
-              'items-center',
-            )}
-          >
+      <View
+        className="self-stretch rounded-2xl border-[3px] bg-white p-2"
+        style={{
+          borderColor: props.isFavorite ? indicatorColor : 'transparent',
+        }}
+      >
+        <View className="flex flex-row justify-between">
+          <View className="flex w-full justify-center">
             <View
-              className={cn(
-                'flex w-full flex-row items-center',
-                props.isFavorite ? 'w-fit' : '',
-              )}
+              className="mx-auto -mt-6 items-center rounded-full px-6 py-1"
+              style={{
+                backgroundColor: indicatorColor,
+              }}
             >
               <MyText
-                className="text-wrap text-md uppercase text-muted "
-                font="MarianneBold"
+                font="MarianneExtraBold"
+                className="uppercase text-[#232323]"
               >
-                {props.isFavorite
-                  ? props.indicator.name
-                  : props.indicator.short_name}
+                {indicatorDataInCurrentDay?.summary.status}
               </MyText>
+            </View>
+
+            <View className="flex items-end">
+              <Info />
             </View>
             <View
               className={cn(
-                'flex items-center justify-center',
-                props.isFavorite ? 'mr-6' : 'mb-6 ',
+                props.isFavorite
+                  ? 'flex-row justify-between pb-2 '
+                  : 'mb-6 mt-3 flex-col-reverse items-center justify-between',
+                'items-center',
               )}
             >
-              {IndicatorService.getPicto({
-                slug: props.indicator.slug,
-                indicatorValue,
-                color: indicatorColor,
-              })}
+              <View
+                className={cn(
+                  'flex w-full flex-row items-center',
+                  props.isFavorite ? 'w-fit' : '',
+                )}
+              >
+                <MyText
+                  className="text-wrap text-md uppercase text-muted "
+                  font="MarianneBold"
+                >
+                  {props.isFavorite
+                    ? props.indicator.name
+                    : props.indicator.short_name}
+                </MyText>
+              </View>
+              <View
+                className={cn(
+                  'flex items-center justify-center',
+                  props.isFavorite ? 'mr-6' : 'mb-6 ',
+                )}
+              >
+                {IndicatorService.getPicto({
+                  slug: props.indicator.slug,
+                  indicatorValue,
+                  color: indicatorColor,
+                })}
+              </View>
             </View>
+            {props.isFavorite ? (
+              <LineChartWithCursor
+                value={indicatorValue}
+                slug={currentIndicatorData?.slug}
+                showCursor={props.isFavorite}
+              />
+            ) : (
+              <LineChart
+                color={indicatorColor}
+                value={indicatorValue}
+                maxValue={indicatorMaxValue}
+              />
+            )}
+
+            {showLineList ? (
+              <LineList
+                slug={currentIndicatorData?.slug}
+                values={indicatorDataInCurrentDay?.values}
+                isPreviewMode
+                onMorePress={() => {
+                  // @ts-expect-error TODO
+                  navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
+                    indicator: currentIndicatorData,
+                    day: props.day,
+                  });
+                }}
+              />
+            ) : null}
+
+            <MyText className="mt-4 text-[10px] text-muted">
+              {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
+                'Pas de recommandations.'}
+            </MyText>
           </View>
-          {props.isFavorite ? (
-            <LineChartWithCursor
-              value={indicatorValue}
-              slug={currentIndicatorData?.slug}
-              showCursor={props.isFavorite}
-            />
-          ) : (
-            <LineChart
-              color={indicatorColor}
-              value={indicatorValue}
-              maxValue={indicatorMaxValue}
-            />
-          )}
-
-          {showLineList ? (
-            <LineList
-              slug={currentIndicatorData?.slug}
-              values={indicatorDataInCurrentDay?.values}
-              isPreviewMode
-              onMorePress={() => {
-                // @ts-expect-error TODO
-                navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
-                  indicator: currentIndicatorData,
-                  day: props.day,
-                });
-              }}
-            />
-          ) : null}
-
-          <MyText className="mt-4 text-[10px] text-muted">
-            {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
-              'Pas de recommandations.'}
-          </MyText>
         </View>
       </View>
     </TouchableOpacity>
