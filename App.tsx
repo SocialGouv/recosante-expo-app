@@ -11,7 +11,6 @@ import EnvironmentIndicator from '~/components/EnvironmentIndicator';
 LogBox.ignoreAllLogs(true);
 
 SplashScreen.preventAutoHideAsync();
-
 Sentry.init({
   dsn: 'https://011d0bf5c5f24f5eb273e83fed66e5eb@sentry.fabrique.social.gouv.fr/94',
   enableInExpoDevelopment: true,
