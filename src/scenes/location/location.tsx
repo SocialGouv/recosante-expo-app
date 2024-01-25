@@ -78,14 +78,9 @@ export function LocationPage(props: LocationPageProps) {
   );
 
   const status: Status = useMemo(() => {
-    if (query.length === 0) return StatusEnum.IDLE;
-    if (hadMin3Char && suggestedAddress.length > 0) {
-      return StatusEnum.WITH_RESULTS;
-    }
-    if (hadMin3Char && suggestedAddress.length === 0) {
-      return StatusEnum.NO_RESULT;
-    }
-    return StatusEnum.IDLE;
+    if (query.length < 3) return StatusEnum.IDLE;
+    if (suggestedAddress.length > 0) return StatusEnum.WITH_RESULTS;
+    return StatusEnum.NO_RESULT;
   }, [query, suggestedAddress.length]);
 
   const handleSheetChanges = useCallback((index: number) => {
