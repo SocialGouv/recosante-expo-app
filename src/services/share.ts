@@ -4,7 +4,7 @@ import { capture } from './sentry';
 
 export namespace ShareService {
   export async function shareApp() {
-    const url = 'https://recosante.beta.gouv.fr/';
+    const url = 'https://recosante.beta.gouv.fr/download';
     try {
       logEvent({
         category: 'SHARE_APP',
