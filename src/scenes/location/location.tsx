@@ -33,13 +33,19 @@ interface LocationPageProps {
   route: any;
 }
 
-type Status = 'idle' | 'with_results' | 'no_result' | 'error';
+type Status = 'idle' | 'with_results' | 'no_result';
+enum StatusEnum {
+  IDLE = 'idle',
+  WITH_RESULTS = 'with_results',
+  NO_RESULT = 'no_result',
+}
+
 export function LocationPage(props: LocationPageProps) {
   const navigation = useNavigation();
   const { setAddress } = useAddress((state) => state);
   const [query, setQuery] = useState('');
   const hadMin3Char = query.length >= 3;
-  const [status, setStatus] = useState<Status>('idle');
+
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedAddress, setSuggestedAddress] = useState<Address[]>([]);
   function handleSelect(address: Address) {
@@ -68,20 +74,19 @@ export function LocationPage(props: LocationPageProps) {
       setSuggestedAddress(adressReponse);
       setIsLoading(false);
     },
-    [query, setSuggestedAddress, setStatus],
+    [query, setSuggestedAddress],
   );
 
-  useEffect(() => {
-    if (query.length === 0) {
-      setStatus('idle');
-    }
+  const status: Status = useMemo(() => {
+    if (query.length === 0) return StatusEnum.IDLE;
     if (query.length >= 3 && suggestedAddress.length > 0) {
-      setStatus('with_results');
+      return StatusEnum.WITH_RESULTS;
     }
     if (suggestedAddress.length === 0 && query.length >= 3) {
-      setStatus('no_result');
+      return StatusEnum.NO_RESULT;
     }
-  }, [query, suggestedAddress]);
+    return StatusEnum.IDLE;
+  }, [query, suggestedAddress.length]);
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
@@ -98,7 +103,6 @@ export function LocationPage(props: LocationPageProps) {
   function cancelQuery() {
     setQuery('');
     setSuggestedAddress([]);
-    setStatus('idle');
   }
 
   useEffect(() => {
@@ -262,7 +266,7 @@ export function LocationPage(props: LocationPageProps) {
               </MyText>
             </View>
           ) : null}
-          {status === 'idle' ? (
+          {status === StatusEnum.IDLE ? (
             <View className="mt-16 h-full w-full">
               <Illu />
               <MyText
@@ -274,7 +278,7 @@ export function LocationPage(props: LocationPageProps) {
               </MyText>
             </View>
           ) : null}
-          {status === 'no_result' ? (
+          {status === StatusEnum.NO_RESULT ? (
             <View className="mt-16 h-full w-full">
               <Illu />
               <MyText
