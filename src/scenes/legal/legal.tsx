@@ -95,8 +95,9 @@ export function LegalPage(props: LocationPageProps) {
           </MyText>
           <Title label="Hébergement de la Plateforme" />
           <MyText font="MarianneRegular" className="mt-2 text-xs">
-            Cette application est hébergée par OVH, situé:{'\n'}2 rue Kellermann
-            {'\n'}59100 Roubaix{'\n'}France.
+            Cette application est hébergée par Microsoft Azure, situé:{'\n'}37
+            Quai du Président Roosevelt
+            {'\n'}92130 Issy-les-Moulineaux{'\n'}France.
           </MyText>
         </View>
       </ScrollView>
