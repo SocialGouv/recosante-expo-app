@@ -156,12 +156,6 @@ function TextRow(props: TextRowProps) {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      hitSlop={{
-        top: 20,
-        bottom: 20,
-        left: 20,
-        right: 20,
-      }}
       className="flex flex-row items-center justify-between py-4 pr-4"
     >
       <MyText font="MarianneRegular" className="text-[14px]">
