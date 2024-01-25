@@ -48,7 +48,9 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Permettez à Recosanté d'accéder à votre position afin de préremplir votre adresse dans les formulaires."
+          "locationAlwaysAndWhenInUsePermission": "Nous n'enregistrons pas vos coordonnées mais nous conservons seulement votre code INSEE de commune, afin de vous fournir des indicateurs précis.",
+          "locationAlwaysPermission": "Nous n'enregistrons pas vos coordonnées mais nous conservons seulement votre code INSEE de commune, afin de vous fournir des indicateurs précis.",
+          "locationWhenInUsePermission": "Nous n'enregistrons pas vos coordonnées mais nous conservons seulement votre code INSEE de commune, afin de vous fournir des indicateurs précis."
         }
       ],
       [
