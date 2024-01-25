@@ -79,10 +79,10 @@ export function LocationPage(props: LocationPageProps) {
 
   const status: Status = useMemo(() => {
     if (query.length === 0) return StatusEnum.IDLE;
-    if (query.length >= 3 && suggestedAddress.length > 0) {
+    if (hadMin3Char && suggestedAddress.length > 0) {
       return StatusEnum.WITH_RESULTS;
     }
-    if (suggestedAddress.length === 0 && query.length >= 3) {
+    if (hadMin3Char && suggestedAddress.length === 0) {
       return StatusEnum.NO_RESULT;
     }
     return StatusEnum.IDLE;
