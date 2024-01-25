@@ -4,7 +4,7 @@ import appJson from '~/../app.json';
 import { getRoute } from './navigation';
 import { API_SCHEME, API_HOST } from '../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_MATOMO_ID } from '~/constants/matamo';
+import { STORAGE_USER_ID } from '~/constants/matomo';
 // AsyncStorage.clear();
 
 export const checkNetwork = async (test = false) => {
@@ -35,7 +35,7 @@ class ApiService {
     body = null,
   }) => {
     try {
-      const matomo_id = await AsyncStorage.getItem(STORAGE_MATOMO_ID);
+      const matomo_id = await AsyncStorage.getItem(STORAGE_USER_ID);
       const config = {
         method,
         headers: {

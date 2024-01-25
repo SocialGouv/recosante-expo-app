@@ -10,6 +10,8 @@ class _Matomo {
     this.dimensions = {};
   }
 
+  trackingEnabled = true;
+
   makeid(length = 16) {
     var result = '';
     var characters = '01234567890abcdefABCDEF';
@@ -59,6 +61,10 @@ class _Matomo {
     // e_a — The event action. Must not be empty. (eg. Play, Pause, Duration, Add Playlist, Downloaded, Clicked...)
     // e_n — The event name. (eg. a Movie name, or Song name, or File name...)
     // e_v — The event value. Must be a float or integer value (numeric), not a string.
+    if (!this.trackingEnabled) {
+      console.log('will NOT log event');
+      return;
+    }
     const params = {
       e_c: category,
       e_a: action,

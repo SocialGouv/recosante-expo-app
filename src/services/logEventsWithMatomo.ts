@@ -4,17 +4,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Matomo from './matomo';
 import { MATOMO_URL, MATOMO_IDSITE } from '../config';
 import API from './api';
-import { STORAGE_MATOMO_ID } from '~/constants/matamo';
+import { MATOMO_TRACKING_ENABLED, STORAGE_USER_ID } from '~/constants/matomo';
 
-// storage.delete('STORAGE_MATOMO_ID');
+// storage.delete('STORAGE_USER_ID');
 export async function initMatomo() {
-  let matomo_id = await AsyncStorage.getItem(STORAGE_MATOMO_ID);
+  let matomo_id = await AsyncStorage.getItem(STORAGE_USER_ID);
   console.log('matomo_id', matomo_id);
   if (!matomo_id) {
-    console.log('no matomo_id');
+    console.log('no user_id for matomo_id');
     matomo_id = Matomo.makeid();
     console.log('created matamo id', matomo_id);
-    AsyncStorage.setItem(STORAGE_MATOMO_ID, matomo_id);
+    AsyncStorage.setItem(STORAGE_USER_ID, matomo_id);
     API.post({
       path: '/user',
       body: {
@@ -34,6 +34,11 @@ export async function initMatomo() {
     userId: matomo_id,
     _idvc: newVisits,
   });
+
+  const matomoTrackingEnabled = await AsyncStorage.getItem(MATOMO_TRACKING_ENABLED);
+  if (matomoTrackingEnabled === 'false') {
+    Matomo.trackingEnabled = false;
+  }
 
   // Matomo.setCustomDimensions({
   //   [1]: "",

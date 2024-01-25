@@ -12,8 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Close } from '~/assets/icons/close';
 import { Switch } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_MATOMO_ID } from '~/constants/matamo';
-import { initMatomo } from '~/services/logEventsWithMatomo';
+import { MATOMO_TRACKING_ENABLED } from '~/constants/matomo';
+import Matomo from '~/services/matomo';
 
 interface LocationPageProps {
   navigation: any;
@@ -23,16 +23,10 @@ interface LocationPageProps {
 export function ConfidentialityPage(props: LocationPageProps) {
   const navigation = useNavigation();
 
-  const [state, setState] = useState({
-    matomoActive: true,
-  });
+  const [matomoActive, setMatomoActive] = useState(Matomo.trackingEnabled);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['80%'], []);
   const isOpenedRef = useRef(false);
-
-  async function getMatomoId() {
-    return await AsyncStorage.getItem(STORAGE_MATOMO_ID);
-  }
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
@@ -48,28 +42,21 @@ export function ConfidentialityPage(props: LocationPageProps) {
 
   useEffect(() => {
     bottomSheetRef.current?.expand();
-    getMatomoId().then((matomoId) => {
-      if (matomoId) {
-        setState({
-          matomoActive: true,
-        });
-      } else {
-        setState({
-          matomoActive: false,
-        });
-      }
+    AsyncStorage.getItem(MATOMO_TRACKING_ENABLED).then((trackingEnabled) => {
+      setMatomoActive(trackingEnabled !== 'false');
     });
   }, []);
 
   function handleSwitchChange() {
-    if (state.matomoActive) {
-      AsyncStorage.removeItem(STORAGE_MATOMO_ID);
+    if (matomoActive) {
+      Matomo.trackingEnabled = false;
+      AsyncStorage.setItem(MATOMO_TRACKING_ENABLED, 'false');
+      setMatomoActive(false);
     } else {
-      initMatomo();
+      AsyncStorage.removeItem(MATOMO_TRACKING_ENABLED);
+      Matomo.trackingEnabled = true;
+      setMatomoActive(true);
     }
-    setState({
-      matomoActive: !state.matomoActive,
-    });
   }
 
   return (
@@ -162,7 +149,7 @@ export function ConfidentialityPage(props: LocationPageProps) {
                 className=" w-1/5"
                 style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
                 onValueChange={handleSwitchChange}
-                value={state.matomoActive}
+                value={matomoActive}
               />
               <MyText
                 font="MarianneRegular"
