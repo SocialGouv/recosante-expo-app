@@ -52,13 +52,15 @@ export function IndicatorSelectorSheet({
   return (
     <BottomSheet
       style={{
-        shadowColor: '#000000',
+        backgroundColor: '#3343BD',
+        borderRadius: 35,
+        shadowColor: '#3343BD',
         shadowOffset: {
           width: 0,
           height: 2,
         },
-        shadowOpacity: 1,
-        shadowRadius: 150,
+        shadowOpacity: 0.7,
+        shadowRadius: 20,
         elevation: 2,
       }}
       ref={bottomSheetRef}

@@ -47,8 +47,32 @@ export function SettingsPage({ navigation }: any) {
             });
           }}
         />
+        <Title label="Recosanté" />
+
+        <TextRow
+          text="Nous contacter"
+          onPress={() => {
+            logEvent({
+              category: 'SETTINGS',
+              action: 'CONTACT_US_BY_EMAIL',
+            });
+            Linking.openURL('mailto:contact@recosante.beta.gouv.fr');
+          }}
+        />
+        <TextRow
+          text="Nos mentions légales"
+          onPress={() => {
+            navigation.navigate(RouteEnum.LEGAL);
+          }}
+        />
+        <TextRow
+          text="La politique de confidentialité"
+          onPress={() => {
+            navigation.navigate(RouteEnum.CONFIDENTIALITY);
+          }}
+        />
         <View>
-          <View className="mt-16 flex w-full flex-row  items-start justify-between space-x-2 px-4">
+          {/* <View className="mb-4 mt-16 flex w-full  flex-row items-start justify-between space-x-2">
             <TouchableOpacity
               onPress={() => {
                 logEvent({
@@ -61,47 +85,52 @@ export function SettingsPage({ navigation }: any) {
             >
               <MyText font="MarianneBold">Nous contacter</MyText>
             </TouchableOpacity>
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(RouteEnum.LEGAL);
-                }}
-                className="border-b pb-1"
-              >
-                <MyText font="MarianneBold">Mentions légales</MyText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={async () => {
-                  if (onVersionClicked < 5) {
-                    setOnVersionClicked((c) => c + 1);
-                  } else {
-                    await AsyncStorage.clear();
-                    await initMatomo();
-                    resetIndicatorsList();
-                    const resetAction = CommonActions.reset({
-                      index: 0,
-                      routes: [{ name: RouteEnum.ONBOARDING }],
-                    });
-                    navigation.dispatch(resetAction);
-                    resetIndicators();
-                  }
-                }}
-                className=" opacity-30"
-              >
-                <MyText
-                  font="MarianneRegularItalic"
-                  className=" mt-2 text-right text-xs"
-                >
-                  Version {appJson.expo.version} (
-                  {Platform.select({
-                    ios: appJson.expo.ios.buildNumber,
-                    android: `${appJson.expo.android.versionCode}`,
-                  })}
-                  )
-                </MyText>
-              </TouchableOpacity>
-            </View>
-          </View>
+          </View> */}
+          {/* <View className="mt-16 flex-row items-center justify-between">
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(RouteEnum.LEGAL);
+              }}
+              className="border-b pb-1"
+            >
+              <MyText font="MarianneBold">Mentions légales</MyText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(RouteEnum.LEGAL);
+              }}
+              className="mt-2 border-b pb-1"
+            >
+              <MyText font="MarianneBold">Politique de confidentialité</MyText>
+            </TouchableOpacity>
+          </View> */}
+          <TouchableOpacity
+            onPress={async () => {
+              if (onVersionClicked < 5) {
+                setOnVersionClicked((c) => c + 1);
+              } else {
+                await AsyncStorage.clear();
+                await initMatomo();
+                resetIndicatorsList();
+                const resetAction = CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: RouteEnum.ONBOARDING }],
+                });
+                navigation.dispatch(resetAction);
+                resetIndicators();
+              }
+            }}
+            className=" mt-2 opacity-30"
+          >
+            <MyText font="MarianneRegularItalic" className="text-left text-xs">
+              Version {appJson.expo.version} (
+              {Platform.select({
+                ios: appJson.expo.ios.buildNumber,
+                android: `${appJson.expo.android.versionCode}`,
+              })}
+              )
+            </MyText>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
