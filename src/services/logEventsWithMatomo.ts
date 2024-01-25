@@ -66,7 +66,7 @@ export const logEvent = async ({
     const canSend = await checkNetwork();
     if (!canSend) throw new Error('no network');
     // TODO: type Matomo.logEvent
-    // @ts-ignore
+    // @ts-expect-error TODO: type Matomo
     Matomo.logEvent({ category, action, name, value });
     const body = {
       event: { category, action, name, value },

@@ -69,6 +69,18 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
 
   return (
     <BottomSheet
+      style={{
+        backgroundColor: '#3343BD',
+        borderRadius: 35,
+        shadowColor: '#3343BD',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.7,
+        shadowRadius: 20,
+        elevation: 2,
+      }}
       ref={bottomSheetRef}
       index={2}
       snapPoints={snapPoints}

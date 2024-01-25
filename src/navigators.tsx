@@ -27,6 +27,7 @@ import { useIndicatorsList } from './zustand/indicator/useIndicatorsList';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { IndicatorDetail } from './scenes/dashboard/indicator-detail';
 import { LegalPage } from './scenes/legal/legal';
+import { ConfidentialityPage } from './scenes/confidentiality/confidentiality';
 
 interface TabBarLabelProps {
   children: React.ReactNode;
@@ -220,6 +221,22 @@ export function Navigators() {
             <RootStack.Screen
               name={RouteEnum.LEGAL}
               component={LegalPage}
+              options={() => ({
+                headerShown: false,
+                presentation: 'transparentModal',
+                customAnimationOnGestureEnd: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+                customAnimationOnGestureStart: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+              })}
+            />
+            <RootStack.Screen
+              name={RouteEnum.CONFIDENTIALITY}
+              component={ConfidentialityPage}
               options={() => ({
                 headerShown: false,
                 presentation: 'transparentModal',

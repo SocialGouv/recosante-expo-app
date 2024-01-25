@@ -36,13 +36,15 @@ export function LegalPage(props: LocationPageProps) {
   return (
     <BottomSheet
       style={{
-        shadowColor: '#000000',
+        backgroundColor: '#3343BD',
+        borderRadius: 35,
+        shadowColor: '#3343BD',
         shadowOffset: {
           width: 0,
           height: 2,
         },
-        shadowOpacity: 1,
-        shadowRadius: 150,
+        shadowOpacity: 0.7,
+        shadowRadius: 20,
         elevation: 2,
       }}
       enablePanDownToClose={true}
@@ -78,7 +80,7 @@ export function LegalPage(props: LocationPageProps) {
       </Pressable>
 
       <ScrollView className="flex flex-1 bg-app-gray">
-        <View className="px-6 pb-20 pt-6">
+        <View className="px-4 pb-20 pt-6">
           <Title label="Editeur de la plateforme" />
           <MyText font="MarianneRegular" className="mt-2 text-xs">
             L’application «Recosanté» est éditée par la Fabrique des ministères
