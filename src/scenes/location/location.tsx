@@ -13,6 +13,7 @@ import {
   TextInput,
   type TextInputChangeEventData,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import * as Location from 'expo-location';
@@ -32,13 +33,20 @@ interface LocationPageProps {
   route: any;
 }
 
-type Status = 'idle' | 'loading' | 'with_results' | 'no_result' | 'error';
+type Status = 'idle' | 'with_results' | 'no_result';
+enum StatusEnum {
+  IDLE = 'idle',
+  WITH_RESULTS = 'with_results',
+  NO_RESULT = 'no_result',
+}
+
 export function LocationPage(props: LocationPageProps) {
   const navigation = useNavigation();
   const { setAddress } = useAddress((state) => state);
   const [query, setQuery] = useState('');
   const hadMin3Char = query.length >= 3;
-  const [status, setStatus] = useState<Status>('idle');
+
+  const [isLoading, setIsLoading] = useState(false);
   const [suggestedAddress, setSuggestedAddress] = useState<Address[]>([]);
   function handleSelect(address: Address) {
     setAddress(address);
@@ -52,13 +60,9 @@ export function LocationPage(props: LocationPageProps) {
       const { text } = event.nativeEvent;
       // TODO: debounce
       setQuery(text);
-      if (query.length < 3) {
-        setStatus('idle');
-        setSuggestedAddress([]);
-      }
 
       const search = query.toLowerCase();
-      setStatus('loading');
+      setIsLoading(true);
       const url = new URL('https://api-adresse.data.gouv.fr/search/');
       url.searchParams.append('q', search);
       const response = await fetch(url);
@@ -68,14 +72,16 @@ export function LocationPage(props: LocationPageProps) {
           return LocationService.formatPropertyToAddress(feature.properties);
         }) ?? [];
       setSuggestedAddress(adressReponse);
-      if (query.length >= 3 && suggestedAddress.length === 0) {
-        setStatus('no_result');
-      } else {
-        setStatus('with_results');
-      }
+      setIsLoading(false);
     },
-    [query, setSuggestedAddress, setStatus],
+    [query, setSuggestedAddress],
   );
+
+  const status: Status = useMemo(() => {
+    if (query.length < 3) return StatusEnum.IDLE;
+    if (suggestedAddress.length > 0) return StatusEnum.WITH_RESULTS;
+    return StatusEnum.NO_RESULT;
+  }, [query, suggestedAddress.length]);
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
@@ -149,6 +155,8 @@ export function LocationPage(props: LocationPageProps) {
         </View>
         <View className="flex-row items-start justify-start bg-app-primary">
           <TextInput
+            autoCorrect={false}
+            autoFocus
             placeholderTextColor="#3343BD"
             placeholder="Rechercher un lieu, ville"
             value={query}
@@ -178,9 +186,14 @@ export function LocationPage(props: LocationPageProps) {
         </View>
       </View>
 
-      <BottomSheetScrollView className="flex flex-1 bg-app-gray">
-        <View className="px-6 pt-6">
-          <View className="w-full  p-4">
+      <BottomSheetScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'flex-start',
+        }}
+      >
+        <View className=" h-full bg-app-gray px-6 pt-6">
+          <View className="w-full">
             <Pressable
               onPress={async () => {
                 logEvent({
@@ -238,17 +251,17 @@ export function LocationPage(props: LocationPageProps) {
             </Pressable>
           </View>
 
-          {status === 'loading' ? (
-            <View className="w-full  border-b  border-gray-300 p-4  ">
+          {isLoading ? (
+            <View className="w-full  p-4  ">
               <MyText
                 font="MarianneRegular"
-                className="ml-4 w-fit text-lg text-black"
+                className="ml-4 w-fit text-xs text-black"
               >
                 Chargement...
               </MyText>
             </View>
           ) : null}
-          {status === 'idle' ? (
+          {status === StatusEnum.IDLE ? (
             <View className="mt-16 h-full w-full">
               <Illu />
               <MyText
@@ -260,7 +273,7 @@ export function LocationPage(props: LocationPageProps) {
               </MyText>
             </View>
           ) : null}
-          {status === 'no_result' ? (
+          {status === StatusEnum.NO_RESULT ? (
             <View className="mt-16 h-full w-full">
               <Illu />
               <MyText
@@ -271,13 +284,14 @@ export function LocationPage(props: LocationPageProps) {
               </MyText>
             </View>
           ) : null}
+
           {suggestedAddress?.map((address) => {
             return (
               <View
                 key={`${address.id}-${address.postcode}$}`}
-                className="w-full  border-b  border-gray-300 p-4  "
+                className="w-full  border-b border-gray-300 py-4"
               >
-                <Pressable
+                <TouchableOpacity
                   onPress={() => {
                     logEvent({
                       category: 'LOCATION',
@@ -288,17 +302,17 @@ export function LocationPage(props: LocationPageProps) {
                 >
                   <MyText
                     font="MarianneRegular"
-                    className="mb-2  w-full   text-xl text-black"
+                    className="mb-1  w-full   text-[14px] text-black"
                   >
                     {address.label}
                   </MyText>
                   <MyText
-                    font="MarianneBold"
-                    className="  w-full   text-xl text-black"
+                    font="MarianneMedium"
+                    className="w-full text-xs text-[#8B99A2]"
                   >
                     {address.postcode} {address.city}
                   </MyText>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             );
           })}
