@@ -5,6 +5,7 @@ import { IndicatorService } from '~/services/indicator';
 import { cn } from '~/utils/tailwind';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import Button from '../ui/button';
+import * as Haptics from 'expo-haptics';
 
 interface IndicatorsSelectorProps {
   indicators: IndicatorItem[] | null;
@@ -17,6 +18,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
   const [state, setState] = useState<IndicatorItem | null>(favoriteIndicator);
 
   function handleSelectIndicator(indicator: IndicatorItem) {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setState(indicator);
   }
 

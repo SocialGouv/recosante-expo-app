@@ -11,6 +11,7 @@ import { RouteEnum } from '~/constants/route';
 import { LineList } from './graphs/lines-list';
 import { LineChart } from './graphs/line';
 import { logEvent } from '~/services/logEventsWithMatomo';
+import * as Haptics from 'expo-haptics';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
@@ -34,6 +35,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
       name: props.indicator.slug.toLocaleUpperCase(),
       value: props.isFavorite ? 1 : 0,
     });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     // @ts-expect-error TODO
     navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
       indicator: currentIndicatorData,
