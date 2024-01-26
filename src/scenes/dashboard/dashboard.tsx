@@ -15,12 +15,15 @@ import { Illu } from '~/assets/share/illu';
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { address } = useAddress((state) => state);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
     if (!address?.citycode) return;
     let ignore = false;
+    setIsLoading(true);
+    // add wait time to show loading
     API.get({ path: '/indicators' }).then((response) => {
       if (ignore) return;
       if (!response.ok) {
@@ -28,7 +31,9 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         return;
       }
       setIndicators(response.data);
+      setIsLoading(false);
     });
+
     registerForPushNotificationsAsync({
       force: false,
       expo: true,
@@ -43,11 +48,11 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     return () => {
       ignore = true;
     };
-  }, [address?.citycode]);
+  }, [address?.city]);
 
   if (error) {
     return (
-      <View>
+      <View className="flex items-center justify-start bg-app-gray px-4 py-4">
         <MyText>{error}</MyText>
       </View>
     );
@@ -63,7 +68,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
             }}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <View className="w-fit rounded-full bg-app-primary p-3 text-sm text-white">
+            <View className="w-fit  rounded-full bg-app-primary p-3 text-sm text-white">
               <LocationIcon />
             </View>
           </TouchableOpacity>
@@ -98,6 +103,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         <IndicatorsListPreview
           indicators={indicators}
           favoriteIndicator={favoriteIndicator}
+          isLoading={isLoading}
         />
       ) : (
         <NoLocationCallToAction navigation={navigation} />

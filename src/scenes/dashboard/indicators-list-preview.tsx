@@ -4,6 +4,7 @@ import { IndicatorPreview } from '~/components/indicators/indicator-preview';
 import { type IndicatorItem } from '~/types/indicator';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { DayEnum } from '~/types/day';
+import { Loader } from '~/components/ui/loader';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -15,6 +16,7 @@ const tabsEnum = {
 interface IndicatorsListPreviewProps {
   indicators: IndicatorItem[] | null;
   favoriteIndicator: IndicatorItem | null;
+  isLoading: boolean;
 }
 export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   //   Remove the favorite indicator from the list of indicators
@@ -32,24 +34,30 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   function IndicatorListView({ route }: any) {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
-          {props.favoriteIndicator ? (
-            <IndicatorPreview
-              day={route.params.day}
-              indicator={props.favoriteIndicator}
-              isFavorite
-              index={0}
-            />
-          ) : null}
-          {filteredIndicators?.map((indicator, index) => (
-            <IndicatorPreview
-              day={route.params.day}
-              key={indicator.slug}
-              indicator={indicator}
-              index={index}
-            />
-          ))}
-        </View>
+        {props.isLoading ? (
+          <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
+            <Loader label="Chargement des indicateurs ..." />
+          </View>
+        ) : (
+          <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
+            {props.favoriteIndicator ? (
+              <IndicatorPreview
+                day={route.params.day}
+                indicator={props.favoriteIndicator}
+                isFavorite
+                index={0}
+              />
+            ) : null}
+            {filteredIndicators?.map((indicator, index) => (
+              <IndicatorPreview
+                day={route.params.day}
+                key={indicator.slug}
+                indicator={indicator}
+                index={index}
+              />
+            ))}
+          </View>
+        )}
       </ScrollView>
     );
   }
@@ -104,5 +112,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#ECF1FB',
+    height: '100%',
   },
 });
