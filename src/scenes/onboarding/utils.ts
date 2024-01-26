@@ -26,12 +26,15 @@ export function useOnboardingNavigation(): {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onNextAfterGeolocation() {
+    console.log('plaf');
     const token = await registerForPushNotificationsAsync({
       force: false,
       expo: true,
     });
+    console.log('plif');
 
     if (token?.data) {
+      console.log('coolos');
       API.put({
         path: '/user',
         body: { push_notif_token: JSON.stringify(token) },
@@ -43,6 +46,7 @@ export function useOnboardingNavigation(): {
       setOnboardingScreen(RouteEnum.HOME);
       navigate(RouteEnum.HOME);
     } else {
+      console.log('plouf');
       setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
       navigate(OnboardingRouteEnum.NOTIFICATIONS);
     }
@@ -91,9 +95,13 @@ export function useOnboardingNavigation(): {
           action: 'ENABLE_GEOLOCATION',
         });
         setIsLoading(true);
+        // eslint-disable-next-line no-case-declarations
         const location = await LocationService.requestLocation();
         if (!location) {
-          Alert.alert('Erreur', 'Impossible de trouver votre position');
+          Alert.alert(
+            'Impossible de vous localiser',
+            'Veuillez réassayer plus tard.',
+          );
           setIsLoading(false);
           return;
         }
@@ -102,11 +110,14 @@ export function useOnboardingNavigation(): {
           location.coords.longitude,
         )
           .then((adress) => {
+            console.log('adress', adress);
             setIsLoading(false);
             if (adress) {
               setAddress(adress);
             }
-            onNextAfterGeolocation();
+            // onNextAfterGeolocation();
+            setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
+            navigate(OnboardingRouteEnum.NOTIFICATIONS);
           })
           .catch((err) => {
             capture(err, {

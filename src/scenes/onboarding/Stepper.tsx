@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import MyText from '~/components/ui/my-text';
 import { cn } from '~/utils/tailwind';
 
 type StepperProps = {

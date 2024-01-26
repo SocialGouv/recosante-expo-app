@@ -9,6 +9,7 @@ import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { RouteEnum } from '~/constants/route';
 import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
@@ -56,6 +57,15 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       <View className="flex items-center justify-start bg-app-gray px-4 py-4">
         <View className="relative z-50 mt-8 flex w-full items-end">
           <TouchableOpacity
+            onPress={async () => {
+              await AsyncStorage.clear();
+            }}
+          >
+            <MyText font="MarianneBold" className="text-2xl text-black">
+              Reset city
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               navigation.navigate(RouteEnum.LOCATION);
             }}
@@ -92,10 +102,18 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           ) : null}
         </View>
       </View>
-      <IndicatorsListPreview
-        indicators={indicators}
-        favoriteIndicator={favoriteIndicator}
-      />
+      {address?.city ? (
+        <IndicatorsListPreview
+          indicators={indicators}
+          favoriteIndicator={favoriteIndicator}
+        />
+      ) : (
+        <View>
+          <TouchableOpacity>
+            <MyText>Choisir une ville</MyText>
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 }

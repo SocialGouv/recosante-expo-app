@@ -9,8 +9,9 @@ import { OnboardingRouteEnum } from '~/constants/route';
 import Button from '~/components/ui/button';
 import { cn } from '~/utils/tailwind';
 import { useOnboardingNavigation } from './utils';
-import { Stepper } from './Stepper';
+
 import MyText from '~/components/ui/my-text';
+import { Stepper } from './stepper';
 
 const OnboardingStack = createStackNavigator();
 export function Onboarding() {

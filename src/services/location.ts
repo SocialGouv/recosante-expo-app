@@ -59,7 +59,19 @@ export namespace LocationService {
     const currentAdress = response?.features[0]?.properties as Property;
 
     if (!currentAdress) {
-      Alert.alert('Erreur', 'Impossible de trouver votre ville');
+      await new Promise((resolve) => {
+        Alert.alert(
+          'Erreur',
+          "Impossible de trouver votre ville, l'application fonctionne uniquement en France pour le moment.",
+          [
+            {
+              text: 'Continuer',
+              onPress: resolve,
+            },
+          ],
+        );
+      });
+      return undefined;
     } else {
       const formatedAdress =
         LocationService.formatPropertyToAddress(currentAdress);
