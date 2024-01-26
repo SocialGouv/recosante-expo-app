@@ -4,21 +4,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Matomo from './matomo';
 import { MATOMO_URL, MATOMO_IDSITE } from '../config';
 import API from './api';
-import { MATOMO_TRACKING_ENABLED, STORAGE_USER_ID } from '~/constants/matomo';
+import { MATOMO_TRACKING_ENABLED, USER_ID } from '~/constants/matomo';
 
-// storage.delete('STORAGE_USER_ID');
-export async function initMatomo() {
-  let matomo_id = await AsyncStorage.getItem(STORAGE_USER_ID);
+// storage.delete('USER_ID');
+export async function initSession() {
+  let matomo_id = await AsyncStorage.getItem(USER_ID);
   console.log('matomo_id', matomo_id);
   if (!matomo_id) {
-    console.log('no user_id for matomo_id');
+    console.log('no matomo_id for matomo_id');
     matomo_id = Matomo.makeid();
     console.log('created matamo id', matomo_id);
-    AsyncStorage.setItem(STORAGE_USER_ID, matomo_id);
+    AsyncStorage.setItem(USER_ID, matomo_id);
     API.post({
       path: '/user',
       body: {
-        matomo_id,
+        matomo_id: matomo_id,
       },
     });
   }

@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import * as Sentry from 'sentry-expo';
 import { Navigators } from './src/navigators';
-import { initMatomo } from '~/services/logEventsWithMatomo';
+import { initSession } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/EnvironmentIndicator';
 
 LogBox.ignoreAllLogs(true);
@@ -18,7 +18,8 @@ Sentry.init({
   debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   tracesSampleRate: 0.05,
 });
-initMatomo();
+
+initSession();
 
 function App() {
   const [fontsLoaded] = useFonts({

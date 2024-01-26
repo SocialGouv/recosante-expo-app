@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteEnum } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
-import { initMatomo, logEvent } from '~/services/logEventsWithMatomo';
+import { initSession, logEvent } from '~/services/logEventsWithMatomo';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
 
@@ -110,7 +110,7 @@ export function SettingsPage({ navigation }: any) {
                 setOnVersionClicked((c) => c + 1);
               } else {
                 await AsyncStorage.clear();
-                await initMatomo();
+                await initSession();
                 resetIndicatorsList();
                 const resetAction = CommonActions.reset({
                   index: 0,
