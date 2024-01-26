@@ -38,8 +38,9 @@ export function LineList(props: LineChartProps) {
           return (
             <View key={line.name} className="flex  flex-row">
               <MyText
-                className="bottom-1 mr-3 min-w-[75px] text-[11px] capitalize text-muted-100"
+                className="bottom-1 mr-3 basis-1/4 text-[11px] capitalize text-muted-100"
                 font="MarianneBold"
+                numberOfLines={1}
               >
                 {line.name}
               </MyText>
