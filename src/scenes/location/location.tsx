@@ -27,6 +27,7 @@ import { cn } from '~/utils/tailwind';
 import { Close } from '~/assets/icons/close';
 import { Illu } from '~/assets/location/illu';
 import { logEvent } from '~/services/logEventsWithMatomo';
+import { Loader } from '~/components/ui/loader';
 
 interface LocationPageProps {
   navigation: any;
@@ -253,12 +254,7 @@ export function LocationPage(props: LocationPageProps) {
 
           {isLoading ? (
             <View className="w-full  p-4  ">
-              <MyText
-                font="MarianneRegular"
-                className="ml-4 w-fit text-xs text-black"
-              >
-                Chargement...
-              </MyText>
+              <Loader label="Chargement des résultats ..." />
             </View>
           ) : null}
           {status === StatusEnum.IDLE ? (
