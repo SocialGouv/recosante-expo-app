@@ -35,7 +35,9 @@ export async function initSession() {
     _idvc: newVisits,
   });
 
-  const matomoTrackingEnabled = await AsyncStorage.getItem(MATOMO_TRACKING_ENABLED);
+  const matomoTrackingEnabled = await AsyncStorage.getItem(
+    MATOMO_TRACKING_ENABLED,
+  );
   if (matomoTrackingEnabled === 'false') {
     Matomo.trackingEnabled = false;
   }

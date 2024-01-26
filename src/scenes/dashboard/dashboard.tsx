@@ -9,6 +9,8 @@ import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { RouteEnum } from '~/constants/route';
 import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
+import Button from '~/components/ui/button';
+import { Illu } from '~/assets/share/illu';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
@@ -92,10 +94,40 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           ) : null}
         </View>
       </View>
-      <IndicatorsListPreview
-        indicators={indicators}
-        favoriteIndicator={favoriteIndicator}
-      />
+      {address?.city ? (
+        <IndicatorsListPreview
+          indicators={indicators}
+          favoriteIndicator={favoriteIndicator}
+        />
+      ) : (
+        <NoLocationCallToAction navigation={navigation} />
+      )}
     </>
+  );
+}
+
+function NoLocationCallToAction({ navigation }: { navigation: any }) {
+  return (
+    <View className="h-full flex-1 bg-app-gray px-4">
+      <Illu />
+      <MyText
+        font="MarianneRegular"
+        className="mb-12 px-8 text-center text-base"
+      >
+        Choisissez une ville afin de découvrir vos indicateurs favoris !
+      </MyText>
+      <View className="px-8">
+        <Button
+          onPress={() => {
+            navigation.navigate(RouteEnum.LOCATION);
+          }}
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
+          textClassName="text-black text-base"
+          font="MarianneBold"
+        >
+          <MyText>Choisir une ville</MyText>
+        </Button>
+      </View>
+    </View>
   );
 }

@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import { Alert, Linking } from 'react-native';
+import { Alert } from 'react-native';
 import { type Address, type Property } from '~/types/location';
 
 export namespace LocationService {
@@ -8,23 +8,23 @@ export namespace LocationService {
   > {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert(
-        'Permission not granted to access your location',
-        'You can change that in your settings',
-        [
-          {
-            text: 'Open Settings',
-            onPress: async () => {
-              await Linking.openSettings();
-            },
-          },
-          {
-            text: 'OK',
-            style: 'cancel',
-            onPress: () => {},
-          },
-        ],
-      );
+      // Alert.alert(
+      //   'Permission not granted to access your location',
+      //   'You can change that in your settings',
+      //   [
+      //     {
+      //       text: 'Open Settings',
+      //       onPress: async () => {
+      //         await Linking.openSettings();
+      //       },
+      //     },
+      //     {
+      //       text: 'OK',
+      //       style: 'cancel',
+      //       onPress: () => {},
+      //     },
+      //   ],
+      // );
       return;
     }
     const lastKnownPosition = await Location.getLastKnownPositionAsync();
@@ -59,7 +59,19 @@ export namespace LocationService {
     const currentAdress = response?.features[0]?.properties as Property;
 
     if (!currentAdress) {
-      Alert.alert('Erreur', 'Impossible de trouver votre ville');
+      await new Promise((resolve) => {
+        Alert.alert(
+          'Erreur',
+          "Impossible de trouver votre ville, l'application fonctionne uniquement en France pour le moment.",
+          [
+            {
+              text: 'Continuer',
+              onPress: resolve,
+            },
+          ],
+        );
+      });
+      return undefined;
     } else {
       const formatedAdress =
         LocationService.formatPropertyToAddress(currentAdress);

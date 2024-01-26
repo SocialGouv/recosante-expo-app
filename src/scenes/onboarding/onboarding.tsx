@@ -9,8 +9,10 @@ import { OnboardingRouteEnum } from '~/constants/route';
 import Button from '~/components/ui/button';
 import { cn } from '~/utils/tailwind';
 import { useOnboardingNavigation } from './utils';
-import { Stepper } from './Stepper';
+
 import MyText from '~/components/ui/my-text';
+import { Stepper } from './stepper';
+import { SkipArrow } from '~/assets/icons/skip';
 
 const OnboardingStack = createStackNavigator();
 export function Onboarding() {
@@ -43,7 +45,7 @@ export function Onboarding() {
           textClassName="text-right text-white text-sm"
           font="MarianneRegular"
         >
-          Passer {'>'}
+          Passer <SkipArrow />
         </Button>
       </View>
       <View className="shrink basis-full justify-end bg-app-primary">

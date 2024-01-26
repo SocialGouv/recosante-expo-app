@@ -53,7 +53,6 @@ const HomeBottomTab = createBottomTabNavigator();
 
 function Home(props: HomeProps) {
   const { favoriteIndicator } = useIndicatorsList((state) => state);
-
   useEffect(() => {
     if (!favoriteIndicator) {
       props.navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
