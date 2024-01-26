@@ -1,4 +1,4 @@
-import { Alert, Platform } from 'react-native';
+import { Alert, Linking, Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import appJson from '~/../app.json';
 import { getRoute } from './navigation';
