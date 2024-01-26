@@ -37,21 +37,16 @@ export async function registerForPushNotificationsAsync({
   expo = false,
 } = {}) {
   // if (Device.isDevice) {
-  console.log('registerForPushNotificationsAsync 1');
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  console.log('registerForPushNotificationsAsync 2', existingStatus);
   let finalStatus = existingStatus;
   if (existingStatus !== 'granted') {
-    console.log('registerForPushNotificationsAsync 3');
     if (!force) {
-      console.log('registerForPushNotificationsAsync 4');
       return null;
     }
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
   }
   if (finalStatus !== 'granted') {
-    console.log('registerForPushNotificationsAsync 5');
     Alert.alert(
       'Permission for Push notifications not granted',
       'You can change that in your settings',
@@ -65,10 +60,8 @@ export async function registerForPushNotificationsAsync({
         { text: 'OK', style: 'cancel', onPress: () => {} },
       ],
     );
-    console.log('registerForPushNotificationsAsync 6');
     return;
   }
-  console.log('registerForPushNotificationsAsync 7');
   const token = expo
     ? await Notifications.getExpoPushTokenAsync({
         projectId: Constants.expoConfig?.extra?.eas.projectId,
@@ -78,7 +71,6 @@ export async function registerForPushNotificationsAsync({
   //   // alert("Must use physical device for Push Notifications");
   // }
 
-  console.log('registerForPushNotificationsAsync 8');
   if (Platform.OS === 'android') {
     Notifications.setNotificationChannelAsync('default', {
       name: 'default',
@@ -87,6 +79,5 @@ export async function registerForPushNotificationsAsync({
       lightColor: '#FF231F7C',
     });
   }
-  console.log('registerForPushNotificationsAsync 9');
   return token;
 }
