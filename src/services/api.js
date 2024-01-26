@@ -22,11 +22,12 @@ class ApiService {
   host = API_HOST;
   getUrl = (path, query) => {
     const url = new URL(path, `${this.scheme}://${this.host}`);
-    Object.keys(query).forEach((key) =>
-      url.searchParams.append(key, query[key]),
-    );
+    Object.keys(query).forEach((key) => {
+      url.searchParams.append(key, query[key]);
+    });
     return url.toString();
   };
+
   execute = async ({
     method = 'GET',
     path = '',
@@ -64,8 +65,9 @@ class ApiService {
       if (response.json) {
         try {
           const readableRes = await response.json();
-          if (readableRes.sendInApp)
+          if (readableRes.sendInApp) {
             this?.showInAppMessage?.(readableRes.sendInApp);
+          }
           return readableRes;
         } catch (e) {
           console.log('ERROR IN RESPONSE JSON', response);
@@ -84,10 +86,11 @@ class ApiService {
       };
     }
   };
-  get = async (args) => this.execute({ method: 'GET', ...args });
-  post = async (args) => this.execute({ method: 'POST', ...args });
-  put = async (args) => this.execute({ method: 'PUT', ...args });
-  delete = async (args) => this.execute({ method: 'DELETE', ...args });
+
+  get = async (args) => await this.execute({ method: 'GET', ...args });
+  post = async (args) => await this.execute({ method: 'POST', ...args });
+  put = async (args) => await this.execute({ method: 'PUT', ...args });
+  delete = async (args) => await this.execute({ method: 'DELETE', ...args });
 }
 
 const API = new ApiService();
