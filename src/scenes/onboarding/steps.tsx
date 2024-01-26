@@ -1,19 +1,18 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Pressable } from 'react-native';
 import { cn } from '~/utils/tailwind';
+import * as Haptics from 'expo-haptics';
 
 type StepperProps = {
   step: 1 | 2 | 3 | 4;
   disabled?: boolean;
-  onPress?: () => void;
+  onPress: () => void;
   children: React.ReactNode;
 };
 
 export function Stepper(props: StepperProps) {
   return (
-    <View
-      className={cn('relative', props.disabled ? 'opacity-30' : 'opacity-100')}
-    >
+    <View className={cn('relative')}>
       <View
         className={cn(
           'absolute left-0 top-0 h-[47%] w-[49%] rounded-tl-full border-4 bg-app-primary',
@@ -51,13 +50,15 @@ export function Stepper(props: StepperProps) {
         <View className="absolute -top-4 left-0 h-4 w-full bg-app-primary" />
         <View className="absolute -right-4 bottom-0 h-full w-4 bg-app-primary" />
       </View>
-      <TouchableOpacity
-        onPress={props.onPress}
-        activeOpacity={0.8}
+      <Pressable
+        onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          props.onPress();
+        }}
         className="z-50 m-2 min-w-[200px] justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3"
       >
         <View className="items-center justify-center">{props.children}</View>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#ECF1FB',
-    height: '100%',
+    minHeight: '100%',
   },
 });

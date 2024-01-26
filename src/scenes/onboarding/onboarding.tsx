@@ -11,7 +11,7 @@ import { cn } from '~/utils/tailwind';
 import { useOnboardingNavigation } from './utils';
 
 import MyText from '~/components/ui/my-text';
-import { Stepper } from './stepper';
+import { Stepper } from './steps';
 import { SkipArrow } from '~/assets/icons/skip';
 
 const OnboardingStack = createStackNavigator();
@@ -71,7 +71,7 @@ export function Onboarding() {
         <View className="mx-auto my-8 flex w-screen flex-row justify-center">
           <Stepper step={step} onPress={onNext} disabled={isLoading}>
             {isLoading ? (
-              <ActivityIndicator size="small" color="black" />
+              <ActivityIndicator size="small" color="#3343BD" />
             ) : (
               <MyText font="MarianneBold" className="text-center text-black">
                 C'est parti !
