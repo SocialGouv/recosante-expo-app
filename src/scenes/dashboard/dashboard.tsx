@@ -11,6 +11,7 @@ import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import Button from '~/components/ui/button';
 import { Illu } from '~/assets/share/illu';
+import { useToast } from '~/services/toast';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
@@ -18,17 +19,16 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const { address } = useAddress((state) => state);
-  const [error, setError] = useState<string>('');
+  const { show } = useToast();
 
   useEffect(() => {
     if (!address?.citycode) return;
     let ignore = false;
     setIsLoading(true);
-    // add wait time to show loading
     API.get({ path: '/indicators' }).then((response) => {
       if (ignore) return;
       if (!response.ok) {
-        setError(response.error);
+        show(`Erreur lors du chargement des indicateurs ${response.message}`);
         return;
       }
       setIndicators(response.data);
@@ -55,20 +55,12 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     setIsRefreshing(true);
     API.get({ path: '/indicators' }).then((response) => {
       if (!response.ok) {
-        setError(response.error);
+        show(`Erreur lors du chargement des indicateurs ${response.message}`);
         return;
       }
       setIndicators(response.data);
       setIsRefreshing(false);
     });
-  }
-
-  if (error) {
-    return (
-      <View className="flex items-center justify-start bg-app-gray px-4 py-4">
-        <MyText>{error}</MyText>
-      </View>
-    );
   }
 
   return (

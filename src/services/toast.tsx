@@ -1,9 +1,12 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 
-import TextStyled from '../components/TextStyled';
+import MyText from '~/components/ui/my-text';
 
-const ViewContext = React.createContext();
+const ViewContext = React.createContext({
+  show: (caption: string | null, timeout?: number) => {},
+  hide: () => {},
+});
 
 export const useToast = () => {
   const context = React.useContext(ViewContext);
@@ -14,15 +17,21 @@ export const useToast = () => {
   return context;
 };
 
-const ToastProvider = (props) => {
+interface ToastProviderProps {
+  children: React.ReactNode;
+}
+
+const ToastProvider = (props: ToastProviderProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  const [caption, setCaption] = useState();
+  const [caption, setCaption] = useState<string | null>('');
 
-  const hide = useCallback(() => setCaption(null), [setCaption]);
+  const hide = useCallback(() => {
+    setCaption(null);
+  }, [setCaption]);
 
   const show = useCallback(
-    (caption, timeout = 1500) => {
+    (caption: string | null, timeout = 1500) => {
       const fadeIn = () => {
         // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(fadeAnim, {
@@ -58,18 +67,17 @@ const ToastProvider = (props) => {
       {Boolean(caption) && (
         <Animated.View
           style={{ opacity: fadeAnim }}
-          className="absolute bottom-11 flex w-full flex-row justify-center"
+          className="absolute top-[65px] flex w-full flex-row justify-center"
           pointerEvents={'box-none'}
         >
-          <View className="mb-4 flex w-min grow-0 rounded-full bg-[#4030a5] px-4	">
-            <TextStyled
+          <View className="mb-4 flex w-[90%]  items-center justify-center rounded-md  bg-white px-4 py-4 shadow-md">
+            <MyText
               maxFontSizeMultiplier={2}
-              color={'#FFF'}
               testID="toast"
               className="py-2 text-center"
             >
               {caption}
-            </TextStyled>
+            </MyText>
           </View>
         </Animated.View>
       )}
