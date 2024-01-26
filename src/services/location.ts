@@ -8,23 +8,23 @@ export namespace LocationService {
   > {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert(
-        'Permission not granted to access your location',
-        'You can change that in your settings',
-        [
-          {
-            text: 'Open Settings',
-            onPress: async () => {
-              await Linking.openSettings();
-            },
-          },
-          {
-            text: 'OK',
-            style: 'cancel',
-            onPress: () => {},
-          },
-        ],
-      );
+      // Alert.alert(
+      //   'Permission not granted to access your location',
+      //   'You can change that in your settings',
+      //   [
+      //     {
+      //       text: 'Open Settings',
+      //       onPress: async () => {
+      //         await Linking.openSettings();
+      //       },
+      //     },
+      //     {
+      //       text: 'OK',
+      //       style: 'cancel',
+      //       onPress: () => {},
+      //     },
+      //   ],
+      // );
       return;
     }
     const lastKnownPosition = await Location.getLastKnownPositionAsync();

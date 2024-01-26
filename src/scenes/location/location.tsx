@@ -204,11 +204,11 @@ export function LocationPage(props: LocationPageProps) {
                   async ({ status }) => {
                     if (status !== 'granted') {
                       Alert.alert(
-                        'Permission not granted to access your location',
-                        'You can change that in your settings',
+                        "Vous n'avez pas autorisé l'application à accéder à votre position.",
+                        'Vous pouvez modifier ce paramètre dans les réglages de votre téléphone.',
                         [
                           {
-                            text: 'Open Settings',
+                            text: "Aller aux réglages de l'application",
                             onPress: async () => {
                               await Linking.openSettings();
                             },

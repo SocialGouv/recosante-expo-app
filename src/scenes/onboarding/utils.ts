@@ -103,6 +103,7 @@ export function useOnboardingNavigation(): {
             'Veuillez réassayer plus tard.',
           );
           setIsLoading(false);
+          onNextAfterGeolocation();
           return;
         }
         LocationService.getAdressByCoordinates(
@@ -115,9 +116,7 @@ export function useOnboardingNavigation(): {
             if (adress) {
               setAddress(adress);
             }
-            // onNextAfterGeolocation();
-            setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
-            navigate(OnboardingRouteEnum.NOTIFICATIONS);
+            onNextAfterGeolocation();
           })
           .catch((err) => {
             capture(err, {
