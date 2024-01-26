@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, RefreshControl } from 'react-native';
 import { IndicatorPreview } from '~/components/indicators/indicator-preview';
 import { type IndicatorItem } from '~/types/indicator';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -17,6 +17,8 @@ interface IndicatorsListPreviewProps {
   indicators: IndicatorItem[] | null;
   favoriteIndicator: IndicatorItem | null;
   isLoading: boolean;
+  isRefreshing: boolean;
+  onRefresh: () => void;
 }
 export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   //   Remove the favorite indicator from the list of indicators
@@ -33,7 +35,15 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
 
   function IndicatorListView({ route }: any) {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            isRefreshing={props.isRefreshing}
+            onRefresh={props.onRefresh}
+          />
+        }
+        contentContainerStyle={styles.contentContainer}
+      >
         {props.isLoading ? (
           <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
             <Loader label="Chargement des indicateurs ..." />
