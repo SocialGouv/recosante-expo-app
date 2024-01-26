@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "recosante",
+    "name": "Recosante",
     "slug": "recosante",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "10",
+      "buildNumber": "12",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -29,7 +29,7 @@
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 10
+      "versionCode": 11
     },
     "web": {
       "favicon": "./assets/favicon.png"
