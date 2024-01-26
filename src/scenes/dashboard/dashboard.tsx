@@ -16,6 +16,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const { address } = useAddress((state) => state);
   const [error, setError] = useState<string>('');
 
@@ -49,6 +50,18 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       ignore = true;
     };
   }, [address?.city]);
+
+  function onRefresh() {
+    setIsRefreshing(true);
+    API.get({ path: '/indicators' }).then((response) => {
+      if (!response.ok) {
+        setError(response.error);
+        return;
+      }
+      setIndicators(response.data);
+      setIsRefreshing(false);
+    });
+  }
 
   if (error) {
     return (
@@ -104,6 +117,8 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           indicators={indicators}
           favoriteIndicator={favoriteIndicator}
           isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          onRefresh={onRefresh}
         />
       ) : (
         <NoLocationCallToAction navigation={navigation} />
