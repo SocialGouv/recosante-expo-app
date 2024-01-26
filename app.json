@@ -29,7 +29,7 @@
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 6
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/favicon.png"

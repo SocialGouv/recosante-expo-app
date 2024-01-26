@@ -17,6 +17,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const { address } = useAddress((state) => state);
   const { show } = useToast();
@@ -30,6 +31,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       if (ignore) return;
       if (!response.ok) {
         show(`Erreur lors du chargement des indicateurs ${response.message}`);
+        setIsError(true);
         return;
       }
       setIndicators(response.data);
@@ -105,17 +107,22 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           ) : null}
         </View>
       </View>
-      {address?.city ? (
-        <IndicatorsListPreview
-          indicators={indicators}
-          favoriteIndicator={favoriteIndicator}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          onRefresh={onRefresh}
-        />
-      ) : (
-        <NoLocationCallToAction navigation={navigation} />
+      {!address?.city && <NoLocationCallToAction navigation={navigation} />}
+      {isError && (
+        <View className="h-full w-full flex-1 flex-row flex-wrap items-center justify-center bg-app-gray pb-24 pt-8">
+          <MyText className="text-center">
+            Désolé, nos serveurs sont hors-service,{'\n'}revenez plus tard ! 😊
+          </MyText>
+        </View>
       )}
+
+      <IndicatorsListPreview
+        indicators={indicators}
+        favoriteIndicator={favoriteIndicator}
+        isLoading={isLoading}
+        isRefreshing={isRefreshing}
+        onRefresh={onRefresh}
+      />
     </>
   );
 }

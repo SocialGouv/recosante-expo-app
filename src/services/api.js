@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import appJson from '~/../app.json';
 import { getRoute } from './navigation';
@@ -66,7 +66,29 @@ class ApiService {
         try {
           const readableRes = await response.json();
           if (readableRes.sendInApp) {
-            this?.showInAppMessage?.(readableRes.sendInApp);
+            console.log('YES');
+            const [title, subTitle, actions = [], options = {}] =
+              readableRes.sendInApp;
+            if (!actions || !actions.length) {
+              Alert.alert(title, subTitle);
+            } else {
+              const actionsWithNavigation = actions.map((action) => {
+                if (action.navigate) {
+                  action.onPress = () => {
+                    navigationRef?.navigate(...action.navigate);
+                    if (action.event) logEvent(action.event);
+                  };
+                }
+                if (action.link) {
+                  action.onPress = () => {
+                    Linking.openURL(action.link);
+                    if (action.event) logEvent(action.event);
+                  };
+                }
+                return action;
+              });
+              Alert.alert(title, subTitle, actionsWithNavigation, options);
+            }
           }
           return readableRes;
         } catch (e) {

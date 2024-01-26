@@ -4,6 +4,7 @@ import { logEvent } from './logEventsWithMatomo';
 import API from './api';
 
 async function showInAppMessage(inAppMessage) {
+  console.log('BIPBIP');
   const [title, subTitle, actions = [], options = {}] = inAppMessage;
   if (!actions || !actions.length) return Alert.alert(title, subTitle);
   const actionsWithNavigation = actions.map((action) => {
