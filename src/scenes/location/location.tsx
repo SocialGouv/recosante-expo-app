@@ -60,8 +60,7 @@ export function LocationPage(props: LocationPageProps) {
       const { text } = event.nativeEvent;
       // TODO: debounce
       setQuery(text);
-
-      const search = query.toLowerCase();
+      const search = text.toLowerCase();
       setIsLoading(true);
       const url = new URL('https://api-adresse.data.gouv.fr/search/');
       url.searchParams.append('q', search);
