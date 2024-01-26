@@ -26,6 +26,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     let ignore = false;
     setIsLoading(true);
     API.get({ path: '/indicators' }).then((response) => {
+      setIsLoading(false);
       if (ignore) return;
       if (!response.ok) {
         show(`Erreur lors du chargement des indicateurs ${response.message}`);
