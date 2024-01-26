@@ -38,7 +38,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
       <ScrollView
         refreshControl={
           <RefreshControl
-            isRefreshing={props.isRefreshing}
+            refreshing={props.isRefreshing}
             onRefresh={props.onRefresh}
           />
         }
