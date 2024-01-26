@@ -3,36 +3,23 @@ import { Alert } from 'react-native';
 import { type Address, type Property } from '~/types/location';
 
 export namespace LocationService {
-  export async function requestLocation(): Promise<
-    Location.LocationObject | undefined
-  > {
+  export async function requestLocation(): Promise<{
+    status: Location.PermissionStatus;
+    location: Location.LocationObject | null;
+  }> {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      // Alert.alert(
-      //   'Permission not granted to access your location',
-      //   'You can change that in your settings',
-      //   [
-      //     {
-      //       text: 'Open Settings',
-      //       onPress: async () => {
-      //         await Linking.openSettings();
-      //       },
-      //     },
-      //     {
-      //       text: 'OK',
-      //       style: 'cancel',
-      //       onPress: () => {},
-      //     },
-      //   ],
-      // );
-      return;
+      return {
+        status,
+        location: null,
+      };
     }
     const lastKnownPosition = await Location.getLastKnownPositionAsync();
-    if (lastKnownPosition) return lastKnownPosition;
+    if (lastKnownPosition) return { status, location: lastKnownPosition };
     const currentPosition = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.Balanced,
     });
-    return currentPosition;
+    return { status, location: currentPosition };
   }
 
   export function formatPropertyToAddress(property: Property): Address {
@@ -62,10 +49,10 @@ export namespace LocationService {
       await new Promise((resolve) => {
         Alert.alert(
           "Désolé, votre lieu n'est pas disponible",
-          "Les indicateurs fournis par Recosanté sont uniquement valable en France 🇫🇷, DOM-TOM compris",
+          'Les indicateurs fournis par Recosanté sont uniquement valable en France 🇫🇷, DOM-TOM compris',
           [
             {
-              text: "OK",
+              text: 'OK',
               onPress: resolve,
               style: 'cancel',
             },

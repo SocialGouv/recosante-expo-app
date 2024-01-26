@@ -96,12 +96,14 @@ export function useOnboardingNavigation(): {
         });
         setIsLoading(true);
         // eslint-disable-next-line no-case-declarations
-        const location = await LocationService.requestLocation();
+        const { status, location } = await LocationService.requestLocation();
         if (!location) {
-          Alert.alert(
-            'Impossible de vous localiser',
-            'Veuillez réassayer plus tard.',
-          );
+          if (status === 'granted') {
+            Alert.alert(
+              "Nous n'avons pas réussi à vous localiser 🧐",
+              'Peut-être est-ce un problème de réseau ? Ne vous en faites pas, vous pourrez réessayer plus tard 😅',
+            );
+          }
           setIsLoading(false);
           onNextAfterGeolocation();
           return;

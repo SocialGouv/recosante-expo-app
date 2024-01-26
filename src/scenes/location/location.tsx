@@ -208,7 +208,7 @@ export function LocationPage(props: LocationPageProps) {
                     if (status !== 'granted') {
                       Alert.alert(
                         "Vous n'avez pas autorisé l'application à accéder à votre position.",
-                        'Vous pouvez modifier ce paramètre dans les réglages de votre téléphone.',
+                        'Vous pouvez modifier ce paramètre dans les réglages de votre téléphone 📲',
                         [
                           {
                             text: "Aller aux réglages de l'application",
