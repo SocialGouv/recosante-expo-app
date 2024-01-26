@@ -9,7 +9,8 @@ import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { RouteEnum } from '~/constants/route';
 import { useAddress } from '~/zustand/address/useAddress';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '~/components/ui/button';
+import { Illu } from '~/assets/share/illu';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
@@ -57,15 +58,6 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       <View className="flex items-center justify-start bg-app-gray px-4 py-4">
         <View className="relative z-50 mt-8 flex w-full items-end">
           <TouchableOpacity
-            onPress={async () => {
-              await AsyncStorage.clear();
-            }}
-          >
-            <MyText font="MarianneBold" className="text-2xl text-black">
-              Reset city
-            </MyText>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={() => {
               navigation.navigate(RouteEnum.LOCATION);
             }}
@@ -108,12 +100,34 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           favoriteIndicator={favoriteIndicator}
         />
       ) : (
-        <View>
-          <TouchableOpacity>
-            <MyText>Choisir une ville</MyText>
-          </TouchableOpacity>
-        </View>
+        <NoLocationCallToAction navigation={navigation} />
       )}
     </>
+  );
+}
+
+function NoLocationCallToAction({ navigation }: { navigation: any }) {
+  return (
+    <View className="h-full flex-1 bg-app-gray px-4">
+      <Illu />
+      <MyText
+        font="MarianneRegular"
+        className="mb-12 px-8 text-center text-base"
+      >
+        Choisissez une ville afin de découvrir vos indicateurs favoris !
+      </MyText>
+      <View className="px-8">
+        <Button
+          onPress={() => {
+            navigation.navigate(RouteEnum.LOCATION);
+          }}
+          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
+          textClassName="text-black text-base"
+          font="MarianneBold"
+        >
+          <MyText>Choisir une ville</MyText>
+        </Button>
+      </View>
+    </View>
   );
 }

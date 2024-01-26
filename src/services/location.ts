@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import { Alert, Linking } from 'react-native';
+import { Alert } from 'react-native';
 import { type Address, type Property } from '~/types/location';
 
 export namespace LocationService {

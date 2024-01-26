@@ -12,6 +12,7 @@ import { useOnboardingNavigation } from './utils';
 
 import MyText from '~/components/ui/my-text';
 import { Stepper } from './stepper';
+import { SkipArrow } from '~/assets/icons/skip';
 
 const OnboardingStack = createStackNavigator();
 export function Onboarding() {
@@ -44,7 +45,7 @@ export function Onboarding() {
           textClassName="text-right text-white text-sm"
           font="MarianneRegular"
         >
-          Passer {'>'}
+          Passer <SkipArrow />
         </Button>
       </View>
       <View className="shrink basis-full justify-end bg-app-primary">
