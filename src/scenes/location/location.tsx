@@ -159,6 +159,7 @@ export function LocationPage(props: LocationPageProps) {
             autoFocus
             placeholderTextColor="#3343BD"
             placeholder="Rechercher un lieu, ville"
+            clearButtonMode="always"
             value={query}
             className="h-12 w-4/5 rounded-full bg-white px-4 text-[16px] placeholder:text-[16px]"
             onChange={getSuggestions}
@@ -169,20 +170,22 @@ export function LocationPage(props: LocationPageProps) {
               });
             }}
           />
-          <Pressable
-            onPress={cancelQuery}
-            className="flex   h-12 w-1/5 items-center justify-center"
-          >
-            <MyText
-              font="MarianneRegular"
-              className={cn(
-                'ml-4 text-white',
-                hadMin3Char ? 'opacity-100' : 'opacity-0',
-              )}
+          <View className="ml-4 shrink-0 basis-1/5 items-center justify-center">
+            <Pressable
+              onPress={cancelQuery}
+              className="h-12 w-full items-center justify-center"
             >
-              Annuler
-            </MyText>
-          </Pressable>
+              <MyText
+                font="MarianneRegular"
+                className={cn(
+                  'text-white',
+                  hadMin3Char ? 'opacity-100' : 'opacity-0',
+                )}
+              >
+                Annuler
+              </MyText>
+            </Pressable>
+          </View>
         </View>
       </View>
 
