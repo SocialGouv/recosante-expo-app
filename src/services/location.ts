@@ -61,12 +61,13 @@ export namespace LocationService {
     if (!currentAdress) {
       await new Promise((resolve) => {
         Alert.alert(
-          'Erreur',
-          "Impossible de trouver votre ville, l'application fonctionne uniquement en France pour le moment.",
+          "Désolé, votre lieu n'est pas disponible",
+          "Les indicateurs fournis par Recosanté sont uniquement valable en France 🇫🇷, DOM-TOM compris",
           [
             {
-              text: 'Continuer',
+              text: "OK",
               onPress: resolve,
+              style: 'cancel',
             },
           ],
         );
