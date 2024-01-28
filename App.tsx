@@ -3,7 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import * as Sentry from 'sentry-expo';
+import * as Sentry from '@sentry/react-native';
 import { Navigators } from './src/navigators';
 import { initSession } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/environment-indicator';
@@ -14,7 +14,6 @@ LogBox.ignoreAllLogs(true);
 SplashScreen.preventAutoHideAsync();
 Sentry.init({
   dsn: 'https://011d0bf5c5f24f5eb273e83fed66e5eb@sentry.fabrique.social.gouv.fr/94',
-  enableInExpoDevelopment: true,
   enabled: !__DEV__,
   debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   tracesSampleRate: 0.05,
@@ -41,15 +40,11 @@ function App() {
   if (!fontsLoaded) {
     return null;
   }
-  return (
-    <SafeAreaProvider>
-      <Navigators />
-    </SafeAreaProvider>
-  );
+  return <Navigators />;
 }
 
 // eslint-disable-next-line react/display-name
-export default function () {
+function AppWrapper() {
   return (
     <>
       <SafeAreaProvider>
@@ -63,3 +58,5 @@ export default function () {
     </>
   );
 }
+
+export default Sentry.wrap(AppWrapper);
