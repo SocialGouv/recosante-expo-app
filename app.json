@@ -30,7 +30,7 @@
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 12
+      "versionCode": 14
     },
     "web": {
       "favicon": "./assets/favicon.png"
