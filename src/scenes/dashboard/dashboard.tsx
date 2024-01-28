@@ -116,13 +116,15 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         </View>
       )}
 
-      <IndicatorsListPreview
-        indicators={indicators}
-        favoriteIndicator={favoriteIndicator}
-        isLoading={isLoading}
-        isRefreshing={isRefreshing}
-        onRefresh={onRefresh}
-      />
+      {!!address?.city && (
+        <IndicatorsListPreview
+          indicators={indicators}
+          favoriteIndicator={favoriteIndicator}
+          isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          onRefresh={onRefresh}
+        />
+      )}
     </>
   );
 }

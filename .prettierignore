@@ -6,3 +6,6 @@ node_modules
 .expo
 CHANGELOG.md
 README.md
+
+.yarn
+.yarnrc.yml
