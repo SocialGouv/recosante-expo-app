@@ -5645,6 +5645,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-env@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: "npm:^7.0.1"
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: f3765c25746c69fcca369655c442c6c886e54ccf3ab8c16847d5ad0e91e2f337d36eedc6599c1227904bf2a228d721e690324446876115bc8e7b32a866735ecf
+  languageName: node
+  linkType: hard
+
 "cross-fetch@npm:^3.1.5":
   version: 3.1.8
   resolution: "cross-fetch@npm:3.1.8"
@@ -5667,7 +5679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -6100,6 +6112,13 @@ __metadata:
   version: 10.0.0
   resolution: "dotenv-expand@npm:10.0.0"
   checksum: 298f5018e29cfdcb0b5f463ba8e8627749103fbcf6cf81c561119115754ed582deee37b49dfc7253028aaba875ab7aea5fa90e5dac88e511d009ab0e6677924e
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.1":
+  version: 16.4.1
+  resolution: "dotenv@npm:16.4.1"
+  checksum: ef3d95f48f38146df0881a4b58447ae437d2da3f6d645074b84de4e64ef64ba75fc357c5ed66b3c2b813b5369fdeb6a4777d6ade2d50e54eed6aa06dddc98bc4
   languageName: node
   linkType: hard
 
@@ -6853,12 +6872,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-haptics@npm:^12.4.0":
-  version: 12.8.1
-  resolution: "expo-haptics@npm:12.8.1"
+"expo-haptics@npm:~12.4.0":
+  version: 12.4.0
+  resolution: "expo-haptics@npm:12.4.0"
   peerDependencies:
     expo: "*"
-  checksum: 6b8bc9de07bcd34283d5deb5c1d031d99bbe89e7bc3a24b7984d9ce513745f7222fe1520b94785633448cceedc9f56d6c3bc94ae8fbf2ddefe57cf3ae83fc990
+  checksum: 34554e858d91079afaba03484decac2db0394d6ce85ab6893bd43f7a1f86adef9b9435b26c0f3d5fc207350dcf733bca53f52d9b751ec9fc91289fef4634908a
   languageName: node
   linkType: hard
 
@@ -12881,7 +12900,9 @@ __metadata:
     "@types/react": "npm:~18.2.14"
     "@typescript-eslint/eslint-plugin": "npm:^6.18.1"
     clsx: "npm:^2.1.0"
+    cross-env: "npm:^7.0.3"
     dayjs: "npm:^1.11.10"
+    dotenv: "npm:^16.4.1"
     eslint: "npm:^8.56.0"
     eslint-config-standard-with-typescript: "npm:^43.0.0"
     eslint-plugin-import: "npm:^2.29.1"
@@ -12894,7 +12915,7 @@ __metadata:
     expo-constants: "npm:~14.4.2"
     expo-device: "npm:~5.4.0"
     expo-font: "npm:~11.4.0"
-    expo-haptics: "npm:^12.4.0"
+    expo-haptics: "npm:~12.4.0"
     expo-image: "npm:~1.3.5"
     expo-linking: "npm:~5.0.2"
     expo-location: "npm:~16.1.0"
