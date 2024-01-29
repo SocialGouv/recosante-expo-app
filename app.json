@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Recosante",
+    "name": "Recosanté",
     "slug": "recosante",
     "version": "1.0.1",
     "orientation": "portrait",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "13",
+      "buildNumber": "18",
       "config": {
         "usesNonExemptEncryption": false
       },
