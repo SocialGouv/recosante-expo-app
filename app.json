@@ -30,6 +30,7 @@
         "foregroundImage": "./assets/android_adaptive_icon.png",
         "backgroundColor": "#3643b6"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.recosante.recosante",
       "versionCode": 16
     },
