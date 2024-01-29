@@ -32,7 +32,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.recosante.recosante",
-      "versionCode": 16
+      "versionCode": 18
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -18,13 +18,14 @@
     "lint-check": "eslint --no-fix --max-warnings 0 --no-fix --max-warnings 0",
     "format": "prettier --write . --ignore-unknown",
     "format-check": "prettier src/**/*.ts* --check .",
-    "build-local:android-aab": "eas build -p android --local",
+    "build-eas:android-aab": "yarn prebuild && eas build -p android",
+    "build-eas-then-submit:ios": "yarn prebuild && eas build -p ios && eas submit -p ios --latest",
+    "build-local:android-aab": "yarn prebuild && eas build -p android --local",
     "build-local:ios-ipa": "eas build -p ios --local",
     "build-local:android-apk": "eas build -p android --profile preview --local",
     "submit:ios": "eas submit -p ios",
     "submit:android": "eas submit -p android",
-    "build-eas-then-deploy:ios": "eas build -p ios && eas submit -p ios --latest",
-    "build-eas-then-deploy:android": "eas build -p android && eas submit -p android --latest"
+    "prebuild": "node ./generate-easignore.js"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.6.0",

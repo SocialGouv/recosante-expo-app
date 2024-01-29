@@ -77,8 +77,3 @@ test-local.js
 !.yarn/sdks
 !.yarn/versions
 
-### EASINCLUDE! ###
-### BELOW THIS LINE WILL NOT BE IGNORED BY EAS ###
-
-google-services.json
-.env
