@@ -89,7 +89,6 @@ export namespace LocationService {
       id: property.id,
       title: property.label, // technical field for autocomplete
       label: property.label, // technical field for autocomplete
-      municipality_full_name: property.label,
       municipality_name: property.city,
       municipality_insee_code: property.citycode,
       municipality_zip_code: property.postcode,

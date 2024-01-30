@@ -13,10 +13,13 @@ import Button from '~/components/ui/button';
 import { Illu } from '~/assets/share/illu';
 import { useToast } from '~/services/toast';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
+  const [municipalityFullName, setMunicipalityFullName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string>('');
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -32,7 +35,6 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     const response = await API.get({ path: '/indicators' });
     setIsLoading(false);
     setIsRefreshing(false);
-    console.log('response', response.error);
     if (!response.ok && response.error === ERROR_NO_NETWORK) {
       setIsError(
         'Désolé, il semblerait que vous n’ayez pas de connexion à internet 🧐',
@@ -52,7 +54,12 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     if (!address?.municipality_insee_code) return;
     let ignore = false;
     getIndicators(false);
-
+    AsyncStorage.getItem(MUNICIPALITY_FULL_NAME).then((name) => {
+      console.log({ ignore, name });
+      if (ignore) return;
+      if (!name) return;
+      setMunicipalityFullName(name);
+    });
     registerForPushNotificationsAsync({
       force: false,
       expo: true,
@@ -67,9 +74,8 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     return () => {
       ignore = true;
     };
-  }, [address?.municipality_name]);
+  }, [address?.municipality_insee_code]);
 
-  console.log({ isLoading, isError, isRefreshing });
   return (
     <>
       <View className="flex items-center justify-start bg-app-gray px-4 py-4">
@@ -102,7 +108,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
                 className="max-w-[90%] text-xs text-app-gray-100"
                 numberOfLines={1}
               >
-                {address?.municipality_full_name ?? address?.municipality_name}
+                {municipalityFullName || address?.municipality_name}
               </MyText>
               <View className=" ml-2">
                 <LocationIcon color="#AEB1B7" />

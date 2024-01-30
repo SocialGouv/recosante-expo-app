@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create, type StateCreator } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { USER_STORAGE } from '~/constants/municipality';
+import { MUNICIPALITY_FULL_NAME, USER_STORAGE } from '~/constants/municipality';
 import API from '~/services/api';
 import { type UserAddress } from '~/types/location';
 import { type User } from '~/types/user';
@@ -25,7 +25,6 @@ const setUser = (
     address: {
       municipality_insee_code: user.municipality_insee_code,
       municipality_name: user.municipality_name,
-      municipality_full_name: user.municipality_full_name,
       municipality_zip_code: user.municipality_zip_code,
     },
     notifications_preference: user.notifications_preference,
@@ -42,14 +41,20 @@ export const useUser = create<UserState>()(
           body: {
             municipality_insee_code: address.municipality_insee_code,
             municipality_name: address.municipality_name,
-            municipality_full_name: address.municipality_full_name,
+            // can't send municipality_full_name to the DB for GDPR purposes
+            // municipality_full_name: address.municipality_full_name,
             municipality_zip_code: address.municipality_zip_code,
           },
         }).then((res) => {
           // user reconciliation
           if (res.data) {
-            const user: User = res.data;
-            setUser(set, user);
+            AsyncStorage.setItem(
+              MUNICIPALITY_FULL_NAME,
+              address.title || '',
+            ).then(() => {
+              const user: User = res.data;
+              setUser(set, user);
+            });
           }
         });
       },
@@ -91,19 +96,17 @@ export const useUser = create<UserState>()(
             body: {
               municipality_insee_code: state.address.municipality_insee_code,
               municipality_name: state.address.municipality_name,
-              municipality_full_name: state.address.municipality_full_name,
               municipality_zip_code: state.address.municipality_zip_code,
             },
           }).then((res) => {
             // user reconciliation
             if (res.data) {
               const user: User = res.data;
-              state.setAddress({
+              state.address = {
                 municipality_insee_code: user.municipality_insee_code,
                 municipality_name: user.municipality_name,
-                municipality_full_name: user.municipality_full_name,
                 municipality_zip_code: user.municipality_zip_code,
-              });
+              };
               state.setNotificationsPreferences(user.notifications_preference);
             }
           });

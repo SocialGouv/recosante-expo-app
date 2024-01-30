@@ -302,7 +302,7 @@ export function LocationPage(props: LocationPageProps) {
                     font="MarianneRegular"
                     className="mb-1  w-full   text-[14px] text-black"
                   >
-                    {address.municipality_full_name}
+                    {address.title}
                   </MyText>
                   <MyText
                     font="MarianneMedium"

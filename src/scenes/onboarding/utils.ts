@@ -112,11 +112,10 @@ export function useOnboardingNavigation(): {
           location.coords.latitude,
           location.coords.longitude,
         )
-          .then((adress) => {
-            console.log('adress', adress);
+          .then((address) => {
             setIsLoading(false);
-            if (adress) {
-              setAddress(adress);
+            if (address) {
+              setAddress(address);
             }
             onNextAfterGeolocation();
           })

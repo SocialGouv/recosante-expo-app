@@ -9,7 +9,6 @@ export type User = {
   appdevice: string;
   municipality_insee_code: string;
   municipality_name: string;
-  municipality_full_name: string;
   municipality_zip_code: string;
   push_notif_token: string;
   created_at: string;

@@ -1,11 +1,10 @@
 export interface UserAddress {
   municipality_insee_code: string;
   municipality_name: string;
-  municipality_full_name: string;
   municipality_zip_code: string;
   id?: string;
-  title?: string; // same as municipality_full_name, but required in autocomplete
-  label?: string; // same as municipality_full_name, but required in autocomplete
+  title?: string; // but required in autocomplete
+  label?: string; // but required in autocomplete
 }
 
 export interface GeoApiFeature {
