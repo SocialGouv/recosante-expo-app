@@ -156,7 +156,9 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
             <MyText className="mt-4 text-[10px] text-muted">
               {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
-                'Pas de recommandations.'}
+                `Aucune donnée disponible pour cet indicateur dans cette zone ${
+                  props.day === 'j0' ? "aujourd'hui" : 'demain'
+                }`}
             </MyText>
           </View>
         </View>

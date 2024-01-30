@@ -13,6 +13,7 @@ import { IndicatorService } from '~/services/indicator';
 import { ScrollView } from 'react-native-gesture-handler';
 import Markdown from 'react-native-markdown-display';
 import { logEvent } from '~/services/logEventsWithMatomo';
+import renderRules from '~/utils/md-rules';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -199,13 +200,15 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               );
             },
           )}
-          <MyText className="mt-2 text-xs opacity-50" font="MarianneLight">
+          <MyText className="mt-2 text-xs" font="MarianneRegular">
             Toutes les informations et recommandations sont issues du
             Gouvernement Francais.
           </MyText>
           <Title label={indicator?.about_title} />
           <View className="mt-2 w-full overflow-hidden">
-            <Markdown>{indicator?.about_description}</Markdown>
+            <Markdown rules={renderRules}>
+              {indicator?.about_description}
+            </Markdown>
           </View>
         </View>
       </ScrollView>
