@@ -5,6 +5,7 @@ import { getRoute } from './navigation';
 import { API_SCHEME, API_HOST } from '../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_ID } from '~/constants/matomo';
+import { ERROR_NO_NETWORK } from '~/constants/errors';
 // AsyncStorage.clear();
 
 export const checkNetwork = async (test = false) => {
@@ -58,7 +59,7 @@ class ApiService {
       const url = this.getUrl(path, query);
       // console.log('url: ', url);
       const canFetch = await checkNetwork();
-      if (!canFetch) return { ok: false };
+      if (!canFetch) return { ok: false, error: ERROR_NO_NETWORK };
 
       const response = await fetch(url, config);
 

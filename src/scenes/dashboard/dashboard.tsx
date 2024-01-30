@@ -12,31 +12,46 @@ import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import Button from '~/components/ui/button';
 import { Illu } from '~/assets/share/illu';
 import { useToast } from '~/services/toast';
+import { ERROR_NO_NETWORK } from '~/constants/errors';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isError, setIsError] = useState<string>('');
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const { address } = useUser((state) => state);
   const { show } = useToast();
 
+  async function getIndicators(refresh = true) {
+    if (refresh) {
+      setIsRefreshing(true);
+    } else {
+      setIsLoading(true);
+    }
+    const response = await API.get({ path: '/indicators' });
+    setIsLoading(false);
+    setIsRefreshing(false);
+    console.log('response', response.error);
+    if (!response.ok && response.error === ERROR_NO_NETWORK) {
+      setIsError(
+        'Désolé, il semblerait que vous n’ayez pas de connexion à internet 🧐',
+      );
+      return;
+    }
+    if (!response.ok) {
+      show(`Erreur lors du chargement des indicateurs ${response.message}`);
+      setIsError('Désolé, une erreur est survenue,\nrevenez plus tard ! 😊');
+      return;
+    }
+    setIsError('');
+    setIndicators(response.data);
+  }
+
   useEffect(() => {
     if (!address?.municipality_insee_code) return;
     let ignore = false;
-    setIsLoading(true);
-    API.get({ path: '/indicators' }).then((response) => {
-      setIsLoading(false);
-      if (ignore) return;
-      if (!response.ok) {
-        show(`Erreur lors du chargement des indicateurs ${response.message}`);
-        setIsError(true);
-        return;
-      }
-      setIndicators(response.data);
-      setIsLoading(false);
-    });
+    getIndicators(false);
 
     registerForPushNotificationsAsync({
       force: false,
@@ -54,18 +69,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     };
   }, [address?.municipality_name]);
 
-  function onRefresh() {
-    setIsRefreshing(true);
-    API.get({ path: '/indicators' }).then((response) => {
-      if (!response.ok) {
-        show(`Erreur lors du chargement des indicateurs ${response.message}`);
-        return;
-      }
-      setIndicators(response.data);
-      setIsRefreshing(false);
-    });
-  }
-
+  console.log({ isLoading, isError, isRefreshing });
   return (
     <>
       <View className="flex items-center justify-start bg-app-gray px-4 py-4">
@@ -110,11 +114,9 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       {!address?.municipality_name && (
         <NoLocationCallToAction navigation={navigation} />
       )}
-      {isError && (
+      {!!isError && (
         <View className="h-full w-full flex-1 flex-row flex-wrap items-center justify-center bg-app-gray pb-24 pt-8">
-          <MyText className="text-center">
-            Désolé, nos serveurs sont hors-service,{'\n'}revenez plus tard ! 😊
-          </MyText>
+          <MyText className="text-center">{isError}</MyText>
         </View>
       )}
 
@@ -124,7 +126,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           favoriteIndicator={favoriteIndicator}
           isLoading={isLoading}
           isRefreshing={isRefreshing}
-          onRefresh={onRefresh}
+          onRefresh={getIndicators}
         />
       )}
     </>

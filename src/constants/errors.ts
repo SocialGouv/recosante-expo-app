@@ -1,0 +1,1 @@
+export const ERROR_NO_NETWORK = 'ERROR_NO_NETWORK';
