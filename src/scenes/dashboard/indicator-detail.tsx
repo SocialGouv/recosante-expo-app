@@ -200,7 +200,8 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             },
           )}
           <MyText className="mt-2 text-xs opacity-50" font="MarianneLight">
-            Ces recommandations sont issues du Gouvernement Francais.
+            Toutes les informations et recommandations sont issues du
+            Gouvernement Francais.
           </MyText>
           <Title label={indicator?.about_title} />
           <View className="mt-2 w-full overflow-hidden">
