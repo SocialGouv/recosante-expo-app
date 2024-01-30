@@ -17,8 +17,8 @@ import {
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import * as Location from 'expo-location';
-import { useAddress } from '~/zustand/address/useAddress';
-import { type Feature, type Address } from '~/types/location';
+import { useUser } from '~/zustand/user/useUser';
+import { type GeoApiFeature, type UserAddress } from '~/types/location';
 import { LocationService } from '~/services/location';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
@@ -43,13 +43,13 @@ enum StatusEnum {
 
 export function LocationPage(props: LocationPageProps) {
   const navigation = useNavigation();
-  const { setAddress } = useAddress((state) => state);
+  const { setAddress } = useUser((state) => state);
   const [query, setQuery] = useState('');
   const hadMin3Char = query.length >= 3;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [suggestedAddress, setSuggestedAddress] = useState<Address[]>([]);
-  function handleSelect(address: Address) {
+  const [suggestedAddress, setSuggestedAddress] = useState<UserAddress[]>([]);
+  function handleSelect(address: UserAddress) {
     setAddress(address);
     props.navigation.goBack();
   }
@@ -67,8 +67,8 @@ export function LocationPage(props: LocationPageProps) {
       url.searchParams.append('q', search);
       const response = await fetch(url);
       const items = await response.json();
-      const adressReponse: Address[] =
-        items?.features?.map((feature: Feature) => {
+      const adressReponse: UserAddress[] =
+        items?.features?.map((feature: GeoApiFeature) => {
           return LocationService.formatPropertyToAddress(feature.properties);
         }) ?? [];
       setSuggestedAddress(adressReponse);
@@ -286,7 +286,7 @@ export function LocationPage(props: LocationPageProps) {
           {suggestedAddress?.map((address) => {
             return (
               <View
-                key={`${address.id}-${address.postcode}$}`}
+                key={`${address.id}-${address.municipality_zip_code}$}`}
                 className="w-full  border-b border-gray-300 py-4"
               >
                 <TouchableOpacity
@@ -302,13 +302,13 @@ export function LocationPage(props: LocationPageProps) {
                     font="MarianneRegular"
                     className="mb-1  w-full   text-[14px] text-black"
                   >
-                    {address.label}
+                    {address.municipality_full_name}
                   </MyText>
                   <MyText
                     font="MarianneMedium"
                     className="w-full text-xs text-[#8B99A2]"
                   >
-                    {address.postcode} {address.city}
+                    {address.municipality_zip_code} {address.municipality_name}
                   </MyText>
                 </TouchableOpacity>
               </View>

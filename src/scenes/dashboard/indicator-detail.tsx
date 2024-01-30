@@ -149,7 +149,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 className="text-wrap text-2xl uppercase text-black"
                 font="MarianneExtraBold"
               >
-                {address?.city}
+                {address?.municipality_name}
               </MyText>
             </View> */}
             <View

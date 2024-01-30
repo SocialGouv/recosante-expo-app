@@ -2,10 +2,10 @@ import React from 'react';
 import { Dimensions, Text, StyleSheet } from 'react-native';
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 import { useAutoComplete } from './hooks/autocomplete.hooks';
-import { type Address } from '~/types/location';
+import { type UserAddress } from '~/types/location';
 
 interface AutoCompleteProps {
-  setAddress: (address: Address) => void;
+  setAddress: (address: UserAddress) => void;
 }
 export default function AutoComplete(props: AutoCompleteProps) {
   const {
@@ -29,7 +29,7 @@ export default function AutoComplete(props: AutoCompleteProps) {
       onChangeText={getSuggestions}
       onSelectItem={(item) => {
         if (!item) return;
-        const selectedAdress = item as Address;
+        const selectedAdress = item as UserAddress;
         props.setAddress(selectedAdress);
       }}
       debounce={600}

@@ -7,7 +7,7 @@ import { IndicatorsListPreview } from './indicators-list-preview';
 import API from '~/services/api';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { RouteEnum } from '~/constants/route';
-import { useAddress } from '~/zustand/address/useAddress';
+import { useUser } from '~/zustand/user/useUser';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import Button from '~/components/ui/button';
 import { Illu } from '~/assets/share/illu';
@@ -19,11 +19,11 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-  const { address } = useAddress((state) => state);
+  const { address } = useUser((state) => state);
   const { show } = useToast();
 
   useEffect(() => {
-    if (!address?.citycode) return;
+    if (!address?.municipality_insee_code) return;
     let ignore = false;
     setIsLoading(true);
     API.get({ path: '/indicators' }).then((response) => {
@@ -52,7 +52,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     return () => {
       ignore = true;
     };
-  }, [address?.city]);
+  }, [address?.municipality_name]);
 
   function onRefresh() {
     setIsRefreshing(true);
@@ -91,14 +91,14 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           >
             Découvrez {'\n'}vos indicateurs favoris !
           </MyText>
-          {address?.city ? (
+          {address?.municipality_name ? (
             <View className="-mb-4 mt-2 flex flex-row items-center">
               <MyText
                 font="MarianneBold"
                 className="max-w-[90%] text-xs text-app-gray-100"
                 numberOfLines={1}
               >
-                {address?.label ?? address?.city}
+                {address?.municipality_full_name ?? address?.municipality_name}
               </MyText>
               <View className=" ml-2">
                 <LocationIcon color="#AEB1B7" />
@@ -107,7 +107,9 @@ export function DashboardPage({ navigation }: { navigation: any }) {
           ) : null}
         </View>
       </View>
-      {!address?.city && <NoLocationCallToAction navigation={navigation} />}
+      {!address?.municipality_name && (
+        <NoLocationCallToAction navigation={navigation} />
+      )}
       {isError && (
         <View className="h-full w-full flex-1 flex-row flex-wrap items-center justify-center bg-app-gray pb-24 pt-8">
           <MyText className="text-center">
@@ -116,7 +118,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         </View>
       )}
 
-      {!!address?.city && (
+      {!!address?.municipality_name && (
         <IndicatorsListPreview
           indicators={indicators}
           favoriteIndicator={favoriteIndicator}

@@ -1,1 +1,1 @@
-export const MUNICPALITY_STORAGE = 'municipality-storage';
+export const USER_STORAGE = 'municipality-storage';

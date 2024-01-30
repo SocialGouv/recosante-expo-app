@@ -1,10 +1,10 @@
 import { useState, useRef, useCallback } from 'react';
 import { LocationService } from '~/services/location';
-import { type Feature, type Address } from '~/types/location';
+import { type GeoApiFeature, type UserAddress } from '~/types/location';
 
 export function useAutoComplete() {
   const [loading, setLoading] = useState(false);
-  const [addressList, setAddressList] = useState<Address[]>([]);
+  const [addressList, setAddressList] = useState<UserAddress[]>([]);
   const dropdownController = useRef(null);
   const searchRef = useRef(null);
 
@@ -21,10 +21,12 @@ export function useAutoComplete() {
 
     const response = await fetch(url);
     const items = await response.json();
-    const adressReponse: Address[] = items.features.map((feature: Feature) => {
-      return LocationService.formatPropertyToAddress(feature.properties);
-    });
-    setAddressList(adressReponse);
+    const geoApiReponse: Array<UserAddress> = items.features.map(
+      (feature: GeoApiFeature) => {
+        return LocationService.formatPropertyToAddress(feature.properties);
+      },
+    );
+    setAddressList(geoApiReponse);
     setLoading(false);
   }, []);
 

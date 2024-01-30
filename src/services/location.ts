@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
-import { type Address, type Property } from '~/types/location';
+import { type UserAddress, type GeoApiProperty } from '~/types/location';
 import { capture } from './sentry';
 
 type LocationRequestResponse = {
@@ -82,28 +82,30 @@ export namespace LocationService {
     };
   }
 
-  export function formatPropertyToAddress(property: Property): Address {
+  export function formatPropertyToAddress(
+    property: GeoApiProperty,
+  ): UserAddress {
     return {
       id: property.id,
-      title: property.label,
-      label: property.label,
-      city: property.city,
-      citycode: property.citycode,
-      postcode: property.postcode,
-      context: property.context,
+      title: property.label, // technical field for autocomplete
+      label: property.label, // technical field for autocomplete
+      municipality_full_name: property.label,
+      municipality_name: property.city,
+      municipality_insee_code: property.citycode,
+      municipality_zip_code: property.postcode,
     };
   }
 
   export async function getAdressByCoordinates(
     latitude: number,
     longitude: number,
-  ): Promise<Address | undefined> {
+  ): Promise<UserAddress | undefined> {
     const url = new URL('https://api-adresse.data.gouv.fr/reverse/');
 
     url.searchParams.append('lon', longitude.toString());
     url.searchParams.append('lat', latitude.toString());
     const response = await fetch(url).then(async (res) => await res.json());
-    const currentAdress = response?.features[0]?.properties as Property;
+    const currentAdress = response?.features[0]?.properties as GeoApiProperty;
 
     if (!currentAdress) {
       await new Promise((resolve) => {
