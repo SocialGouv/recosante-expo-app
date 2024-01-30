@@ -21,7 +21,7 @@
     "build-eas:android-aab": "yarn prebuild && eas build -p android",
     "build-eas-then-submit:ios": "yarn prebuild && eas build -p ios && eas submit -p ios --latest",
     "build-local:android-aab": "yarn prebuild && eas build -p android --local",
-    "build-local:ios-ipa": "eas build -p ios --local",
+    "build-local:ios-ipa": "yarn prebuild && eas build -p ios --local",
     "build-local:android-apk": "eas build -p android --profile preview --local",
     "submit:ios": "eas submit -p ios",
     "submit:android": "eas submit -p android",

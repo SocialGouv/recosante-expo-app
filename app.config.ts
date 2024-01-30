@@ -4,7 +4,7 @@ import { ExpoConfig, ConfigContext } from 'expo/config';
 export default ({ config }: ConfigContext): ExpoConfig => {
   return {
     ...config,
-    name: 'Recosanté',
+    name: 'Recosante',
     slug: 'recosante',
     // android: {
     //   googleServicesFile:
