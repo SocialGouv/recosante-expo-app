@@ -1,43 +1,45 @@
 import { Switch, View } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import { logEvent } from '~/services/logEventsWithMatomo';
-import { type NotificationType } from '~/types/notification';
-import { useNotification } from '~/zustand/notification/useNotification';
+import {
+  NotificationIdEnum,
+  type NotificationType,
+} from '~/types/notification';
+import { useUser } from '~/zustand/user/useUser';
 
 const notifications: NotificationType[] = [
   {
-    id: 'morning',
+    id: NotificationIdEnum.MORNING,
     label: '☕️ Les nouvelles matinales ',
-    description: 'Notification pour bien commencer la journée à 7h. ',
+    description: 'Notification pour bien commencer la journée à 7h',
   },
   {
-    id: 'evening',
+    id: NotificationIdEnum.EVENING,
     label: '🌇️ Les nouvelles de soirée ',
     description:
       'Terminez votre journée en beauté ! Recevez une notification à 19h',
   },
   {
-    id: 'alert',
+    id: NotificationIdEnum.ALERT,
     label: '⚠️️ Alertes d’urgence',
-    description:
-      'Soyez informé immédiatement en cas de seuil critique atteint.',
+    description: 'Soyez informé immédiatement en cas de seuil critique atteint',
   },
 ];
 
 export function NotificationsList() {
-  const { selectedNotifications, setSelectedNotifications } = useNotification(
+  const { notifications_preference, setNotificationsPreferences } = useUser(
     (state) => state,
   );
-  function toggleSwitch(id: string) {
-    if (selectedNotifications?.includes(id)) {
+  function toggleSwitch(id: NotificationIdEnum) {
+    if (notifications_preference?.includes(id)) {
       logEvent({
         category: 'SETTINGS',
         action: 'NOTIFICATION',
         name: id.toLocaleUpperCase(),
         value: 0,
       });
-      setSelectedNotifications(
-        selectedNotifications.filter((item) => item !== id),
+      setNotificationsPreferences(
+        notifications_preference.filter((item) => item !== id),
       );
     } else {
       logEvent({
@@ -46,14 +48,14 @@ export function NotificationsList() {
         name: id.toLocaleUpperCase(),
         value: 1,
       });
-      setSelectedNotifications([...selectedNotifications, id]);
+      setNotificationsPreferences([...notifications_preference, id]);
     }
   }
 
   return (
     <View className="space-y-2">
       {notifications?.map((notification) => {
-        const isEnabled = selectedNotifications?.includes(notification.id);
+        const isEnabled = notifications_preference?.includes(notification.id);
         return (
           <View
             key={notification.id}

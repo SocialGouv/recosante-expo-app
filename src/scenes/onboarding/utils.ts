@@ -4,7 +4,7 @@ import { LocationService } from '~/services/location';
 
 import { OnboardingRouteEnum, RouteEnum } from '~/constants/route';
 import { navigate } from '~/services/navigation';
-import { useAddress } from '~/zustand/address/useAddress';
+import { useUser } from '~/zustand/user/useUser';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
 import { capture } from '~/services/sentry';
@@ -22,7 +22,7 @@ export function useOnboardingNavigation(): {
   >(OnboardingRouteEnum.WELCOME);
   const [skipVisible, setSkipVisible] = useState<boolean>(false);
 
-  const { setAddress } = useAddress((state) => state);
+  const { setAddress } = useUser((state) => state);
   const [isLoading, setIsLoading] = useState(false);
 
   async function onNextAfterGeolocation() {

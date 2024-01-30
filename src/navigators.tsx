@@ -21,7 +21,7 @@ import { Onboarding } from './scenes/onboarding/onboarding';
 import { SharePage } from './scenes/share';
 import { SettingsPage } from './scenes/settings/settings';
 import { LocationPage } from '~/scenes/location/location';
-import { useAddress } from './zustand/address/useAddress';
+import { useUser } from './zustand/user/useUser';
 import { IndicatorSelectorSheet } from './scenes/dashboard/indicator-selector-sheet';
 import { useIndicatorsList } from './zustand/indicator/useIndicatorsList';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -127,8 +127,8 @@ function Home(props: HomeProps) {
 }
 const RootStack = createNativeStackNavigator();
 export function Navigators() {
-  const { _hasHydrated, address } = useAddress((state) => state);
-  const hasAddress = !!address?.citycode;
+  const { _hasHydrated, address } = useUser((state) => state);
+  const hasAddress = !!address?.municipality_insee_code;
 
   async function onReady() {
     await SplashScreen.hideAsync();

@@ -1,25 +1,23 @@
-export interface Address {
-  id: string;
-  title: string;
-  label: string;
-  citycode: string;
-  postcode: string;
-  context: string;
-  city: string;
+export interface UserAddress {
+  municipality_insee_code: string;
+  municipality_name: string;
+  municipality_full_name: string;
+  municipality_zip_code: string;
+  id?: string;
+  title?: string; // same as municipality_full_name, but required in autocomplete
+  label?: string; // same as municipality_full_name, but required in autocomplete
 }
 
-export interface Feature {
+export interface GeoApiFeature {
   type: string;
-  geometry: Geometry;
-  properties: Property;
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
+  properties: GeoApiProperty;
 }
 
-interface Geometry {
-  type: string;
-  coordinates: [number, number];
-}
-
-export interface Property {
+export interface GeoApiProperty {
   label: string;
   score: number;
   housenumber: string;
@@ -36,8 +34,4 @@ export interface Property {
   importance: number;
   street: string;
   distance: number;
-}
-
-export interface FeatureCollection {
-  features: Feature[];
 }
