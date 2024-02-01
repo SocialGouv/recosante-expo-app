@@ -25,7 +25,7 @@ export function ConfidentialityPage(props: LocationPageProps) {
 
   const [matomoActive, setMatomoActive] = useState(Matomo.trackingEnabled);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['80%'], []);
+  const snapPoints = useMemo(() => ['90%'], []);
   const isOpenedRef = useRef(false);
 
   const handleSheetChanges = useCallback((index: number) => {

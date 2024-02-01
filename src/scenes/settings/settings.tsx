@@ -48,7 +48,12 @@ export function SettingsPage({ navigation }: any) {
           }}
         />
         <Title label="Recosanté" />
-
+        <TextRow
+          text="Donner mon avis"
+          onPress={() => {
+            navigation.navigate(RouteEnum.FEEDBACK);
+          }}
+        />
         <TextRow
           text="Nous contacter"
           onPress={() => {
@@ -72,38 +77,6 @@ export function SettingsPage({ navigation }: any) {
           }}
         />
         <View>
-          {/* <View className="mb-4 mt-16 flex w-full  flex-row items-start justify-between space-x-2">
-            <TouchableOpacity
-              onPress={() => {
-                logEvent({
-                  category: 'SETTINGS',
-                  action: 'CONTACT_US_BY_EMAIL',
-                });
-                Linking.openURL('mailto:contact@recosante.beta.gouv.fr');
-              }}
-              className="border-b pb-1"
-            >
-              <MyText font="MarianneBold">Nous contacter</MyText>
-            </TouchableOpacity>
-          </View> */}
-          {/* <View className="mt-16 flex-row items-center justify-between">
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(RouteEnum.LEGAL);
-              }}
-              className="border-b pb-1"
-            >
-              <MyText font="MarianneBold">Mentions légales</MyText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(RouteEnum.LEGAL);
-              }}
-              className="mt-2 border-b pb-1"
-            >
-              <MyText font="MarianneBold">Politique de confidentialité</MyText>
-            </TouchableOpacity>
-          </View> */}
           <TouchableOpacity
             onPress={async () => {
               if (onVersionClicked < 5) {

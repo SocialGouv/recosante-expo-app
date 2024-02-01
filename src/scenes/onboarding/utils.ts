@@ -26,15 +26,12 @@ export function useOnboardingNavigation(): {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onNextAfterGeolocation() {
-    console.log('plaf');
     const token = await registerForPushNotificationsAsync({
       force: false,
       expo: true,
     });
-    console.log('plif');
 
     if (token?.data) {
-      console.log('coolos');
       API.put({
         path: '/user',
         body: { push_notif_token: JSON.stringify(token) },
@@ -46,7 +43,6 @@ export function useOnboardingNavigation(): {
       setOnboardingScreen(RouteEnum.HOME);
       navigate(RouteEnum.HOME);
     } else {
-      console.log('plouf');
       setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
       navigate(OnboardingRouteEnum.NOTIFICATIONS);
     }

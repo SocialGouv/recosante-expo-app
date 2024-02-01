@@ -3059,6 +3059,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/slider@npm:4.4.2":
+  version: 4.4.2
+  resolution: "@react-native-community/slider@npm:4.4.2"
+  checksum: 77210cb4fcea796301334526c57efb9e43196a92766d9b1d9254a08bad8fba35d88f3b0d4cfc9ed84bf272cbfbbb9887432750330508a0999902b5bf0282e4ce
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:^0.72.0":
   version: 0.72.0
   resolution: "@react-native/assets-registry@npm:0.72.0"
@@ -12887,6 +12894,7 @@ __metadata:
     "@gorhom/bottom-sheet": "npm:^4.6.0"
     "@react-native-async-storage/async-storage": "npm:1.18.2"
     "@react-native-community/netinfo": "npm:9.3.10"
+    "@react-native-community/slider": "npm:4.4.2"
     "@react-navigation/bottom-tabs": "npm:^6.5.11"
     "@react-navigation/material-top-tabs": "npm:^6.6.5"
     "@react-navigation/native": "npm:^6.1.9"

@@ -70,11 +70,12 @@ const ToastProvider = (props: ToastProviderProps) => {
           className="absolute top-[65px] flex w-full flex-row justify-center"
           pointerEvents={'box-none'}
         >
-          <View className="mb-4 flex w-[90%]  items-center justify-center rounded-md  bg-white px-4 py-4 shadow-md">
+          <View className="mb-4 flex w-[90%]  items-start  justify-start rounded-md  bg-white px-4 py-4 shadow-md">
             <MyText
+              font="MarianneBold"
               maxFontSizeMultiplier={2}
               testID="toast"
-              className="py-2 text-center"
+              className="py-2 text-left"
             >
               {caption}
             </MyText>

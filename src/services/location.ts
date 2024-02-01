@@ -20,8 +20,8 @@ export namespace LocationService {
           location: null,
         };
       }
-      const requestLocationPromise: Promise<LocationRequestResponse> =
-        new Promise(async (resolve, reject) => {
+      const requestLocationPromise = new Promise<LocationRequestResponse>(
+        async (resolve, reject) => {
           try {
             console.log('requestLocationPromise');
             const gpsEnabled = await Location.hasServicesEnabledAsync();
@@ -55,7 +55,8 @@ export namespace LocationService {
           } catch (error) {
             reject(error);
           }
-        });
+        },
+      );
 
       const timerPromise = new Promise<LocationRequestResponse>((resolve) =>
         setTimeout(() => {
