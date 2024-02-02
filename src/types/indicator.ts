@@ -16,6 +16,7 @@ export type IndicatorByPeriodValues = Array<{
   slug: string;
   name: string;
   value: number;
+  link?: string;
 }>;
 export interface IndicatorByPeriod {
   id: string;

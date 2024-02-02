@@ -109,7 +109,7 @@ export namespace IndicatorService {
         };
       case IndicatorsSlugEnum.pollen_allergy:
         return {
-          maxValue: 4,
+          maxValue: 5,
           valuesToColor: {
             0: '#D9D9EF',
             1: '#b1f3ef',
@@ -121,7 +121,7 @@ export namespace IndicatorService {
         };
       case IndicatorsSlugEnum.weather_alert:
         return {
-          maxValue: 4,
+          maxValue: 5,
           valuesToColor: {
             0: '#D9D9EF',
             1: '#73c8ae',
@@ -135,11 +135,11 @@ export namespace IndicatorService {
         return {
           maxValue: 4,
           valuesToColor: {
-            0: '#D9D9EF',
-            1: '#b1f3ef',
-            2: '#73c8ae',
-            3: '#ee817e',
-            4: '#a7546d',
+            0: '#D9D9EF', // Site non classé - Site n'ayant pas suffisamment de prélèvements cette saison pour être classé
+            1: '#b1f3ef', // bon qualité
+            2: '#73c8ae', // moyen qualité
+            3: '#ee817e', // mauvais
+            4: '#965f9b', // interdiction
           },
         };
       default:

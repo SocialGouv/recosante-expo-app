@@ -1,3 +1,5 @@
+// TODO: this is just to have the proper font, maybe there is a better way than overriding all the rules
+
 // overriding https://github.com/iamacup/react-native-markdown-display/blob/master/src/lib/renderRules.js
 import {
   // Text as MyText,
@@ -7,6 +9,32 @@ import {
   StyleSheet,
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
+
+const textStyleProps = [
+  'textShadowOffset',
+  'color',
+  'fontSize',
+  'fontStyle',
+  'fontWeight',
+  'lineHeight',
+  'textAlign',
+  'textDecorationLine',
+  'textShadowColor',
+  'fontFamily',
+  'textShadowRadius',
+  'includeFontPadding',
+  'textAlignVertical',
+  'fontVariant',
+  'letterSpacing',
+  'textDecorationColor',
+  'textDecorationStyle',
+  'textTransform',
+  'writingDirection',
+];
+
+function hasParents(parents, type) {
+  return parents.findIndex((el) => el.type === type) > -1;
+}
 
 const renderRules = {
   // when unknown elements are introduced, so it wont break
