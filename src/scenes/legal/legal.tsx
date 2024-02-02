@@ -14,7 +14,7 @@ export function LegalPage(props: LocationPageProps) {
   const navigation = useNavigation();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['60%'], []);
+  const snapPoints = useMemo(() => ['90%'], []);
   const isOpenedRef = useRef(false);
 
   const handleSheetChanges = useCallback((index: number) => {

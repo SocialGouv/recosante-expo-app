@@ -12,6 +12,7 @@ export enum RouteEnum {
   SHARE = 'SHARE',
   LEGAL = 'LEGAL',
   CONFIDENTIALITY = 'CONFIDENTIALITY',
+  FEEDBACK = 'FEEDBACK',
 }
 
 export interface RootStackParamList {
