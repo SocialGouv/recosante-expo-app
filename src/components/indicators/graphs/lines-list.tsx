@@ -9,6 +9,7 @@ import MyText from '~/components/ui/my-text';
 import { useMemo } from 'react';
 import { IndicatorService } from '~/services/indicator';
 import { cn } from '~/utils/tailwind';
+import ArrowTopRightOnSquare from '~/assets/icons/arrow-top-right-on-square';
 
 interface LineChartProps {
   values: IndicatorByPeriod['values'];
@@ -45,12 +46,12 @@ export function LineList(props: LineChartProps) {
             : {};
           return (
             <LineWrapper key={line.name} {...lineWrapperProps}>
-              <View className="flex  flex-row">
+              <View className="bottom-1 flex flex-row items-center">
+                <View className="mx-1">
+                  {!!line.link && <ArrowTopRightOnSquare />}
+                </View>
                 <MyText
-                  className={cn(
-                    'bottom-1 mr-3 basis-1/4 text-[11px] capitalize text-muted-100',
-                    line.link ? 'underline' : '',
-                  )}
+                  className="mr-3 basis-1/3 text-[11px] capitalize text-muted-100"
                   font="MarianneBold"
                   numberOfLines={1}
                 >

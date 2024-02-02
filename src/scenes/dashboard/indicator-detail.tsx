@@ -176,16 +176,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             values={currentDayIndicatorData.values}
             slug={indicator.slug}
           />
-          <Title
-            label={`${indicator.long_name ?? indicator.name}: ${
-              currentDayIndicatorData.summary.status
-            }`}
-          />
-          <View className="mt-2 ">
-            <MyText className=" text-xs leading-5" font="MarianneRegular">
-              {currentDayIndicatorData.summary.recommendations?.[0]}
-            </MyText>
-          </View>
 
           <Title label="Nos recommandations" />
           {currentDayIndicatorData.summary?.recommendations?.map(
@@ -195,12 +185,12 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   key={recommendation}
                   className="mt-3 flex flex-row items-center rounded-2xl bg-white p-2 px-3"
                 >
-                  <MyText className="text-xs">{recommendation}</MyText>
+                  <MyText>{recommendation}</MyText>
                 </View>
               );
             },
           )}
-          <MyText className="mt-2 text-xs" font="MarianneRegular">
+          <MyText className="mt-2" font="MarianneRegular">
             Toutes les informations et recommandations sont issues du
             Gouvernement Francais.
           </MyText>
