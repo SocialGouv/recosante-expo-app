@@ -1,3 +1,5 @@
+// TODO: this is just to have the proper font, maybe there is a better way than overriding all the rules
+
 // overriding https://github.com/iamacup/react-native-markdown-display/blob/master/src/lib/renderRules.js
 import {
   // Text as MyText,
