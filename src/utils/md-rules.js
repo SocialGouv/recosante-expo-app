@@ -8,6 +8,32 @@ import {
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
 
+const textStyleProps = [
+  'textShadowOffset',
+  'color',
+  'fontSize',
+  'fontStyle',
+  'fontWeight',
+  'lineHeight',
+  'textAlign',
+  'textDecorationLine',
+  'textShadowColor',
+  'fontFamily',
+  'textShadowRadius',
+  'includeFontPadding',
+  'textAlignVertical',
+  'fontVariant',
+  'letterSpacing',
+  'textDecorationColor',
+  'textDecorationStyle',
+  'textTransform',
+  'writingDirection',
+];
+
+function hasParents(parents, type) {
+  return parents.findIndex((el) => el.type === type) > -1;
+}
+
 const renderRules = {
   // when unknown elements are introduced, so it wont break
   unknown: (node, children, parent, styles) => null,
