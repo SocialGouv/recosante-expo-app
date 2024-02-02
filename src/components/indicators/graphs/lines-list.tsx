@@ -1,4 +1,5 @@
-import { TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Linking, Pressable, TouchableOpacity, View } from 'react-native';
 import {
   type IndicatorsSlugEnum,
   type IndicatorByPeriod,
@@ -7,6 +8,7 @@ import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
 import { useMemo } from 'react';
 import { IndicatorService } from '~/services/indicator';
+import { cn } from '~/utils/tailwind';
 
 interface LineChartProps {
   values: IndicatorByPeriod['values'];
@@ -35,23 +37,34 @@ export function LineList(props: LineChartProps) {
       {sortedValues
         ?.map((line) => {
           if (line.value === 0) return null;
+          const LineWrapper = line.link ? Pressable : React.Fragment;
+          const lineWrapperProps = line.link
+            ? {
+                onPress: () => !!line.link && Linking.openURL(line.link),
+              }
+            : {};
           return (
-            <View key={line.name} className="flex  flex-row">
-              <MyText
-                className="bottom-1 mr-3 basis-1/4 text-[11px] capitalize text-muted-100"
-                font="MarianneBold"
-                numberOfLines={1}
-              >
-                {line.name}
-              </MyText>
-              <View className="w-full flex-1 ">
-                <LineChart
-                  color={valuesToColor[line.value]}
-                  value={line.value}
-                  maxValue={maxValue}
-                />
+            <LineWrapper key={line.name} {...lineWrapperProps}>
+              <View className="flex  flex-row">
+                <MyText
+                  className={cn(
+                    'bottom-1 mr-3 basis-1/4 text-[11px] capitalize text-muted-100',
+                    line.link ? 'underline' : '',
+                  )}
+                  font="MarianneBold"
+                  numberOfLines={1}
+                >
+                  {line.name}
+                </MyText>
+                <View className="w-full flex-1 ">
+                  <LineChart
+                    color={valuesToColor[line.value]}
+                    value={line.value}
+                    maxValue={maxValue}
+                  />
+                </View>
               </View>
-            </View>
+            </LineWrapper>
           );
         })
         .slice(0, props.isPreviewMode ? MAX_LINE : undefined)}
