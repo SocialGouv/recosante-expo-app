@@ -7,9 +7,20 @@ import {
   View,
   Platform,
   StyleSheet,
+  Linking,
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
 
+function openUrl(url, customCallback) {
+  if (customCallback) {
+    const result = customCallback(url);
+    if (url && result && typeof result === 'boolean') {
+      Linking.openURL(url);
+    }
+  } else if (url) {
+    Linking.openURL(url);
+  }
+}
 const textStyleProps = [
   'textShadowOffset',
   'color',
