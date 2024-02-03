@@ -56,21 +56,25 @@ export function LocationPage(props: LocationPageProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['20%', '50%', '90%'], []);
   const isOpenedRef = useRef(false);
+  const searchRef = useRef('');
   const getSuggestions = useCallback(
     async (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
       const { text } = event.nativeEvent;
-      // TODO: debounce
-      setQuery(text);
       const search = text.toLowerCase();
+      searchRef.current = search;
+      setQuery(text);
       setIsLoading(true);
       const url = new URL('https://api-adresse.data.gouv.fr/search/');
       url.searchParams.append('q', search);
+      if (searchRef.current !== search) return; // too late
       const response = await fetch(url);
       const items = await response.json();
+      if (searchRef.current !== search) return; // too late
       const adressReponse: UserAddress[] =
         items?.features?.map((feature: GeoApiFeature) => {
           return LocationService.formatPropertyToAddress(feature.properties);
         }) ?? [];
+      if (searchRef.current !== search) return; // too late
       setSuggestedAddress(adressReponse);
       setIsLoading(false);
     },
