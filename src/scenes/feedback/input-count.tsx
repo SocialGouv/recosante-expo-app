@@ -28,8 +28,8 @@ export function InputCount(props: InputCountProps) {
         style={{ width: windowWidth, height: 40 }}
         minimumValue={0}
         maximumValue={props.max}
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#3343BD"
+        maximumTrackTintColor="#FFFFFF"
+        minimumTrackTintColor="#3343BD"
         tapToSeek={true}
         step={1}
       />
