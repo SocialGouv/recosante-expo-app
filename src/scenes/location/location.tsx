@@ -14,9 +14,9 @@ import {
   type TextInputChangeEventData,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
-import * as Location from 'expo-location';
 import { useUser } from '~/zustand/user/useUser';
 import { type GeoApiFeature, type UserAddress } from '~/types/location';
 import { LocationService } from '~/services/location';
@@ -28,6 +28,7 @@ import { Close } from '~/assets/icons/close';
 import { Illu } from '~/assets/location/illu';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import { Loader } from '~/components/ui/loader';
+import { capture } from '~/services/sentry';
 
 interface LocationPageProps {
   navigation: any;
@@ -48,6 +49,7 @@ export function LocationPage(props: LocationPageProps) {
   const hadMin3Char = query.length >= 3;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isGeolocating, setIsGeolocating] = useState(false);
   const [suggestedAddress, setSuggestedAddress] = useState<UserAddress[]>([]);
   function handleSelect(address: UserAddress) {
     setAddress(address);
@@ -202,58 +204,78 @@ export function LocationPage(props: LocationPageProps) {
         <View className=" h-full bg-app-gray px-6 pt-6">
           <View className="w-full">
             <Pressable
+              disabled={isGeolocating}
               onPress={async () => {
                 logEvent({
                   category: 'LOCATION',
                   action: 'SELECT_GEOLOCATION',
                 });
-                Location.requestForegroundPermissionsAsync().then(
-                  async ({ status }) => {
-                    if (status !== 'granted') {
-                      Alert.alert(
-                        "Vous n'avez pas autorisé l'application à accéder à votre position.",
-                        'Vous pouvez modifier ce paramètre dans les réglages de votre téléphone 📲',
-                        [
-                          {
-                            text: "Aller aux réglages de l'application",
-                            onPress: async () => {
-                              await Linking.openSettings();
-                            },
+                setIsGeolocating(true);
+                // eslint-disable-next-line no-case-declarations
+                const { status, location } =
+                  await LocationService.requestLocation();
+                if (!location) {
+                  if (status === 'granted') {
+                    Alert.alert(
+                      "Nous n'avons pas réussi à vous localiser 🧐",
+                      'Peut-être est-ce un problème de réseau ? Ne vous en faites pas, vous pourrez réessayer plus tard 😅',
+                    );
+                  }
+                  if (status !== 'granted') {
+                    Alert.alert(
+                      "Vous n'avez pas autorisé l'application à accéder à votre position.",
+                      'Vous pouvez modifier ce paramètre dans les réglages de votre téléphone 📲',
+                      [
+                        {
+                          text: "Aller aux réglages de l'application",
+                          onPress: async () => {
+                            await Linking.openSettings();
                           },
-                          {
-                            text: 'OK',
-                            style: 'cancel',
-                            onPress: () => {
-                              navigation.goBack();
-                            },
-                          },
-                        ],
-                      );
-                      return;
+                        },
+                        {
+                          text: 'OK',
+                          style: 'cancel',
+                        },
+                      ],
+                    );
+                  }
+                  setIsGeolocating(false);
+                  return;
+                }
+                LocationService.getAdressByCoordinates(
+                  location.coords.latitude,
+                  location.coords.longitude,
+                )
+                  .then((address) => {
+                    setIsGeolocating(false);
+                    if (address) {
+                      handleSelect(address);
                     }
-                    const location = await Location.getCurrentPositionAsync({});
-                    const { latitude, longitude } = location.coords;
-
-                    const formatedAdress =
-                      await LocationService.getAdressByCoordinates(
-                        latitude,
-                        longitude,
-                      );
-                    if (formatedAdress) {
-                      handleSelect(formatedAdress);
-                    }
-                  },
-                );
+                  })
+                  .catch((err: any) => {
+                    setIsGeolocating(false);
+                    capture(err, {
+                      extra: {
+                        location,
+                        method: 'get localisation',
+                      },
+                    });
+                  });
               }}
               className="flex flex-row items-center justify-start "
             >
-              <LocationIcon color="black" />
-
+              {isGeolocating ? (
+                <ActivityIndicator color="black" />
+              ) : (
+                <LocationIcon color="black" />
+              )}
               <MyText
                 font="MarianneBold"
                 className="ml-4 w-fit text-[14px] text-black"
               >
-                Utiliser ma géolocalisation
+                {isGeolocating
+                  ? 'Géolocalisation en cours...'
+                  : 'Utiliser ma géolocalisation'}
               </MyText>
             </Pressable>
           </View>
