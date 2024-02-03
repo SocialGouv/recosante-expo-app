@@ -16,6 +16,9 @@ import Button from '~/components/ui/button';
 import { useToast } from '~/services/toast';
 import API from '~/services/api';
 import { MailService } from '~/services/mail';
+import { logEvent } from '~/services/logEventsWithMatomo';
+import { USER_ID } from '~/constants/matomo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface LocationPageProps {
   navigation: any;
@@ -50,7 +53,14 @@ export function FeedbackPage(props: LocationPageProps) {
   function handleChange({ id, value }: { id: string; value: string | number }) {
     setValues({ ...values, [id]: value });
   }
-  function onSend() {
+  async function onSend() {
+    const userId = await AsyncStorage.getItem(USER_ID);
+    logEvent({
+      category: 'FEEDBACK',
+      action: 'SEND_FEEDBACK',
+      name: 'SCORE',
+      value: values.score,
+    });
     API.post({
       path: '/feedback',
       body: {
@@ -59,7 +69,7 @@ export function FeedbackPage(props: LocationPageProps) {
     });
     MailService.sendMail({
       subject: 'Feedback Recosanté',
-      text: `Score : ${values.score} \nMessage : ${values.message} \nContact : ${values.contact}`,
+      text: `MatomoId: ${userId}\nScore : ${values.score} \nMessage : ${values.message} \nContact : ${values.contact}`,
     }).then((res) => {
       if (res.ok) {
         closeBottomSheet();
@@ -119,7 +129,18 @@ export function FeedbackPage(props: LocationPageProps) {
           en 20 secondes !
         </MyText>
       </View>
-      <Pressable onPress={closeBottomSheet} className="absolute right-2 top-0">
+      <Pressable
+        onPress={() => {
+          logEvent({
+            category: 'FEEDBACK',
+            action: 'CLOSE_FEEDBACK',
+            name: 'SCORE',
+            value: values.score,
+          });
+          closeBottomSheet();
+        }}
+        className="absolute right-2 top-0"
+      >
         <Close />
       </Pressable>
 
@@ -131,12 +152,12 @@ export function FeedbackPage(props: LocationPageProps) {
           <InputCount
             max={10}
             value={values.score}
-            onChange={(value) =>
+            onChange={(value) => {
               handleChange({
                 id: 'score',
                 value,
-              })
-            }
+              });
+            }}
           />
         </View>
         <View className="border-b border-gray-200 pb-6 pt-4 ">
