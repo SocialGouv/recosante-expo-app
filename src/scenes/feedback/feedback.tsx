@@ -1,14 +1,7 @@
 import React, { useCallback, useRef, useEffect, useMemo } from 'react';
-import {
-  Pressable,
-  View,
-  ScrollView,
-  TextInput,
-  TextInputChangeEventData,
-  NativeSyntheticEvent,
-} from 'react-native';
+import { Pressable, View, ScrollView, StyleSheet } from 'react-native';
 import MyText from '~/components/ui/my-text';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import { Close } from '~/assets/icons/close';
 import { InputCount } from './input-count';
@@ -164,7 +157,8 @@ export function FeedbackPage(props: LocationPageProps) {
           <MyText font="MarianneBold" className=" text-[15px] text-black">
             2. Avez-vous des suggestions pour améliorer Recosanté ?
           </MyText>
-          <TextInput
+          <BottomSheetTextInput
+            style={styles.textArea}
             value={values.message}
             onChange={(event) => {
               handleChange({
@@ -183,7 +177,8 @@ export function FeedbackPage(props: LocationPageProps) {
           <MyText font="MarianneBold" className=" text-[15px] text-black">
             3. Peut-on vous recontacter pour en savoir plus ?
           </MyText>
-          <TextInput
+          <BottomSheetTextInput
+            style={styles.textInput}
             value={values.contact}
             onChange={(event) => {
               handleChange({
@@ -205,3 +200,29 @@ export function FeedbackPage(props: LocationPageProps) {
     </BottomSheet>
   );
 }
+
+const styles = StyleSheet.create({
+  textArea: {
+    marginTop: 12,
+    marginBottom: 12,
+    padding: 12,
+    fontSize: 16,
+    minHeight: 100,
+    borderRadius: 4,
+    backgroundColor: 'white',
+    color: 'black',
+    textAlign: 'left',
+  },
+  textInput: {
+    fontSize: 16,
+    marginTop: 12,
+    alignSelf: 'stretch',
+    marginBottom: 12,
+    padding: 12,
+    minHeight: 50,
+    borderRadius: 4,
+    backgroundColor: 'white',
+    color: 'black',
+    textAlign: 'left',
+  },
+});
