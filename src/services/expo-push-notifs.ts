@@ -47,8 +47,8 @@ export async function registerForPushNotificationsAsync({
   }
   if (finalStatus !== 'granted') {
     Alert.alert(
-      'Permission for Push notifications not granted',
-      'You can change that in your settings',
+      "L'autorisation pour les notifications Push n'est pas été acceptée",
+      'Vous pouvez modifier cela dans vos paramètres',
       [
         {
           text: 'Open Settings',

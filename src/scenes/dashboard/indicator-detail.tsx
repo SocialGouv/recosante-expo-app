@@ -110,10 +110,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
         >
           {indicator.name}
         </MyText>
-        <MyText
-          font="MarianneBold"
-          className="mt-2 pb-1 text-xs text-app-gray-100"
-        >
+        <MyText font="MarianneBold" className="pb-1 text-xs text-app-gray-100">
           Mis à jour{' '}
           {DateService.getTimeFromNow(currentDayIndicatorData.diffusion_date)}
         </MyText>
@@ -145,14 +142,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
       >
         <View className="px-6 pb-20 pt-6">
           <View className="mb-4 flex flex-row flex-wrap items-start justify-start">
-            {/* <View className="mb-5 flex basis-2/3">
-              <MyText
-                className="text-wrap text-2xl uppercase text-black"
-                font="MarianneExtraBold"
-              >
-                {address?.municipality_name}
-              </MyText>
-            </View> */}
             <View
               className="items-center rounded-full px-6 py-1"
               style={{

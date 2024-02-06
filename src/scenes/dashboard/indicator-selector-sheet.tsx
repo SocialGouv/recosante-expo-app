@@ -1,4 +1,4 @@
-import { Dimensions, Platform, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo } from 'react';
 import MyText from '~/components/ui/my-text';
@@ -26,7 +26,6 @@ export function IndicatorSelectorSheet({
   const { indicators } = useIndicatorsList((state) => state);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose, eventCategory } = route.params;
-  const isSettingsPage = eventCategory === 'SETTINGS';
   const snapPoints = useMemo(
     () =>
       [inPercentOfScreen, 75, 90, 100, 30]
@@ -83,10 +82,8 @@ export function IndicatorSelectorSheet({
       }}
     >
       <View className="flex h-full w-full flex-1 border-t border-app-primary bg-app-primary p-2 pt-4">
-        <MyText className="mx-2 mb-4 text-white" font="MarianneBold">
-          {isSettingsPage
-            ? 'Séléctionnez votre indicateur favori'
-            : 'Découvrez votre tableau de bord personnalisé'}
+        <MyText className="mx-2  mb-4 text-white" font="MarianneBold">
+          Choisissez votre indicateur favori, les autres s'afficheront aussi.
         </MyText>
         <IndicatorsSelector
           onSubmit={(favoriteIndicator) => {

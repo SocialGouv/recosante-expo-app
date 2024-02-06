@@ -63,6 +63,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
         props.isFavorite ? '' : props.index % 2 === 0 ? 'pl-5' : 'pr-5',
       )}
       onPress={handleSelect}
+      activeOpacity={1}
     >
       <View
         className="self-stretch rounded-2xl border-[3px] bg-white p-2"
@@ -80,7 +81,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             >
               <MyText
                 font="MarianneExtraBold"
-                className="uppercase text-[#232323]"
+                className="text-center uppercase text-[#232323]"
               >
                 {indicatorDataInCurrentDay?.summary.status}
               </MyText>
