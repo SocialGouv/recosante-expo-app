@@ -83,6 +83,7 @@ function Home(props: HomeProps) {
           overflow: 'hidden',
           zIndex: 100,
           height: 70,
+          bottom: 25,
         },
         lazy: false,
       }}

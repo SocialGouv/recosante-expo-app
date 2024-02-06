@@ -29,6 +29,7 @@ import { Illu } from '~/assets/location/illu';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import { Loader } from '~/components/ui/loader';
 import { capture } from '~/services/sentry';
+import { Search } from '~/assets/icons/search';
 
 interface LocationPageProps {
   navigation: any;
@@ -160,26 +161,29 @@ export function LocationPage(props: LocationPageProps) {
           </Pressable>
         </View>
         <View className="flex-row items-start justify-start bg-app-primary">
-          <TextInput
-            autoCorrect={false}
-            autoFocus
-            placeholderTextColor="#3343BD"
-            placeholder="Rechercher un lieu, ville"
-            clearButtonMode="always"
-            value={query}
-            className="h-12 w-4/5 rounded-full bg-white px-4 text-[16px] placeholder:text-[16px]"
-            onChange={getSuggestions}
-            onFocus={() => {
-              logEvent({
-                category: 'LOCATION',
-                action: 'TYPE_ADDRESS',
-              });
-            }}
-          />
-          <View className="ml-4 shrink-0 basis-1/5 items-center justify-center">
+          <View className="h-10 w-4/5 flex-row  items-center rounded-full bg-white  pl-4">
+            <Search />
+            <TextInput
+              autoCorrect={false}
+              autoFocus
+              placeholderTextColor="#3343BD"
+              placeholder="Rechercher un lieu, ville"
+              // clearButtonMode="always"
+              value={query}
+              className="w-full px-2 text-[16px] placeholder:text-[16px]"
+              onChange={getSuggestions}
+              onFocus={() => {
+                logEvent({
+                  category: 'LOCATION',
+                  action: 'TYPE_ADDRESS',
+                });
+              }}
+            />
+          </View>
+          <View className="ml-2 shrink-0 basis-1/5 items-center justify-center">
             <Pressable
               onPress={cancelQuery}
-              className="h-12 w-full items-center justify-center"
+              className="h-10 w-full items-center justify-center"
             >
               <MyText
                 font="MarianneRegular"
@@ -201,7 +205,7 @@ export function LocationPage(props: LocationPageProps) {
           justifyContent: 'flex-start',
         }}
       >
-        <View className=" h-full bg-app-gray px-6 pt-6">
+        <View className=" h-full bg-app-gray px-6 pt-4">
           <View className="w-full">
             <Pressable
               disabled={isGeolocating}
@@ -290,7 +294,7 @@ export function LocationPage(props: LocationPageProps) {
               <Illu />
               <MyText
                 font="MarianneMedium"
-                className="mt-4 px-12 text-center text-[14px] text-gray-700"
+                className="mt-4 px-6 text-center text-[14px] text-[rgba(0,0,0,0.6)]"
               >
                 Optimisez votre expérience en activant la géolocalisation afin
                 d’améliorer votre utilisation de l'application.
