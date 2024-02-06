@@ -80,7 +80,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
             >
               <MyText
                 font="MarianneExtraBold"
-                className="uppercase text-[#232323]"
+                className="text-center uppercase text-[#232323]"
               >
                 {indicatorDataInCurrentDay?.summary.status}
               </MyText>

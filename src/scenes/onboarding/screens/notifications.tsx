@@ -12,7 +12,7 @@ export function Notifications({ navigation }: { navigation: any }) {
           className="text-center text-3xl text-white"
         >
           🔔 Accepter les {'\n'}
-          notification
+          notifications
         </MyText>
       </View>
       <View className="mb-8 h-1/3 w-full">
