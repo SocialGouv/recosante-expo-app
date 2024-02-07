@@ -31,7 +31,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const hasScroll = useRef(false);
   const { indicator, day } = props.route.params;
   const currentDayIndicatorData = indicator?.[day];
-  const indicatorValue = currentDayIndicatorData?.summary.value ?? 0;
+  const indicatorValue = currentDayIndicatorData?.summary.value;
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
@@ -42,7 +42,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(
     indicator.slug,
   );
-  const indicatorColor = valuesToColor[indicatorValue];
+  const indicatorColor = valuesToColor[indicatorValue ?? 0];
 
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
@@ -156,33 +156,36 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               </MyText>
             </View>
           </View>
-          <LineChartWithCursor
-            value={indicatorValue}
-            slug={indicator.slug}
-            showCursor={true}
-          />
-          <LineList
-            values={currentDayIndicatorData.values}
-            slug={indicator.slug}
-          />
-
-          <Title label="Nos recommandations" />
-          {currentDayIndicatorData.summary?.recommendations?.map(
-            (recommendation) => {
-              return (
-                <View
-                  key={recommendation}
-                  className="mt-3 flex flex-row items-center rounded-2xl bg-white p-2 px-3"
-                >
-                  <MyText>{recommendation}</MyText>
-                </View>
-              );
-            },
+          {indicatorValue != null && (
+            <>
+              <LineChartWithCursor
+                value={indicatorValue}
+                slug={indicator.slug}
+                showCursor={true}
+              />
+              <LineList
+                values={currentDayIndicatorData.values}
+                slug={indicator.slug}
+              />
+              <Title label="Nos recommandations" />
+              {currentDayIndicatorData.summary?.recommendations?.map(
+                (recommendation) => {
+                  return (
+                    <View
+                      key={recommendation}
+                      className="mt-3 flex flex-row items-center rounded-2xl bg-white p-2 px-3"
+                    >
+                      <MyText>{recommendation}</MyText>
+                    </View>
+                  );
+                },
+              )}
+              <MyText className="mt-2" font="MarianneRegular">
+                Toutes les informations et recommandations sont issues du
+                Gouvernement Francais.
+              </MyText>
+            </>
           )}
-          <MyText className="mt-2" font="MarianneRegular">
-            Toutes les informations et recommandations sont issues du
-            Gouvernement Francais.
-          </MyText>
           <Title label={indicator?.about_title} />
           <View className="mt-2 w-full overflow-hidden">
             <Markdown rules={renderRules}>

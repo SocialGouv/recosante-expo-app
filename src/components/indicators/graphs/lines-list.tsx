@@ -33,6 +33,7 @@ export function LineList(props: LineChartProps) {
   const { valuesToColor, maxValue } =
     IndicatorService.getDataVisualisationBySlug(props.slug);
 
+  if (!sortedValues?.length) return <></>;
   return (
     <View className="mt-6 flex space-y-2">
       {sortedValues

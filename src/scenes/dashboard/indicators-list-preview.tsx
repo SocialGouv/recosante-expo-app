@@ -5,6 +5,7 @@ import { type IndicatorItem } from '~/types/indicator';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { DayEnum } from '~/types/day';
 import { Loader } from '~/components/ui/loader';
+import MyText from '~/components/ui/my-text';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -18,6 +19,7 @@ interface IndicatorsListPreviewProps {
   favoriteIndicator: IndicatorItem | null;
   isLoading: boolean;
   isRefreshing: boolean;
+  isError: string;
   onRefresh: () => void;
 }
 export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
@@ -47,6 +49,10 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         {props.isLoading ? (
           <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
             <Loader label="Chargement des indicateurs ..." />
+          </View>
+        ) : props.isError ? (
+          <View className="h-full w-full flex-1 flex-row flex-wrap items-center justify-center bg-app-gray pb-24 pt-8">
+            <MyText className="text-center">{props.isError}</MyText>
           </View>
         ) : (
           <View className="flex-1 flex-row flex-wrap pb-24 pt-8">

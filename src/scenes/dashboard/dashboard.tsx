@@ -43,7 +43,9 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       return;
     }
     if (!response.ok) {
-      show(`Erreur lors du chargement des indicateurs ${response.message}`);
+      show(
+        `Erreur lors du chargement des indicateurs ${response.message ?? ''}`,
+      );
       setIsError('Désolé, une erreur est survenue,\nrevenez plus tard ! 😊');
       return;
     }
@@ -131,16 +133,11 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       {!address?.municipality_name && (
         <NoLocationCallToAction navigation={navigation} />
       )}
-      {!!isError && (
-        <View className="h-full w-full flex-1 flex-row flex-wrap items-center justify-center bg-app-gray pb-24 pt-8">
-          <MyText className="text-center">{isError}</MyText>
-        </View>
-      )}
-
       {!!address?.municipality_name && (
         <IndicatorsListPreview
           indicators={indicators}
           favoriteIndicator={favoriteIndicator}
+          isError={isError}
           isLoading={isLoading}
           isRefreshing={isRefreshing}
           onRefresh={getIndicators}

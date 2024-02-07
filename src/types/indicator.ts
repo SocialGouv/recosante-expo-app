@@ -26,7 +26,7 @@ export interface IndicatorByPeriod {
   created_at: string;
   updated_at: string;
   summary: {
-    value: number;
+    value: number | null;
     status: string;
     status_description?: string;
     recommendations?: string[];
