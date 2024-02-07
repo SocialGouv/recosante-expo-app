@@ -47,8 +47,8 @@ export async function registerForPushNotificationsAsync({
   }
   if (finalStatus !== 'granted') {
     Alert.alert(
-      "L'autorisation pour les notifications Push n'est pas été acceptée",
-      'Vous pouvez modifier cela dans vos paramètres',
+      'Les notifications sont désactivées',
+      'Vous pouvez activer les notifications dans les paramètres de votre téléphone.',
       [
         {
           text: 'Open Settings',
