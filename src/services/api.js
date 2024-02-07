@@ -6,6 +6,8 @@ import { API_SCHEME, API_HOST } from '../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_ID } from '~/constants/matomo';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
+import fetchRetry from 'fetch-retry';
+
 // AsyncStorage.clear();
 
 export const checkNetwork = async (test = false) => {
@@ -29,6 +31,7 @@ class ApiService {
     return url.toString();
   };
 
+  fetch = fetchRetry(fetch);
   execute = async ({
     method = 'GET',
     path = '',
@@ -54,6 +57,8 @@ class ApiService {
           ...headers,
         },
         body: body ? JSON.stringify(body) : null,
+        retries: method === 'GET' ? 3 : 0,
+        retryDelay: 800,
       };
 
       const url = this.getUrl(path, query);
@@ -61,7 +66,7 @@ class ApiService {
       const canFetch = await checkNetwork();
       if (!canFetch) return { ok: false, error: ERROR_NO_NETWORK };
 
-      const response = await fetch(url, config);
+      const response = await this.fetch(url, config);
 
       if (response.json) {
         try {

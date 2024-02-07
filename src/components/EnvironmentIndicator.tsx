@@ -16,6 +16,7 @@ const EnvironmentIndicator = () => {
     });
   }, []);
 
+  return null;
   if (environment === 'production') return null;
   return (
     <SafeAreaView style={styles.container}>
