@@ -37,7 +37,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     setIsRefreshing(false);
     if (!response.ok && response.error === ERROR_NO_NETWORK) {
       setIsError(
-        'Désolé, il semblerait que vous n’ayez pas de connexion à internet 🧐',
+        'Désolé, il semblerait que vous\nn’ayez pas de connexion à internet 🧐',
       );
       return;
     }
