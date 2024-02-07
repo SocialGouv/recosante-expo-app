@@ -1,12 +1,13 @@
-import { Dimensions, View } from 'react-native';
+import { Dimensions, InteractionManager, View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import MyText from '~/components/ui/my-text';
 import { IndicatorsSelector } from '~/components/indicators/indicators-selector';
 import { RouteEnum, type RootStackParamList } from '~/constants/route';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { logEvent } from '~/services/logEventsWithMatomo';
+import API from '~/services/api';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -23,7 +24,7 @@ export function IndicatorSelectorSheet({
   navigation,
   route,
 }: IndicatorSelectorSheetProps) {
-  const { indicators } = useIndicatorsList((state) => state);
+  const { indicators, setIndicatorsList } = useIndicatorsList((state) => state);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const { enablePanDownToClose, eventCategory } = route.params;
   const snapPoints = useMemo(
@@ -45,6 +46,19 @@ export function IndicatorSelectorSheet({
       navigation.navigate(RouteEnum.HOME);
     }, 500);
   }
+
+  async function refreshIndicatorsList() {
+    // to avoid having to quit the app to see the new indicators
+    const response = await API.get({ path: '/indicators/list' });
+    if (!response.ok) return;
+    setIndicatorsList(response.data);
+  }
+  useEffect(() => {
+    setTimeout(() => {
+      refreshIndicatorsList();
+      // if we don't put this timeout, the transition is very ugly :(
+    }, 1500);
+  }, []);
 
   return (
     <BottomSheet

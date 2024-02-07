@@ -17,7 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
-  const { favoriteIndicator, indicators } = useIndicatorsList((state) => state);
+  const { favoriteIndicator, indicators, setIndicatorsList } =
+    useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
   const [municipalityFullName, setMunicipalityFullName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,6 +49,14 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     }
     setIsError('');
     setIndicators(response.data);
+    refreshIndicatorsList();
+  }
+
+  async function refreshIndicatorsList() {
+    // to avoid having to quit the app to see the new indicators
+    const response = await API.get({ path: '/indicators/list' });
+    if (!response.ok) return;
+    setIndicatorsList(response.data);
   }
 
   useEffect(() => {
@@ -75,6 +84,8 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       ignore = true;
     };
   }, [address?.municipality_insee_code]);
+
+  console.log({ isRefreshing });
 
   return (
     <>
