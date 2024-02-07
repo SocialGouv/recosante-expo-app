@@ -10,19 +10,21 @@ import { useUser } from '~/zustand/user/useUser';
 const notifications: NotificationType[] = [
   {
     id: NotificationIdEnum.MORNING,
-    label: '☕️ Les nouvelles matinales ',
-    description: 'Notification pour bien commencer la journée à 7h',
+    label: '☕️ Notifié le matin pour la journée',
+    description:
+      'Recevez des informations sur votre indicateur favori le matin à 7h.',
   },
   {
     id: NotificationIdEnum.EVENING,
-    label: '🌇️ Les nouvelles de soirée ',
+    label: '🌇️ Notifié le soir pour le lendemain',
     description:
-      'Terminez votre journée en beauté ! Recevez une notification à 19h',
+      'Recevez des informations sur votre indicateur favori le soir à 19h.',
   },
   {
     id: NotificationIdEnum.ALERT,
-    label: '⚠️️ Alertes d’urgence',
-    description: 'Soyez informé immédiatement en cas de seuil critique atteint',
+    label: '⚠️️ Notifié en cas de vigilance',
+    description:
+      'Recevez une notification dès qu’un indicateur dépasse un seuil d’alerte',
   },
 ];
 
@@ -61,7 +63,7 @@ export function NotificationsList() {
             key={notification.id}
             className="mt-4 flex flex-row items-center justify-between rounded-2xl bg-white  p-4"
           >
-            <View className="w-3/4">
+            <View className="w-5/6">
               <View>
                 <MyText font="MarianneBold" className="text-sm">
                   {notification.label}
