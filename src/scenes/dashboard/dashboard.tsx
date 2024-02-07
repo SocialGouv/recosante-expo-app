@@ -66,7 +66,6 @@ export function DashboardPage({ navigation }: { navigation: any }) {
     let ignore = false;
     getIndicators(false);
     AsyncStorage.getItem(MUNICIPALITY_FULL_NAME).then((name) => {
-      console.log({ ignore, name });
       if (ignore) return;
       if (!name) return;
       setMunicipalityFullName(name);
@@ -86,8 +85,6 @@ export function DashboardPage({ navigation }: { navigation: any }) {
       ignore = true;
     };
   }, [address?.municipality_insee_code]);
-
-  console.log({ isRefreshing });
 
   return (
     <>
