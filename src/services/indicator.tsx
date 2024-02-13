@@ -121,14 +121,13 @@ export namespace IndicatorService {
         };
       case IndicatorsSlugEnum.weather_alert:
         return {
-          maxValue: 5,
+          maxValue: 4,
           valuesToColor: {
             0: '#D9D9EF',
             1: '#73c8ae',
             2: '#fef799',
             3: '#ee817e',
             4: '#a7546d',
-            5: '#965f9b',
           },
         };
       case IndicatorsSlugEnum.bathing_water:
