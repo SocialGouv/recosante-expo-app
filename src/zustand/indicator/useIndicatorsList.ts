@@ -56,6 +56,14 @@ export const useIndicatorsList = create<State>()(
           const indicators = response.data as IndicatorItem[];
           state?.setIndicatorsList(indicators);
         });
+        if (state?.favoriteIndicator) {
+          API.put({
+            path: '/user',
+            body: {
+              favorite_indicator: state.favoriteIndicator?.slug,
+            },
+          });
+        }
       },
     },
   ),
