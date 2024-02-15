@@ -68,7 +68,7 @@ export function Onboarding() {
             component={Notifications}
           />
         </OnboardingStack.Navigator>
-        <View className="mx-auto my-8 flex w-screen flex-row justify-center">
+        <View className="mx-auto my-8 flex w-full flex-row justify-center">
           <Stepper step={step} onPress={onNext} disabled={isLoading}>
             {isLoading ? (
               <ActivityIndicator size="small" color="#3343BD" />
