@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Pressable, View, ScrollView } from 'react-native';
+import { Pressable, View, ScrollView, Linking } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
@@ -111,13 +111,6 @@ export function ConfidentialityPage(props: LocationPageProps) {
 
         <ScrollView className="flex flex-1 bg-app-gray">
           <View className="px-4 pb-20 pt-6">
-            <Title label="Qui est responsable de Recosanté ?" />
-            <MyText font="MarianneRegular" className="mt-2 text-xs">
-              Recosanté est développé au sein de la Fabrique numérique des
-              ministères sociaux. La Direction générale de la santé (DGS) et la
-              Direction générale de la prévention des risques (DGPR) sont les
-              responsables du traitement de vos données à caractère personnel.
-            </MyText>
             <Title label="Quel est l’objectif de Recosanté ? " />
             <MyText font="MarianneRegular" className="mt-2 text-xs">
               Transmettre des informations et des recommandations aux
@@ -127,11 +120,35 @@ export function ConfidentialityPage(props: LocationPageProps) {
             <Title label="Confidentialité" />
             <MyText font="MarianneRegular" className="mt-2 text-xs">
               L’application Recosanté ne traite pas de données à caractère
-              personnel, nous ne sommes pas en mesure de vous identifier ou vous
-              réidentifier. Nous collectons uniquement les données de navigation
-              anonymisées et les villes. Toutefois, les données de
-              géolocalisation à l’échelle de la rue restent stockées sur votre
-              appareil dans le but de vous proposer un historique.
+              personnel, nous ne sommes pas en mesure de vous identifier ou de
+              vous réidentifier. Nous collectons uniquement les données de
+              navigation anonymisées et les villes.
+            </MyText>
+            <MyText font="MarianneRegular" className="mt-2 text-xs">
+              Toutefois, les données de géolocalisation à l’échelle de la rue
+              restent stockées sur votre appareil dans le but de vous proposer
+              un historique.
+            </MyText>
+            <MyText font="MarianneRegular" className="mt-2 text-xs">
+              Sous-traitant : OVH
+            </MyText>
+            <MyText font="MarianneRegular" className="mt-2 text-xs">
+              Pays Destinataire : France
+            </MyText>
+            <MyText font="MarianneRegular" className="mt-2 text-xs">
+              Traitement réalisé : Hébergement
+            </MyText>
+            <MyText
+              font="MarianneRegular"
+              className="mt-2 text-xs"
+              onPress={() => {
+                Linking.openURL(
+                  'https://storage.gra.cloud.ovh.net/v1/AUTH_325716a587c64897acbef9a4a4726e38/contracts/9e74492-OVH_Data_Protection_Agreement-FR-6.0.pdf',
+                );
+              }}
+            >
+              Garanties :
+              https://storage.gra.cloud.ovh.net/v1/AUTH_325716a587c64897acbef9a4a4726e38/contracts/9e74492-OVH_Data_Protection_Agreement-FR-6.0.pdf
             </MyText>
             <MyText font="MarianneRegular" className="mt-2 text-xs">
               Nous utilisons Matomo, une solution de mesure d’audience,

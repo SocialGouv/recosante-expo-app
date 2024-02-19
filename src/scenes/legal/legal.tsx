@@ -84,7 +84,8 @@ export function LegalPage(props: LocationPageProps) {
           <Title label="Editeur de la plateforme" />
           <MyText font="MarianneRegular" className="mt-2 text-xs">
             L’application «Recosanté» est éditée par la Fabrique des ministères
-            sociaux, située:{'\n'}Tour Mirabeau{'\n'}39-43 Quai André Citroën
+            sociaux, située{'\u00a0'}:{'\n'}Tour Mirabeau{'\n'}39-43 Quai André
+            Citroën
             {'\n'}
             75015 Paris France{'\n'}01 44 38 36 40
           </MyText>
@@ -95,9 +96,9 @@ export function LegalPage(props: LocationPageProps) {
           </MyText>
           <Title label="Hébergement de la Plateforme" />
           <MyText font="MarianneRegular" className="mt-2 text-xs">
-            Cette application est hébergée par Microsoft Azure, situé:{'\n'}37
-            Quai du Président Roosevelt
-            {'\n'}92130 Issy-les-Moulineaux{'\n'}France.
+            Cette application est hébergée par OVH, situé{'\u00a0'}:{'\n'}2, rue
+            Kellermann
+            {'\n'}59100 Roubaix{'\n'}France.
           </MyText>
         </View>
       </ScrollView>
