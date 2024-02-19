@@ -8,9 +8,7 @@ import {
   Platform,
   StyleSheet,
   Linking,
-  Dimensions,
 } from 'react-native';
-import { Image } from 'expo-image';
 
 import MyText from '~/components/ui/my-text';
 import { DynamicHeightImage } from '~/components/DynamicHeightImage';
@@ -329,10 +327,6 @@ const renderRules = {
     defaultImageHandler,
   ) => {
     const { src, alt } = node.attributes;
-    const windowWidth = Dimensions.get('window').width;
-
-    console.log('src', src);
-    console.log('alt', alt);
 
     // we check that the source starts with at least one of the elements in allowedImageHandlers
     const show =
@@ -409,6 +403,24 @@ const renderRules = {
       {children}
     </MyText>
   ),
+  sup: (node, children, parent, styles) => {
+    return (
+      <View style={styles.supContainer}>
+        <MyText key={node.key} style={styles.sup}>
+          {children}
+        </MyText>
+      </View>
+    );
+  },
+  sub: (node, children, parent, styles) => {
+    return (
+      <View style={styles.subContainer}>
+        <MyText key={node.key} style={styles.sup}>
+          {children}
+        </MyText>
+      </View>
+    );
+  },
 };
 
 export default renderRules;

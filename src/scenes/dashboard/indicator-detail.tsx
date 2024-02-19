@@ -1,19 +1,25 @@
 import { View, Pressable } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo, useCallback, useEffect } from 'react';
+import supPlugin from 'markdown-it-sup';
+import subPlugin from 'markdown-it-sub';
+import { ScrollView } from 'react-native-gesture-handler';
+import Markdown, { MarkdownIt } from 'react-native-markdown-display';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import MyText from '~/components/ui/my-text';
 import { Close } from '~/assets/icons/close';
 import { LineChartWithCursor } from '~/components/indicators/graphs/line-with-cursor';
 import { DateService } from '~/services/date';
-import { useNavigation } from '@react-navigation/native';
 import type { RootStackParamList, RouteEnum } from '~/constants/route';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LineList } from '~/components/indicators/graphs/lines-list';
 import { IndicatorService } from '~/services/indicator';
-import { ScrollView } from 'react-native-gesture-handler';
-import Markdown from 'react-native-markdown-display';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import renderRules from '~/utils/md-rules';
+
+const markdownItInstance = MarkdownIt({ typographer: true })
+  .use(supPlugin)
+  .use(subPlugin);
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
   // @ts-expect-error TODO
@@ -188,7 +194,25 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
           )}
           <Title label={indicator?.about_title} />
           <View className="mt-2 w-full overflow-hidden">
-            <Markdown rules={renderRules}>
+            <Markdown
+              rules={renderRules}
+              style={{
+                sup: {
+                  lineHeight: 18,
+                  fontSize: 10,
+                  textAlignVertical: 'top',
+                },
+                sub: {
+                  lineHeight: 10,
+                  fontSize: 10,
+                  textAlignVertical: 'bottom',
+                },
+                subContainer: {
+                  marginTop: -5,
+                },
+              }}
+              markdownit={markdownItInstance}
+            >
               {indicator?.about_description}
             </Markdown>
           </View>

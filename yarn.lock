@@ -9911,6 +9911,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-it-sub@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "markdown-it-sub@npm:2.0.0"
+  checksum: d92e16e1398c496c69be4a1c8a8209c408dbbb67eb99c3ed9935b637a4a7b8940456bf6036823ed9a2bf7baae7cc764dd56bae6180069f57f40b726de58e4d91
+  languageName: node
+  linkType: hard
+
+"markdown-it-sup@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "markdown-it-sup@npm:2.0.0"
+  checksum: 5cc912993e0768ef001d6c8d75ab3bf1e643639473a01b7f3526d5a2b8434e3b2e7b3b7899d8d2ba3d319632998b7a63c00d68597eb12dd91564ffbb779ebb9d
+  languageName: node
+  linkType: hard
+
 "markdown-it@npm:^10.0.0":
   version: 10.0.0
   resolution: "markdown-it@npm:10.0.0"
@@ -12939,6 +12953,8 @@ __metadata:
     expo-status-bar: "npm:~1.6.0"
     fetch-retry: "npm:^5.0.6"
     husky: "npm:^8.0.0"
+    markdown-it-sub: "npm:^2.0.0"
+    markdown-it-sup: "npm:^2.0.0"
     nativewind: "npm:^2.0.11"
     prettier: "npm:2"
     prettier-plugin-tailwindcss: "npm:^0.4.1"
