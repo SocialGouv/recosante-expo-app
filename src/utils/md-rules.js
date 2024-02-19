@@ -8,8 +8,12 @@ import {
   Platform,
   StyleSheet,
   Linking,
+  Dimensions,
 } from 'react-native';
+import { Image } from 'expo-image';
+
 import MyText from '~/components/ui/my-text';
+import { DynamicHeightImage } from '~/components/DynamicHeightImage';
 
 function openUrl(url, customCallback) {
   if (customCallback) {
@@ -325,6 +329,10 @@ const renderRules = {
     defaultImageHandler,
   ) => {
     const { src, alt } = node.attributes;
+    const windowWidth = Dimensions.get('window').width;
+
+    console.log('src', src);
+    console.log('alt', alt);
 
     // we check that the source starts with at least one of the elements in allowedImageHandlers
     const show =
@@ -336,21 +344,19 @@ const renderRules = {
       return null;
     }
 
-    const imageProps = {
-      indicator: true,
-      key: node.key,
-      style: styles._VIEW_SAFE_image,
-      source: {
-        uri: show === true ? src : `${defaultImageHandler}${src}`,
-      },
-    };
-
-    if (alt) {
-      imageProps.accessible = true;
-      imageProps.accessibilityLabel = alt;
-    }
-
-    return <FitImage {...imageProps} />;
+    return (
+      <DynamicHeightImage
+        key={node.key}
+        className="h-96 w-full"
+        source={{
+          uri: show === true ? src : `${defaultImageHandler}${src}`,
+        }}
+        contentFit="contain"
+        transition={1000}
+        accessibilityLabel={alt}
+        accessible={!!alt}
+      />
+    );
   },
 
   // MyText Output
