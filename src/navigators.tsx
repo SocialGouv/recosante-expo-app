@@ -78,12 +78,11 @@ function Home(props: HomeProps) {
           borderTopWidth: 0,
           borderRadius: 500,
           marginHorizontal: 30,
-          marginVertical: 12,
           position: 'absolute',
           overflow: 'hidden',
           zIndex: 100,
           height: 70,
-          bottom: 25,
+          bottom: 20,
         },
         lazy: false,
       }}

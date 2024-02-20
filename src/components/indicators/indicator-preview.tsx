@@ -74,17 +74,19 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
         <View className="flex flex-row justify-between">
           <View className="flex w-full justify-center">
             <View
-              className="mx-auto -mt-6 items-center rounded-full px-6 py-1"
+              className="mx-auto -mt-6 flex-row items-center justify-center rounded-full py-1"
               style={{
                 backgroundColor: indicatorColor,
               }}
             >
+              <View className="shrink basis-6" />
               <MyText
                 font="MarianneExtraBold"
                 className="-mt-0.5 text-center uppercase text-[#232323]"
               >
                 {indicatorDataInCurrentDay?.summary.status}
               </MyText>
+              <View className="shrink basis-6" />
             </View>
 
             <View className="flex items-end">

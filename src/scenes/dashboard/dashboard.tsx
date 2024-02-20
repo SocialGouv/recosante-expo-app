@@ -15,6 +15,7 @@ import { useToast } from '~/services/toast';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export function DashboardPage({ navigation }: { navigation: any }) {
   const { favoriteIndicator, indicators, setIndicatorsList } =
@@ -88,25 +89,25 @@ export function DashboardPage({ navigation }: { navigation: any }) {
 
   return (
     <>
-      <View className="flex items-center justify-start bg-app-gray px-4 pb-2 pt-4">
-        <View className="relative z-40 flex w-full items-end">
+      <SafeAreaView
+        className="flex grow-0 items-center justify-start bg-app-gray px-4 py-2"
+        edges={['top', 'left', 'right']}
+      >
+        <View className="relative z-50 flex w-full items-end">
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(RouteEnum.LOCATION);
             }}
-            className="absolute right-0 top-8 z-50"
+            className="absolute right-0"
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <View className="w-fit  rounded-full bg-app-primary p-3 text-sm text-white">
+            <View className="w-fit rounded-full bg-app-primary p-3 text-sm text-white">
               <LocationIcon />
             </View>
           </TouchableOpacity>
         </View>
-        <View className="mt-6 flex w-full">
-          <MyText
-            font="MarianneBold"
-            className="mt-2 text-2xl leading-6 text-black"
-          >
+        <View className="mt-2 flex w-full">
+          <MyText font="MarianneBold" className="text-2xl leading-6 text-black">
             Découvrez{'\n'}vos indicateurs{'\u00A0'}!
           </MyText>
           {address?.municipality_name ? (
@@ -124,7 +125,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
             </View>
           ) : null}
         </View>
-      </View>
+      </SafeAreaView>
       {!address?.municipality_name && (
         <NoLocationCallToAction navigation={navigation} />
       )}
