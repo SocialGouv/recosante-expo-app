@@ -153,7 +153,7 @@ export function FeedbackPage(props: LocationPageProps) {
             }}
           />
         </View>
-        <View className="border-b border-gray-200 pb-6 pt-4 ">
+        <View className="border-b border-gray-200 pb-6 pt-4">
           <MyText font="MarianneBold" className=" text-[15px] text-black">
             2. Avez-vous des suggestions pour améliorer Recosanté ?
           </MyText>
@@ -193,7 +193,7 @@ export function FeedbackPage(props: LocationPageProps) {
             placeholder="Votre numéro de téléphone ou adresse mail (facultatif)"
           />
         </View>
-        <Button onPress={onSend} viewClassName="bg-app-primary py-4">
+        <Button onPress={onSend} viewClassName="bg-app-primary py-4 mb-10">
           Envoyer
         </Button>
       </ScrollView>

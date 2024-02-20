@@ -55,16 +55,6 @@ export function SettingsPage({ navigation }: any) {
           }}
         />
         <TextRow
-          text="Nous contacter"
-          onPress={() => {
-            logEvent({
-              category: 'SETTINGS',
-              action: 'CONTACT_US_BY_EMAIL',
-            });
-            Linking.openURL('mailto:contact@recosante.beta.gouv.fr');
-          }}
-        />
-        <TextRow
           text="Nos mentions légales"
           onPress={() => {
             navigation.navigate(RouteEnum.LEGAL);
