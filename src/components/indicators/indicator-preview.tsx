@@ -1,5 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import { type IndicatorItem, type IndicatorDay } from '~/types/indicator';
+import type { DayEnum } from '~/types/day';
+import type { DashboardProps } from '~/scenes/dashboard/dashboard';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
 import { cn } from '~/utils/tailwind';
@@ -16,34 +18,20 @@ import * as Haptics from 'expo-haptics';
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
   isFavorite?: boolean;
-  day: IndicatorDay;
+  day: DayEnum;
   index: number;
 }
 
 export function IndicatorPreview(props: IndicatorPreviewProps) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<DashboardProps['navigation']>();
+
   const { indicators } = useIndicators((state) => state);
   const currentIndicatorData = indicators?.find(
     (indicator) => indicator.slug === props.indicator.slug,
   );
-
-  function handleSelect() {
-    if (!currentIndicatorData) return;
-    logEvent({
-      category: 'DASHBOARD',
-      action: 'INDICATOR_SELECTED',
-      name: props.indicator.slug.toLocaleUpperCase(),
-      value: props.isFavorite ? 1 : 0,
-    });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    // @ts-expect-error TODO
-    navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
-      indicator: currentIndicatorData,
-      day: props.day,
-    });
-  }
   const slug = props.indicator.slug;
   const indicatorDataInCurrentDay = currentIndicatorData?.[props.day];
+  if (!indicatorDataInCurrentDay) return <></>;
   const indicatorMaxValue =
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
 
@@ -54,7 +42,39 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
   const showLineList =
     props.isFavorite && indicatorDataInCurrentDay?.values?.length;
-  if (!indicatorDataInCurrentDay) return <></>;
+
+  function handlePress() {
+    if (!currentIndicatorData) return;
+    if (!props.day) return;
+    logEvent({
+      category: 'DASHBOARD',
+      action: 'INDICATOR_SELECTED',
+      name: props.indicator.slug.toLocaleUpperCase(),
+      value: props.isFavorite ? 1 : 0,
+    });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
+      indicator: currentIndicatorData,
+      day: props.day,
+    });
+  }
+
+  function handleLongPress() {
+    if (!currentIndicatorData) return;
+    if (!props.day) return;
+    if (props.isFavorite) return;
+    logEvent({
+      category: 'DASHBOARD',
+      action: 'INDICATOR_SELECTED',
+      name: props.indicator.slug.toLocaleUpperCase(),
+      value: 1,
+    });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.navigate(RouteEnum.INDICATOR_FAST_SELECTOR, {
+      indicatorSlug: props.indicator.slug,
+    });
+  }
+
   return (
     <TouchableOpacity
       className={cn(
@@ -62,7 +82,8 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
         props.isFavorite ? 'mx-5 -mt-2' : 'basis-[50%] flex-row px-1.5',
         props.isFavorite ? '' : props.index % 2 === 0 ? 'pl-5' : 'pr-5',
       )}
-      onPress={handleSelect}
+      onPress={handlePress}
+      onLongPress={handleLongPress}
       activeOpacity={1}
     >
       <View
@@ -148,7 +169,6 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                 values={indicatorDataInCurrentDay?.values}
                 isPreviewMode
                 onMorePress={() => {
-                  // @ts-expect-error TODO
                   navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
                     indicator: currentIndicatorData,
                     day: props.day,

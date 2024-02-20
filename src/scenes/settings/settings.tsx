@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  Platform,
-  Linking,
-} from 'react-native';
+import { ScrollView, TouchableOpacity, View, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {
+  HomeTabRouteEnum,
+  RouteEnum,
+  HomeTabParamList,
+  RootStackParamList,
+} from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RouteEnum } from '~/constants/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
 import { initSession, logEvent } from '~/services/logEventsWithMatomo';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
 
-export function SettingsPage({ navigation }: any) {
+export type SettingsProps = CompositeScreenProps<
+  BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.SETTINGS>,
+  NativeStackScreenProps<RootStackParamList>
+>;
+
+export function SettingsPage(props: SettingsProps) {
   const [onVersionClicked, setOnVersionClicked] = useState(0);
   const resetIndicatorsList = useIndicatorsList((state) => state.reset);
   const resetIndicators = useIndicators((state) => state.reset);
@@ -41,7 +48,7 @@ export function SettingsPage({ navigation }: any) {
         <TextRow
           text="Changer votre indicateur favori"
           onPress={() => {
-            navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
+            props.navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
               eventCategory: 'SETTINGS',
             });
@@ -51,19 +58,19 @@ export function SettingsPage({ navigation }: any) {
         <TextRow
           text="Donner mon avis"
           onPress={() => {
-            navigation.navigate(RouteEnum.FEEDBACK);
+            props.navigation.navigate(RouteEnum.FEEDBACK);
           }}
         />
         <TextRow
           text="Nos mentions légales"
           onPress={() => {
-            navigation.navigate(RouteEnum.LEGAL);
+            props.navigation.navigate(RouteEnum.LEGAL);
           }}
         />
         <TextRow
           text="La politique de confidentialité"
           onPress={() => {
-            navigation.navigate(RouteEnum.CONFIDENTIALITY);
+            props.navigation.navigate(RouteEnum.CONFIDENTIALITY);
           }}
         />
         <View>
@@ -79,7 +86,7 @@ export function SettingsPage({ navigation }: any) {
                   index: 0,
                   routes: [{ name: RouteEnum.ONBOARDING }],
                 });
-                navigation.dispatch(resetAction);
+                props.navigation.dispatch(resetAction);
                 resetIndicators();
               }
             }}

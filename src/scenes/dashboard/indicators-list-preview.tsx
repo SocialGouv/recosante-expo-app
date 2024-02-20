@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { ScrollView, StyleSheet, View, RefreshControl } from 'react-native';
+import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { IndicatorPreview } from '~/components/indicators/indicator-preview';
 import { type IndicatorItem } from '~/types/indicator';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -7,12 +8,24 @@ import { DayEnum } from '~/types/day';
 import { Loader } from '~/components/ui/loader';
 import MyText from '~/components/ui/my-text';
 
-const Tab = createMaterialTopTabNavigator();
-
-const tabsEnum = {
-  TODAY: 'TODAY',
-  TOMORROW: 'TOMORROW',
+export type IndicatorsDaysTabParamList = {
+  [tabsEnum.TODAY]: {
+    day: DayEnum;
+  };
+  [tabsEnum.TOMORROW]: {
+    day: DayEnum;
+  };
 };
+
+const IndicatorsDaysTab =
+  createMaterialTopTabNavigator<IndicatorsDaysTabParamList>();
+
+enum tabsEnum {
+  TODAY = 'TODAY',
+  TOMORROW = 'TOMORROW',
+}
+
+type TabProps = MaterialTopTabScreenProps<IndicatorsDaysTabParamList>;
 
 interface IndicatorsListPreviewProps {
   indicators: IndicatorItem[] | null;
@@ -35,7 +48,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
     return null;
   }
 
-  function IndicatorListView({ route }: any) {
+  function IndicatorListView(tabProps: TabProps) {
     return (
       <ScrollView
         refreshControl={
@@ -58,7 +71,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
             {props.favoriteIndicator ? (
               <IndicatorPreview
-                day={route.params.day}
+                day={tabProps.route.params.day}
                 indicator={props.favoriteIndicator}
                 isFavorite
                 index={0}
@@ -66,7 +79,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
             ) : null}
             {filteredIndicators?.map((indicator, index) => (
               <IndicatorPreview
-                day={route.params.day}
+                day={tabProps.route.params.day}
                 key={indicator.slug}
                 indicator={indicator}
                 index={index}
@@ -79,7 +92,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   }
 
   return (
-    <Tab.Navigator
+    <IndicatorsDaysTab.Navigator
       initialRouteName={tabsEnum.TODAY}
       screenOptions={{
         tabBarStyle: {
@@ -104,7 +117,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         tabBarInactiveTintColor: '#AEB1B7',
       }}
     >
-      <Tab.Screen
+      <IndicatorsDaysTab.Screen
         name={tabsEnum.TODAY}
         options={{
           tabBarLabel: "Aujourd'hui",
@@ -112,7 +125,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         component={IndicatorListView}
         initialParams={{ day: DayEnum.TODAY }}
       />
-      <Tab.Screen
+      <IndicatorsDaysTab.Screen
         name={tabsEnum.TOMORROW}
         options={{
           tabBarLabel: 'Demain',
@@ -120,7 +133,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         component={IndicatorListView}
         initialParams={{ day: DayEnum.TOMORROW }}
       />
-    </Tab.Navigator>
+    </IndicatorsDaysTab.Navigator>
   );
 }
 const styles = StyleSheet.create({

@@ -10,7 +10,6 @@ import { logEvent } from '~/services/logEventsWithMatomo';
 import API from '~/services/api';
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
-  // @ts-expect-error TODO
   RootStackParamList,
   RouteEnum.INDICATORS_SELECTOR
 >;

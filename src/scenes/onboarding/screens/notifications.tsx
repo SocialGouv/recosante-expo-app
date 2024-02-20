@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import { Illu_4 } from '~/assets/onboarding/illu_4';
 
-export function Notifications({ navigation }: { navigation: any }) {
+export function Notifications() {
   return (
     <View className="basis-full items-center justify-center bg-app-primary">
       <View className="mb-8 w-full">

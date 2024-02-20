@@ -16,7 +16,12 @@ import { ShareIcon } from '~/assets/icons/share';
 
 import MyText from './components/ui/my-text';
 import { DashboardPage } from './scenes/dashboard/dashboard';
-import { RouteEnum, type RootStackParamList } from './constants/route';
+import {
+  RouteEnum,
+  HomeTabRouteEnum,
+  type RootStackParamList,
+  type HomeTabParamList,
+} from './constants/route';
 import { Onboarding } from './scenes/onboarding/onboarding';
 import { SharePage } from './scenes/share';
 import { SettingsPage } from './scenes/settings/settings';
@@ -29,6 +34,7 @@ import { IndicatorDetail } from './scenes/dashboard/indicator-detail';
 import { LegalPage } from './scenes/legal/legal';
 import { ConfidentialityPage } from './scenes/confidentiality/confidentiality';
 import { FeedbackPage } from './scenes/feedback/feedback';
+import { IndicatorFastSelector } from './scenes/dashboard/indicator-fast-selector';
 
 interface TabBarLabelProps {
   children: React.ReactNode;
@@ -48,9 +54,9 @@ function TabBarLabel(props: TabBarLabelProps) {
     </MyText>
   );
 }
-// @ts-expect-error TODO
+
 type HomeProps = NativeStackScreenProps<RootStackParamList, RouteEnum.HOME>;
-const HomeBottomTab = createBottomTabNavigator();
+const HomeBottomTab = createBottomTabNavigator<HomeTabParamList>();
 
 function Home(props: HomeProps) {
   const { favoriteIndicator } = useIndicatorsList((state) => state);
@@ -88,7 +94,7 @@ function Home(props: HomeProps) {
       }}
     >
       <HomeBottomTab.Screen
-        name={RouteEnum.DASHBOARD}
+        name={HomeTabRouteEnum.DASHBOARD}
         options={{
           tabBarLabel: (props) => (
             <TabBarLabel {...props}>Dashboard</TabBarLabel>
@@ -100,7 +106,7 @@ function Home(props: HomeProps) {
         component={DashboardPage}
       />
       <HomeBottomTab.Screen
-        name={RouteEnum.SHARE}
+        name={HomeTabRouteEnum.SHARE}
         options={{
           tabBarLabel: (props) => (
             <TabBarLabel {...props}>Partager</TabBarLabel>
@@ -112,7 +118,7 @@ function Home(props: HomeProps) {
         component={SharePage}
       />
       <HomeBottomTab.Screen
-        name={RouteEnum.SETTINGS}
+        name={HomeTabRouteEnum.SETTINGS}
         component={SettingsPage}
         options={{
           tabBarLabel: (props) => (
@@ -126,7 +132,9 @@ function Home(props: HomeProps) {
     </HomeBottomTab.Navigator>
   );
 }
-const RootStack = createNativeStackNavigator();
+
+// https://github.com/react-navigation/react-navigation/issues/10802#issuecomment-1326687295
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 export function Navigators() {
   const { _hasHydrated, address } = useUser((state) => state);
   const hasAddress = !!address?.municipality_insee_code;
@@ -168,15 +176,9 @@ export function Navigators() {
               component={Onboarding}
             />
 
-            <RootStack.Screen
-              name={RouteEnum.HOME}
-              // @ts-expect-error TODO
-              component={Home}
-            />
-            <RootStack.Screen name={RouteEnum.SHARE} component={SharePage} />
+            <RootStack.Screen name={RouteEnum.HOME} component={Home} />
             <RootStack.Screen
               name={RouteEnum.INDICATORS_SELECTOR}
-              // @ts-expect-error TODO
               component={IndicatorSelectorSheet}
               options={() => ({
                 headerShown: false,
@@ -187,7 +189,6 @@ export function Navigators() {
             />
             <RootStack.Screen
               name={RouteEnum.INDICATOR_DETAIL}
-              // @ts-expect-error TODOe
               component={IndicatorDetail}
               options={() => ({
                 headerShown: false,
@@ -264,6 +265,15 @@ export function Navigators() {
                   animation: 'fade',
                   duration: 400,
                 },
+              })}
+            />
+            <RootStack.Screen
+              name={RouteEnum.INDICATOR_FAST_SELECTOR}
+              component={IndicatorFastSelector}
+              options={() => ({
+                headerShown: false,
+                presentation: 'transparentModal',
+                animation: 'fade',
               })}
             />
           </RootStack.Navigator>

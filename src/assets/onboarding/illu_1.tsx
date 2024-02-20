@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Circle, G, Path, Defs, ClipPath } from 'react-native-svg';
 
-export function Illu_1(props: any) {
+export function Illu_1() {
   return (
     <Svg viewBox="0 0 313 313" fill="none" className="h-full w-full">
       <Circle cx={156.5} cy={156.5} r={156.5} fill="#DFDFDF" />

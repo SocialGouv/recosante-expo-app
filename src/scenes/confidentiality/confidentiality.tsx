@@ -5,24 +5,23 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Pressable, View, ScrollView, Linking } from 'react-native';
-import MyText from '~/components/ui/my-text';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
-import { Close } from '~/assets/icons/close';
+import { Pressable, View, ScrollView, Linking } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RouteEnum, RootStackParamList } from '~/constants/route';
+import MyText from '~/components/ui/my-text';
+import { Close } from '~/assets/icons/close';
 import { MATOMO_TRACKING_ENABLED } from '~/constants/matomo';
 import Matomo from '~/services/matomo';
 
-interface LocationPageProps {
-  navigation: any;
-  route: any;
-}
+type ConfidentialityPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  RouteEnum.CONFIDENTIALITY
+>;
 
-export function ConfidentialityPage(props: LocationPageProps) {
-  const navigation = useNavigation();
-
+export function ConfidentialityPage(props: ConfidentialityPageProps) {
   const [matomoActive, setMatomoActive] = useState(Matomo.trackingEnabled);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['90%'], []);
@@ -37,7 +36,7 @@ export function ConfidentialityPage(props: LocationPageProps) {
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     isOpenedRef.current = false;
-    navigation.goBack();
+    props.navigation.goBack();
   }
 
   useEffect(() => {

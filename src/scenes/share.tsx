@@ -1,12 +1,26 @@
 import React from 'react';
 import { ScrollView, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {
+  HomeTabRouteEnum,
+  RouteEnum,
+  HomeTabParamList,
+  RootStackParamList,
+} from '~/constants/route';
 import { ShareLink } from '~/assets/icons/share-link';
 import { Illu } from '~/assets/share/illu';
 import MyText from '~/components/ui/my-text';
 import { ShareService } from '~/services/share';
 
-export function SharePage({ navigation }: { navigation: any }) {
+export type ShareProps = CompositeScreenProps<
+  BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.SHARE>,
+  NativeStackScreenProps<RootStackParamList>
+>;
+
+export function SharePage(props: ShareProps) {
   return (
     <SafeAreaView className="flex flex-1 items-center justify-start gap-y-6 bg-app-gray">
       <ScrollView

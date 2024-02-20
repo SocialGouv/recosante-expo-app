@@ -5,7 +5,6 @@ import supPlugin from 'markdown-it-sup';
 import subPlugin from 'markdown-it-sub';
 import { ScrollView } from 'react-native-gesture-handler';
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
-import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import MyText from '~/components/ui/my-text';
 import { Close } from '~/assets/icons/close';
@@ -22,7 +21,6 @@ const markdownItInstance = MarkdownIt({ typographer: true })
   .use(subPlugin);
 
 type IndicatorSelectorSheetProps = NativeStackScreenProps<
-  // @ts-expect-error TODO
   RootStackParamList,
   RouteEnum.INDICATOR_DETAIL
 >;
@@ -30,7 +28,6 @@ type IndicatorSelectorSheetProps = NativeStackScreenProps<
 export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const navigation = useNavigation();
   const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
   const isOpenedRef = useRef(false);
   const hasScrollToEnd = useRef(false);
@@ -53,7 +50,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     isOpenedRef.current = false;
-    navigation.goBack();
+    props.navigation.goBack();
   }
 
   useEffect(() => {

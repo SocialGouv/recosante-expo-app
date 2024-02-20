@@ -2,7 +2,9 @@ import React, { useCallback, useRef, useEffect, useMemo } from 'react';
 import { Pressable, View, ScrollView, StyleSheet } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RouteEnum, RootStackParamList } from '~/constants/route';
 import { Close } from '~/assets/icons/close';
 import { InputCount } from './input-count';
 import Button from '~/components/ui/button';
@@ -11,12 +13,11 @@ import API from '~/services/api';
 import { MailService } from '~/services/mail';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import { USER_ID } from '~/constants/matomo';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface LocationPageProps {
-  navigation: any;
-  route: any;
-}
+type InterfacePageProps = NativeStackScreenProps<
+  RootStackParamList,
+  RouteEnum.FEEDBACK
+>;
 
 const initialState = {
   score: 8,
@@ -24,8 +25,7 @@ const initialState = {
   contact: '',
 };
 
-export function FeedbackPage(props: LocationPageProps) {
-  const navigation = useNavigation();
+export function FeedbackPage(props: InterfacePageProps) {
   const { show } = useToast();
   const [values, setValues] = React.useState(initialState);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -41,7 +41,7 @@ export function FeedbackPage(props: LocationPageProps) {
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     isOpenedRef.current = false;
-    navigation.goBack();
+    props.navigation.goBack();
   }
   function handleChange({ id, value }: { id: string; value: string | number }) {
     setValues({ ...values, [id]: value });

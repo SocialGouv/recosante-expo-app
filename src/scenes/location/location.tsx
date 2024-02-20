@@ -16,12 +16,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RouteEnum, RootStackParamList } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { useUser } from '~/zustand/user/useUser';
 import { type GeoApiFeature, type UserAddress } from '~/types/location';
 import { LocationService } from '~/services/location';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
 import { LocationIcon } from '~/assets/icons/location';
 import { cn } from '~/utils/tailwind';
 import { Close } from '~/assets/icons/close';
@@ -31,10 +32,10 @@ import { Loader } from '~/components/ui/loader';
 import { capture } from '~/services/sentry';
 import { Search } from '~/assets/icons/search';
 
-interface LocationPageProps {
-  navigation: any;
-  route: any;
-}
+type LocationPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  RouteEnum.LOCATION
+>;
 
 type Status = 'idle' | 'with_results' | 'no_result';
 enum StatusEnum {
@@ -44,7 +45,6 @@ enum StatusEnum {
 }
 
 export function LocationPage(props: LocationPageProps) {
-  const navigation = useNavigation();
   const { setAddress } = useUser((state) => state);
   const [query, setQuery] = useState('');
   const hadMin3Char = query.length >= 3;
@@ -99,7 +99,7 @@ export function LocationPage(props: LocationPageProps) {
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     isOpenedRef.current = false;
-    navigation.goBack();
+    props.navigation.goBack();
   }
 
   function cancelQuery() {

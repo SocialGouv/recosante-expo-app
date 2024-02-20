@@ -1,23 +1,36 @@
 import { View, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {
+  HomeTabRouteEnum,
+  RouteEnum,
+  HomeTabParamList,
+  RootStackParamList,
+} from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { LocationIcon } from '~/assets/icons/location';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { IndicatorsListPreview } from './indicators-list-preview';
 import API from '~/services/api';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
-import { RouteEnum } from '~/constants/route';
 import { useUser } from '~/zustand/user/useUser';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import Button from '~/components/ui/button';
 import { Illu } from '~/assets/share/illu';
 import { useToast } from '~/services/toast';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-export function DashboardPage({ navigation }: { navigation: any }) {
+export type DashboardProps = CompositeScreenProps<
+  BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.DASHBOARD>,
+  NativeStackScreenProps<RootStackParamList>
+>;
+
+export function DashboardPage(props: DashboardProps) {
   const { favoriteIndicator, indicators, setIndicatorsList } =
     useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
@@ -96,7 +109,9 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         <View className="relative z-50 flex w-full items-end">
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate(RouteEnum.LOCATION);
+              props.navigation.navigate(RouteEnum.LOCATION, {
+                isOnboarding: false,
+              });
             }}
             className="absolute right-0"
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -127,7 +142,13 @@ export function DashboardPage({ navigation }: { navigation: any }) {
         </View>
       </SafeAreaView>
       {!address?.municipality_name && (
-        <NoLocationCallToAction navigation={navigation} />
+        <NoLocationCallToAction
+          onPress={() => {
+            props.navigation.navigate(RouteEnum.LOCATION, {
+              isOnboarding: false,
+            });
+          }}
+        />
       )}
       {!!address?.municipality_name && (
         <IndicatorsListPreview
@@ -143,7 +164,7 @@ export function DashboardPage({ navigation }: { navigation: any }) {
   );
 }
 
-function NoLocationCallToAction({ navigation }: { navigation: any }) {
+function NoLocationCallToAction(props: { onPress: () => void }) {
   return (
     <View className="h-full flex-1 bg-app-gray px-4">
       <Illu />
@@ -155,9 +176,7 @@ function NoLocationCallToAction({ navigation }: { navigation: any }) {
       </MyText>
       <View className="px-8">
         <Button
-          onPress={() => {
-            navigation.navigate(RouteEnum.LOCATION);
-          }}
+          onPress={props.onPress}
           viewClassName="bg-app-yellow px-8 pb-4 pt-3"
           textClassName="text-black text-base"
           font="MarianneBold"
