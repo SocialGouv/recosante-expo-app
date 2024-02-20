@@ -8,6 +8,7 @@ import { getRoute } from './navigation';
 import { API_SCHEME, API_HOST } from '../config';
 import { USER_ID } from '~/constants/matomo';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
+import { logEvent } from './logEventsWithMatomo';
 
 // AsyncStorage.clear();
 
@@ -75,7 +76,13 @@ class ApiService {
           if (readableRes.askForReview) {
             setTimeout(() => {
               StoreReview.isAvailableAsync().then((isAvailable) => {
-                if (isAvailable) StoreReview.requestReview();
+                if (isAvailable)
+                  StoreReview.requestReview().then(() => {
+                    logEvent({
+                      category: 'STORE_REVIEW',
+                      action: 'ASKED_FROM_API',
+                    });
+                  });
               });
             }, 2000);
           }

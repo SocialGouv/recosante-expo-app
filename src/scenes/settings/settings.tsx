@@ -79,7 +79,12 @@ export function SettingsPage(props: SettingsProps) {
           <TextRow
             text="Noter 5 étoiles"
             onPress={() => {
-              StoreReview.requestReview();
+              StoreReview.requestReview().then((lof) => {
+                logEvent({
+                  category: 'STORE_REVIEW',
+                  action: 'TRIGGERED_FROM_SETTINGS',
+                });
+              });
             }}
           />
         )}
