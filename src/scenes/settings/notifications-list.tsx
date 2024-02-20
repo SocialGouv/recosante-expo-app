@@ -1,11 +1,15 @@
-import { Switch, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { AppState, Switch, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
 import MyText from '~/components/ui/my-text';
+import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import {
   NotificationIdEnum,
   type NotificationType,
 } from '~/types/notification';
 import { useUser } from '~/zustand/user/useUser';
+import { useFocusEffect } from '@react-navigation/native';
 
 const notifications: NotificationType[] = [
   {
@@ -32,32 +36,61 @@ export function NotificationsList() {
   const { notifications_preference, setNotificationsPreferences } = useUser(
     (state) => state,
   );
+  const [notificationsAreEnabled, setNotificationsAreEnabled] = useState(false);
   function toggleSwitch(id: NotificationIdEnum) {
-    if (notifications_preference?.includes(id)) {
-      logEvent({
-        category: 'SETTINGS',
-        action: 'NOTIFICATION',
-        name: id.toLocaleUpperCase(),
-        value: 0,
-      });
-      setNotificationsPreferences(
-        notifications_preference.filter((item) => item !== id),
-      );
-    } else {
-      logEvent({
-        category: 'SETTINGS',
-        action: 'NOTIFICATION',
-        name: id.toLocaleUpperCase(),
-        value: 1,
-      });
-      setNotificationsPreferences([...notifications_preference, id]);
-    }
+    registerForPushNotificationsAsync({ expo: true, force: true }).then(
+      (token) => {
+        if (token) {
+          if (notifications_preference?.includes(id)) {
+            logEvent({
+              category: 'SETTINGS',
+              action: 'NOTIFICATION',
+              name: id.toLocaleUpperCase(),
+              value: 0,
+            });
+            setNotificationsPreferences(
+              notifications_preference.filter((item) => item !== id),
+            );
+          } else {
+            logEvent({
+              category: 'SETTINGS',
+              action: 'NOTIFICATION',
+              name: id.toLocaleUpperCase(),
+              value: 1,
+            });
+            setNotificationsPreferences([...notifications_preference, id]);
+          }
+        }
+      },
+    );
   }
+
+  useFocusEffect(() => {
+    Notifications.getPermissionsAsync().then(({ status }) => {
+      setNotificationsAreEnabled(status === 'granted');
+    });
+  });
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        Notifications.getPermissionsAsync().then(({ status }) => {
+          setNotificationsAreEnabled(status === 'granted');
+        });
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <View className="space-y-2">
       {notifications?.map((notification) => {
-        const isEnabled = notifications_preference?.includes(notification.id);
+        const isEnabled =
+          notificationsAreEnabled &&
+          notifications_preference?.includes(notification.id);
         return (
           <View
             key={notification.id}
