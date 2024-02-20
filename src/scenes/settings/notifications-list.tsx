@@ -15,14 +15,12 @@ const notifications: NotificationType[] = [
   {
     id: NotificationIdEnum.MORNING,
     label: '☕️ Notifié le matin pour la journée',
-    description:
-      'Recevez des informations sur votre indicateur favori le matin à 7h.',
+    description: 'Recevez une notification sur vos indicateurs le matin à 7h.',
   },
   {
     id: NotificationIdEnum.EVENING,
     label: '🌇️ Notifié le soir pour le lendemain',
-    description:
-      'Recevez des informations sur votre indicateur favori le soir à 19h.',
+    description: 'Recevez une notification sur vos indicateurs le soir à 19h.',
   },
   {
     id: NotificationIdEnum.ALERT,
