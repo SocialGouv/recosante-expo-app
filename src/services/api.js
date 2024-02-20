@@ -1,12 +1,13 @@
 import { Alert, Linking, Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import fetchRetry from 'fetch-retry';
+import * as StoreReview from 'expo-store-review';
 import appJson from '~/../app.json';
 import { getRoute } from './navigation';
 import { API_SCHEME, API_HOST } from '../config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_ID } from '~/constants/matomo';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
-import fetchRetry from 'fetch-retry';
 
 // AsyncStorage.clear();
 
@@ -71,8 +72,14 @@ class ApiService {
       if (response.json) {
         try {
           const readableRes = await response.json();
+          if (readableRes.askForReview) {
+            setTimeout(() => {
+              StoreReview.isAvailableAsync().then((isAvailable) => {
+                if (isAvailable) StoreReview.requestReview();
+              });
+            }, 2000);
+          }
           if (readableRes.sendInApp) {
-            console.log('YES');
             const [title, subTitle, actions = [], options = {}] =
               readableRes.sendInApp;
             if (!actions || !actions.length) {

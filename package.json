@@ -54,6 +54,7 @@
     "expo-notifications": "~0.20.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "expo-store-review": "~6.4.0",
     "fetch-retry": "^5.0.6",
     "markdown-it-sub": "^2.0.0",
     "markdown-it-sup": "^2.0.0",

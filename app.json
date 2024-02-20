@@ -2,7 +2,7 @@
   "expo": {
     "name": "Recosante",
     "slug": "recosante",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +22,8 @@
       },
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["recosante"]
-      }
+      },
+      "appStoreUrl": "https://apps.apple.com/fr/app/id6476136888"
     },
     "android": {
       "icon": "./assets/icon.png",
@@ -32,7 +33,8 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.recosante.recosante",
-      "versionCode": 24
+      "versionCode": 24,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
     },
     "web": {
       "favicon": "./assets/favicon.png"

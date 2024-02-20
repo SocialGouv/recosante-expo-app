@@ -6991,6 +6991,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-store-review@npm:~6.4.0":
+  version: 6.4.0
+  resolution: "expo-store-review@npm:6.4.0"
+  peerDependencies:
+    expo: "*"
+  checksum: dd4397fb8743d61f54cb26cb3283644e011ddf4f6541336301d6c103d5282a8c205f70d8718fbe08470648c174e516ec05639a70545754348eff61c90e007b86
+  languageName: node
+  linkType: hard
+
 "expo@npm:^49.0.21":
   version: 49.0.22
   resolution: "expo@npm:49.0.22"
@@ -12951,6 +12960,7 @@ __metadata:
     expo-notifications: "npm:~0.20.1"
     expo-splash-screen: "npm:~0.20.5"
     expo-status-bar: "npm:~1.6.0"
+    expo-store-review: "npm:~6.4.0"
     fetch-retry: "npm:^5.0.6"
     husky: "npm:^8.0.0"
     markdown-it-sub: "npm:^2.0.0"

@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { ScrollView, TouchableOpacity, View, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  ScrollView,
+  TouchableOpacity,
+  View,
+  Platform,
+  Linking,
+} from 'react-native';
+import * as StoreReview from 'expo-store-review';
 import { CommonActions } from '@react-navigation/native';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
@@ -29,6 +36,13 @@ export function SettingsPage(props: SettingsProps) {
   const [onVersionClicked, setOnVersionClicked] = useState(0);
   const resetIndicatorsList = useIndicatorsList((state) => state.reset);
   const resetIndicators = useIndicators((state) => state.reset);
+  const [canAskForReview, setCanAskForReview] = useState(false);
+
+  useEffect(() => {
+    StoreReview.isAvailableAsync().then((isAvailable) => {
+      setCanAskForReview(isAvailable);
+    });
+  }, []);
 
   return (
     <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray">
@@ -59,6 +73,25 @@ export function SettingsPage(props: SettingsProps) {
           text="Donner mon avis"
           onPress={() => {
             props.navigation.navigate(RouteEnum.FEEDBACK);
+          }}
+        />
+        {canAskForReview && (
+          <TextRow
+            text="Noter 5 étoiles"
+            onPress={() => {
+              StoreReview.requestReview();
+            }}
+          />
+        )}
+        <TextRow
+          text="Laisser une revue sur les stores"
+          onPress={() => {
+            Linking.openURL(
+              Platform.select({
+                ios: `${appJson.expo.ios.appStoreUrl}?action=write-review`,
+                android: `market://details?id=${appJson.expo.android.package}&showAllReviews=true`,
+              }) as string,
+            );
           }}
         />
         <TextRow
