@@ -1,6 +1,14 @@
 import React, { useCallback, useRef, useEffect, useMemo } from 'react';
-import { Pressable, View, ScrollView, StyleSheet } from 'react-native';
+import {
+  Pressable,
+  View,
+  ScrollView,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import MyText from '~/components/ui/my-text';
+import * as Notifications from 'expo-notifications';
+import appJson from '~/../app.json';
 import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,6 +21,7 @@ import API from '~/services/api';
 import { MailService } from '~/services/mail';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import { USER_ID } from '~/constants/matomo';
+import { useUser } from '~/zustand/user/useUser';
 
 type InterfacePageProps = NativeStackScreenProps<
   RootStackParamList,
@@ -27,6 +36,7 @@ const initialState = {
 
 export function FeedbackPage(props: InterfacePageProps) {
   const { show } = useToast();
+  const { address, notifications_preference } = useUser((state) => state);
   const [values, setValues] = React.useState(initialState);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['90%'], []);
@@ -60,9 +70,28 @@ export function FeedbackPage(props: InterfacePageProps) {
         ...values,
       },
     });
+    const notifs = await Notifications.getPermissionsAsync();
+    const textEmail = `
+Message : ${values.message}
+
+---
+MatomoId : ${userId}
+Ville: ${address?.municipality_insee_code} - ${address?.municipality_name}
+Notifications : ${notifications_preference}
+Notifications activées : ${notifs.status === 'granted' ? 'Oui' : 'Non'}
+Score : ${values.score}
+Contact : ${values.contact}
+Device : ${Platform.OS}
+Device Version : ${Platform.Version}
+App Version : ${appJson.expo.version} (${Platform.select({
+      ios: appJson.expo.ios.buildNumber,
+      android: `${appJson.expo.android.versionCode}`,
+    })})
+`;
+
     MailService.sendMail({
       subject: 'Feedback Recosanté',
-      text: `MatomoId: ${userId}\nScore : ${values.score} \nMessage : ${values.message} \nContact : ${values.contact}`,
+      text: textEmail,
     }).then((res) => {
       if (res.ok) {
         closeBottomSheet();
@@ -96,9 +125,7 @@ export function FeedbackPage(props: InterfacePageProps) {
       index={0}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
-      onClose={() => {
-        closeBottomSheet();
-      }}
+      onClose={closeBottomSheet}
       backgroundStyle={{
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
