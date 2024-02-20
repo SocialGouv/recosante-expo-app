@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import * as Sentry from 'sentry-expo';
 import { Navigators } from './src/navigators';
 import { initSession } from '~/services/logEventsWithMatomo';
-import EnvironmentIndicator from '~/components/EnvironmentIndicator';
+import EnvironmentIndicator from '~/components/environment-indicator';
 import ToastProvider from '~/services/toast';
 
 LogBox.ignoreAllLogs(true);

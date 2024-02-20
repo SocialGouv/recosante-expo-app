@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import MyText from '~/components/ui/my-text';
-import { DynamicHeightImage } from '~/components/DynamicHeightImage';
+import { DynamicHeightImage } from '~/components/dynamic-height-image';
 
 function openUrl(url, customCallback) {
   if (customCallback) {
