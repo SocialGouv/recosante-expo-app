@@ -187,8 +187,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 },
               )}
               <MyText className="mt-2" font="MarianneRegular">
-                Toutes les informations et recommandations sont issues du
-                Gouvernement Francais.
+                Source des recommandations : Gouvernement Francais.
               </MyText>
             </>
           )}
