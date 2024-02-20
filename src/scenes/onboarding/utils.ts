@@ -3,7 +3,7 @@ import { Alert, InteractionManager } from 'react-native';
 import { LocationService } from '~/services/location';
 
 import { OnboardingRouteEnum, RouteEnum } from '~/constants/route';
-import { navigate } from '~/services/navigation';
+import { navigate, resetNavigationTo } from '~/services/navigation';
 import { useUser } from '~/zustand/user/useUser';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
@@ -41,7 +41,7 @@ export function useOnboardingNavigation(): {
         action: 'COMPLETED',
       });
       setOnboardingScreen(RouteEnum.HOME);
-      navigate(RouteEnum.HOME);
+      resetNavigationTo(RouteEnum.HOME);
     } else {
       setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
       navigate(OnboardingRouteEnum.NOTIFICATIONS);
@@ -69,7 +69,7 @@ export function useOnboardingNavigation(): {
           action: 'COMPLETED',
         });
         setOnboardingScreen(RouteEnum.HOME);
-        navigate(RouteEnum.HOME);
+        resetNavigationTo(RouteEnum.HOME);
         break;
       default:
         break;
@@ -132,7 +132,7 @@ export function useOnboardingNavigation(): {
             action: 'ENABLE_NOTIFICATIONS',
           });
           setOnboardingScreen(RouteEnum.HOME);
-          navigate(RouteEnum.HOME);
+          resetNavigationTo(RouteEnum.HOME);
           if (token) {
             API.put({
               path: '/user',

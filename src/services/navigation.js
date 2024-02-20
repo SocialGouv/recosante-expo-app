@@ -10,6 +10,15 @@ export function navigate(name, params) {
   }
 }
 
+export function resetNavigationTo(name, params) {
+  if (navigationRef.isReady()) {
+    navigationRef.reset({
+      index: 0,
+      routes: [{ name, params }],
+    });
+  }
+}
+
 export function getRoute(name, params) {
   if (navigationRef.isReady()) {
     return navigationRef?.getCurrentRoute?.()?.name;
