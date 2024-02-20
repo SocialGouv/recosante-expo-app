@@ -89,6 +89,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           shadowOffset: { width: 0, height: 10 }, // change this for more shadow
           shadowOpacity: 0.1,
           shadowRadius: 10,
+          marginTop: -12,
         },
         tabBarLabelStyle: {
           fontSize: 14,

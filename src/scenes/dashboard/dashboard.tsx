@@ -88,12 +88,13 @@ export function DashboardPage({ navigation }: { navigation: any }) {
 
   return (
     <>
-      <View className="flex items-center justify-start bg-app-gray px-4 py-4">
-        <View className="relative z-50 mt-8 flex w-full items-end">
+      <View className="flex items-center justify-start bg-app-gray px-4 pb-2 pt-4">
+        <View className="relative z-40 flex w-full items-end">
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(RouteEnum.LOCATION);
             }}
+            className="absolute right-0 top-8 z-50"
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <View className="w-fit  rounded-full bg-app-primary p-3 text-sm text-white">
@@ -101,21 +102,18 @@ export function DashboardPage({ navigation }: { navigation: any }) {
             </View>
           </TouchableOpacity>
         </View>
-        <View className="-mt-6 flex w-full">
-          <MyText font="MarianneRegular" className="text-md text-black">
-            Bonjour,
-          </MyText>
+        <View className="mt-6 flex w-full">
           <MyText
             font="MarianneBold"
             className="mt-2 text-2xl leading-6 text-black"
           >
-            Découvrez {'\n'}vos indicateurs favoris !
+            Découvrez{'\n'}vos indicateurs{'\u00A0'}!
           </MyText>
           {address?.municipality_name ? (
-            <View className="-mb-4 mt-2 flex flex-row items-center">
+            <View className="mt-2 flex max-w-[90%] flex-row items-center">
               <MyText
                 font="MarianneBold"
-                className="max-w-[90%] text-xs text-app-gray-100"
+                className="text-sm text-app-gray-100"
                 numberOfLines={1}
               >
                 {municipalityFullName || address?.municipality_name}
