@@ -65,7 +65,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     if (props.isFavorite) return;
     logEvent({
       category: 'DASHBOARD',
-      action: 'INDICATOR_SELECTED',
+      action: 'INDICATOR_LONG_PRESS',
       name: props.indicator.slug.toLocaleUpperCase(),
       value: 1,
     });

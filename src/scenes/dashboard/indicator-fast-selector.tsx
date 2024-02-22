@@ -4,6 +4,7 @@ import { RouteEnum, RootStackParamList } from '~/constants/route';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import Button from '~/components/ui/button';
 import MyText from '~/components/ui/my-text';
+import { logEvent } from '~/services/logEventsWithMatomo';
 
 type IndicatorFastSelectorProps = NativeStackScreenProps<
   RootStackParamList,
@@ -23,6 +24,11 @@ export function IndicatorFastSelector(props: IndicatorFastSelectorProps) {
 
   const handleSubmit = () => {
     if (indicatorItem) {
+      logEvent({
+        category: 'DASHBOARD',
+        action: 'INDICATOR_FAVORITE_SELECTED',
+        name: indicatorItem.slug,
+      });
       setFavoriteIndicator(indicatorItem);
       props.navigation.goBack();
     }
