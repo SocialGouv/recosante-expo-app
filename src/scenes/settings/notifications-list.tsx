@@ -35,32 +35,33 @@ export function NotificationsList() {
     (state) => state,
   );
   const [notificationsAreEnabled, setNotificationsAreEnabled] = useState(false);
-  function toggleSwitch(id: NotificationIdEnum) {
-    registerForPushNotificationsAsync({ expo: true, force: true }).then(
-      (token) => {
-        if (token) {
-          if (notifications_preference?.includes(id)) {
-            logEvent({
-              category: 'SETTINGS',
-              action: 'NOTIFICATION',
-              name: id.toLocaleUpperCase(),
-              value: 0,
-            });
-            setNotificationsPreferences(
-              notifications_preference.filter((item) => item !== id),
-            );
-          } else {
-            logEvent({
-              category: 'SETTINGS',
-              action: 'NOTIFICATION',
-              name: id.toLocaleUpperCase(),
-              value: 1,
-            });
-            setNotificationsPreferences([...notifications_preference, id]);
-          }
-        }
-      },
-    );
+  async function toggleSwitch(id: NotificationIdEnum) {
+    if (!notificationsAreEnabled) {
+      const token = await registerForPushNotificationsAsync({
+        expo: true,
+        force: true,
+      });
+      if (!token) return;
+    }
+    if (notifications_preference?.includes(id)) {
+      logEvent({
+        category: 'SETTINGS',
+        action: 'NOTIFICATION',
+        name: id.toLocaleUpperCase(),
+        value: 0,
+      });
+      setNotificationsPreferences(
+        notifications_preference.filter((item) => item !== id),
+      );
+    } else {
+      logEvent({
+        category: 'SETTINGS',
+        action: 'NOTIFICATION',
+        name: id.toLocaleUpperCase(),
+        value: 1,
+      });
+      setNotificationsPreferences([...notifications_preference, id]);
+    }
   }
 
   useFocusEffect(() => {
