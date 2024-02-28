@@ -414,11 +414,9 @@ const renderRules = {
   },
   sub: (node, children, parent, styles) => {
     return (
-      <View style={styles.subContainer}>
-        <MyText key={node.key} style={styles.sup}>
-          {children}
-        </MyText>
-      </View>
+      <MyText key={node.key} style={styles.sub}>
+        {children}
+      </MyText>
     );
   },
 };
