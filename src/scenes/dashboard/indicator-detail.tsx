@@ -1,4 +1,4 @@
-import { View, Pressable } from 'react-native';
+import { View, Pressable, Platform } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo, useCallback, useEffect } from 'react';
 import supPlugin from 'markdown-it-sup';
@@ -194,17 +194,14 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               rules={renderRules}
               style={{
                 sup: {
-                  lineHeight: 18,
+                  lineHeight: 20,
                   fontSize: 10,
                   textAlignVertical: 'top',
                 },
                 sub: {
-                  lineHeight: 10,
+                  lineHeight: Platform.select({ ios: 10, android: 20 }),
                   fontSize: 10,
                   textAlignVertical: 'bottom',
-                },
-                subContainer: {
-                  marginTop: -5,
                 },
               }}
               markdownit={markdownItInstance}
