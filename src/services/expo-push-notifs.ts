@@ -63,7 +63,10 @@ export async function registerForPushNotificationsAsync({
   }
   const token = expo
     ? await Notifications.getExpoPushTokenAsync({
-        projectId: Constants.expoConfig?.extra?.eas.projectId,
+        // https://docs.expo.dev/versions/latest/sdk/notifications/#expopushtokenoptions
+        // "[...] it is recommended to set it manually."
+        projectId: '8d8b446e-c8db-4641-b730-5cef195e96da',
+        // projectId: Constants.expoConfig?.extra?.eas.projectId,
       })
     : await Notifications.getDevicePushTokenAsync();
   // } else {
