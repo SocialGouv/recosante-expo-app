@@ -105,7 +105,7 @@ export namespace LocationService {
     url.searchParams.append('lon', longitude.toString());
     url.searchParams.append('lat', latitude.toString());
     const response = await fetch(url).then(async (res) => await res.json());
-    const currentAdress = response?.features[0]?.properties as GeoApiProperty;
+    const currentAdress = response?.features?.[0]?.properties as GeoApiProperty;
 
     if (!currentAdress) {
       await new Promise((resolve) => {
