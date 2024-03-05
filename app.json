@@ -2,7 +2,7 @@
   "expo": {
     "name": "Recosante",
     "slug": "recosante",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "26",
+      "buildNumber": "27",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -33,7 +33,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.recosante.recosante",
-      "versionCode": 26,
+      "versionCode": 27,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
     },
     "web": {
