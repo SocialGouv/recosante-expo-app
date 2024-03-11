@@ -54,8 +54,7 @@
         {
           "organization": "incubateur",
           "project": "recosante-expo-app",
-          "url": "https://sentry.fabrique.social.gouv.fr/",
-          "auth_token": "50317f0dccca4091a23b6e2543c59f3b3b3c22d29ef045a8af0580a166ebc092"
+          "url": "https://sentry.fabrique.social.gouv.fr/"
         }
       ],
       [
