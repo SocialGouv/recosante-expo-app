@@ -81,4 +81,5 @@ test-local.js
 ### BELOW THIS LINE WILL NOT BE IGNORED BY EAS ###
 
 google-services.json
+GoogleService-Info.plist
 .env
