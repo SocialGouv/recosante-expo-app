@@ -52,12 +52,12 @@
       [
         "react-native-fbsdk-next",
         {
-          "appID": "",
-          "clientToken": "",
+          "appID": "2091749431177634",
+          "clientToken": "336c13eb382494f41b9ea9faf3fccf3a",
           "displayName": "Recosanté",
-          "scheme": "",
-          "advertiserIDCollectionEnabled": false,
-          "autoLogAppEventsEnabled": false,
+          "scheme": "fb2091749431177634",
+          "advertiserIDCollectionEnabled": true,
+          "autoLogAppEventsEnabled": true,
           "isAutoInitEnabled": true,
           "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
