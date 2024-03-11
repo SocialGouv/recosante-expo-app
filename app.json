@@ -49,7 +49,14 @@
     },
     "owner": "recosante",
     "plugins": [
-      "sentry-expo",
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "incubateur",
+          "project": "recosante-expo-app",
+          "url": "https://sentry.fabrique.social.gouv.fr/"
+        }
+      ],
       [
         "expo-location",
         {
@@ -68,19 +75,8 @@
             "deploymentTarget": "13.4"
           }
         }
-      ]
-    ],
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "incubateur",
-            "project": "recosante-expo-app",
-            "url": "https://sentry.fabrique.social.gouv.fr/"
-          }
-        }
-      ]
-    }
+      ],
+      "expo-font"
+    ]
   }
 }

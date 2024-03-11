@@ -52,8 +52,11 @@ export function Stepper(props: StepperProps) {
       </View>
       <Pressable
         onPress={() => {
+          console.log('pressed');
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          console.log('pressed 2');
           props.onPress();
+          console.log('pressed 3');
         }}
         className="z-50 m-2 min-w-[200px] justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3"
       >
