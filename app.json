@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "28",
+      "buildNumber": "29",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -76,7 +76,16 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
     ]
   }
 }
