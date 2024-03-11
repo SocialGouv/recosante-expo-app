@@ -35,6 +35,8 @@ import { LegalPage } from './scenes/legal/legal';
 import { ConfidentialityPage } from './scenes/confidentiality/confidentiality';
 import { FeedbackPage } from './scenes/feedback/feedback';
 import { IndicatorFastSelector } from './scenes/dashboard/indicator-fast-selector';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { Settings } from 'react-native-fbsdk-next';
 
 interface TabBarLabelProps {
   children: React.ReactNode;
@@ -140,6 +142,14 @@ export function Navigators() {
   const hasAddress = !!address?.municipality_insee_code;
 
   async function onReady() {
+    const { status } = await requestTrackingPermissionsAsync();
+
+    Settings.initializeSDK();
+
+    if (status === 'granted') {
+      await Settings.setAdvertiserTrackingEnabled(true);
+    }
+
     await SplashScreen.hideAsync();
     // wait for matomoid to be created here: https://github.com/SocialGouv/recosante-expo-app/blob/02aa1bb97a687df66b682fc059b92114ed097c51/src/services/logEventsWithMatomo.ts#L17
     await new Promise((resolve) => setTimeout(resolve, 1000));
