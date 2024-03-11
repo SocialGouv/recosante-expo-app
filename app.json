@@ -23,6 +23,7 @@
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["recosante"]
       },
+      "googleServicesFile": "./GoogleService-Info.plist",
       "appStoreUrl": "https://apps.apple.com/fr/app/id6476136888"
     },
     "android": {
@@ -66,6 +67,15 @@
           },
           "ios": {
             "deploymentTarget": "13.4"
+          }
+        }
+      ],
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
           }
         }
       ]
