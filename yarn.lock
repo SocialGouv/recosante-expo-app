@@ -3761,9 +3761,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/react-native@npm:5.19.2":
-  version: 5.19.2
-  resolution: "@sentry/react-native@npm:5.19.2"
+"@sentry/react-native@npm:5.19.1":
+  version: 5.19.1
+  resolution: "@sentry/react-native@npm:5.19.1"
   dependencies:
     "@sentry/browser": "npm:7.100.1"
     "@sentry/cli": "npm:2.25.2"
@@ -3782,7 +3782,7 @@ __metadata:
       optional: true
   bin:
     sentry-expo-upload-sourcemaps: scripts/expo-upload-sourcemaps.js
-  checksum: 285ae0932b90f43f1f448fdd8c899d214dd3c9d444a7f401f3862bd7818c83cd58f188e258229e4d0f966b21fcca0702603ba0e9aa674da563857f8ed9f04d8f
+  checksum: 0d08e6453994cebe0ac4fadd6712e0e4714517001e6f199c969b23eca3fad1ebc84c58f7c6a210d385e9b40e0aa9ee81d6b10b3c95b2beb5d0dff4b0b2664bf1
   languageName: node
   linkType: hard
 
@@ -7357,9 +7357,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-modules-autolinking@npm:1.10.3":
-  version: 1.10.3
-  resolution: "expo-modules-autolinking@npm:1.10.3"
+"expo-modules-autolinking@npm:1.10.2":
+  version: 1.10.2
+  resolution: "expo-modules-autolinking@npm:1.10.2"
   dependencies:
     "@expo/config": "npm:~8.5.0"
     chalk: "npm:^4.1.0"
@@ -7369,7 +7369,7 @@ __metadata:
     fs-extra: "npm:^9.1.0"
   bin:
     expo-modules-autolinking: bin/expo-modules-autolinking.js
-  checksum: 51247211b25649947967ff01e62a55ccc38b473ccdae8adc2cbe268c3a022d8657ad490316b4e45fceece13bf310af4b5a3f503c8658d8419b9e72943bb7b2a6
+  checksum: 85a10b54b179a4cf69874dcf8a1e7de0d4d1e2184828132d6b950bbd6581d8aa4fb8696e16e37de06d3382d4c51cfc643cb049ebea5bd0253052b0cea317b41e
   languageName: node
   linkType: hard
 
@@ -13260,7 +13260,7 @@ __metadata:
     "@react-navigation/stack": "npm:^6.3.20"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/git": "npm:^10.0.1"
-    "@sentry/react-native": "npm:5.19.2"
+    "@sentry/react-native": "npm:5.19.1"
     "@socialgouv/releaserc": "npm:^1.1.1"
     "@types/lodash": "npm:^4.14.202"
     "@types/react": "npm:~18.2.14"
