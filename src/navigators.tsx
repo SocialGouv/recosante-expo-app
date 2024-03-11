@@ -141,6 +141,8 @@ export function Navigators() {
 
   async function onReady() {
     await SplashScreen.hideAsync();
+    // wait for matomoid to be created here: https://github.com/SocialGouv/recosante-expo-app/blob/02aa1bb97a687df66b682fc059b92114ed097c51/src/services/logEventsWithMatomo.ts#L17
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await logEvent({ category: 'APP', action: 'APP_OPEN' });
   }
   const prevCurrentRouteName = useRef<string>(null);
