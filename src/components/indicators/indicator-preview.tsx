@@ -128,7 +128,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                 )}
               >
                 <MyText
-                  className="text-wrap text-md uppercase text-muted "
+                  className="text-md text-wrap uppercase text-muted "
                   font="MarianneBold"
                 >
                   {props.isFavorite
