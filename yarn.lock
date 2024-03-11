@@ -7159,6 +7159,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-tracking-transparency@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "expo-tracking-transparency@npm:3.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 85ac170dc4d9d22bad295c48f94aa6f56339f6397f69152165191abdada0568901a4e482e4c273e00f97d2745133a85746e93298f24c53e03d77638a0770f52c
+  languageName: node
+  linkType: hard
+
 "expo@npm:^49.0.21":
   version: 49.0.23
   resolution: "expo@npm:49.0.23"
@@ -13218,6 +13227,7 @@ __metadata:
     expo-splash-screen: "npm:~0.20.5"
     expo-status-bar: "npm:~1.6.0"
     expo-store-review: "npm:~6.4.0"
+    expo-tracking-transparency: "npm:^3.3.0"
     fetch-retry: "npm:^5.0.6"
     husky: "npm:^8.0.0"
     markdown-it-sub: "npm:^2.0.0"
