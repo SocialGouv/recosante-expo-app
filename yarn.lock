@@ -12773,6 +12773,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-fbsdk-next@npm:^12.1.4":
+  version: 12.1.4
+  resolution: "react-native-fbsdk-next@npm:12.1.4"
+  peerDependencies:
+    expo: ">=47.0.0"
+    react-native: ">=0.63.3"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: b9722c0936bc6373af330b7429be45c8b6d87600a8a863f367a581928133d4009b7802411440b8e64c36a42506c42f0f70dd3bf917c565b78d3af4f425cb442a
+  languageName: node
+  linkType: hard
+
 "react-native-feather@npm:^1.1.2":
   version: 1.1.2
   resolution: "react-native-feather@npm:1.1.2"
@@ -13216,6 +13229,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-native: "npm:0.72.6"
     react-native-autocomplete-dropdown: "npm:^3.1.0"
+    react-native-fbsdk-next: "npm:^12.1.4"
     react-native-gesture-handler: "npm:~2.12.0"
     react-native-markdown-display: "npm:^7.0.2"
     react-native-pager-view: "npm:6.2.0"
