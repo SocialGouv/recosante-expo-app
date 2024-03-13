@@ -35,7 +35,14 @@
       "googleServicesFile": "./google-services.json",
       "package": "com.recosante.recosante",
       "versionCode": 27,
-      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "BIND_GET_INSTALL_REFERRER_SERVICE",
+        "CHECK_LICENSE",
+        "AD_ID"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

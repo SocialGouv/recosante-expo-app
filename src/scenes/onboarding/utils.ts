@@ -83,21 +83,27 @@ export function useOnboardingNavigation(): {
   }
 
   async function askRequestForCookie() {
-    const { status: requestTrackingPermissionsStatus } =
-      await requestTrackingPermissionsAsync();
-
-    if (requestTrackingPermissionsStatus === 'granted') {
-      logEvent({
-        category: 'ONBOARDING',
-        action: 'ENABLE_ADVERTISER_TRACKING',
-      });
-      logEvent({
-        category: 'ONBOARDING',
-        action: 'COMPLETED',
-      });
-      setOnboardingScreen(RouteEnum.HOME);
-      resetNavigationTo(RouteEnum.HOME);
-    }
+    requestTrackingPermissionsAsync().then((response) => {
+      if (response.status === 'granted') {
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'ENABLE_ADVERTISER_TRACKING',
+        });
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'COMPLETED',
+        });
+        setOnboardingScreen(RouteEnum.HOME);
+        resetNavigationTo(RouteEnum.HOME);
+      } else {
+        logEvent({
+          category: 'ONBOARDING',
+          action: 'DENY_ADVERTISER_TRACKING',
+        });
+        setOnboardingScreen(RouteEnum.HOME);
+        resetNavigationTo(RouteEnum.HOME);
+      }
+    });
   }
 
   async function askRequestForLocation() {
