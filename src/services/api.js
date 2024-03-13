@@ -76,20 +76,21 @@ class ApiService {
           if (readableRes.askForReview) {
             setTimeout(() => {
               StoreReview.isAvailableAsync().then((isAvailable) => {
-                if (isAvailable)
+                if (isAvailable) {
                   StoreReview.requestReview().then(() => {
                     logEvent({
                       category: 'STORE_REVIEW',
                       action: 'ASKED_FROM_API',
                     });
                   });
+                }
               });
             }, 2000);
           }
           if (readableRes.sendInApp) {
             const [title, subTitle, actions = [], options = {}] =
               readableRes.sendInApp;
-            if (!actions || !actions.length) {
+            if (!actions?.length) {
               Alert.alert(title, subTitle);
             } else {
               const actionsWithNavigation = actions.map((action) => {

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Pressable, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Welcome } from './screens/welcome';
 import { Geolocation } from './screens/geolocation';
 import { Notifications } from './screens/notifications';
-import { OnboardingRouteEnum } from '~/constants/route';
+import { OnboardingRouteEnum, RouteEnum } from '~/constants/route';
 import Button from '~/components/ui/button';
 import { cn } from '~/utils/tailwind';
 import { useOnboardingNavigation } from './utils';
@@ -13,6 +13,8 @@ import { useOnboardingNavigation } from './utils';
 import MyText from '~/components/ui/my-text';
 import { Stepper } from './steps';
 import { SkipArrow } from '~/assets/icons/skip';
+import { Cookies } from './screens/cookies';
+import { navigate } from '~/services/navigation';
 
 const OnboardingStack = createStackNavigator();
 export function Onboarding() {
@@ -27,8 +29,10 @@ export function Onboarding() {
         return 2;
       case OnboardingRouteEnum.NOTIFICATIONS:
         return 3;
-      default:
+      case OnboardingRouteEnum.COOKIES:
         return 4;
+      default:
+        return 5;
     }
   }, [onboardingScreen]);
 
@@ -67,18 +71,45 @@ export function Onboarding() {
             name={OnboardingRouteEnum.NOTIFICATIONS}
             component={Notifications}
           />
+          <OnboardingStack.Screen
+            name={OnboardingRouteEnum.COOKIES}
+            component={Cookies}
+          />
         </OnboardingStack.Navigator>
-        <View className="mx-auto my-8 flex w-full flex-row justify-center">
-          <Stepper step={step} onPress={onNext} disabled={isLoading}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color="#3343BD" />
-            ) : (
+        {step !== 4 ? (
+          <View className="mx-auto my-8 flex w-full flex-row justify-center">
+            <Stepper step={step} onPress={onNext} disabled={isLoading}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#3343BD" />
+              ) : (
+                <MyText font="MarianneBold" className="text-center text-black">
+                  C'est parti !
+                </MyText>
+              )}
+            </Stepper>
+          </View>
+        ) : (
+          <View className="mx-auto my-8 flex w-full flex-row justify-center">
+            <Pressable
+              onPress={() => {
+                navigate(RouteEnum.HOME);
+              }}
+              className="z-50 m-2  justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3"
+            >
               <MyText font="MarianneBold" className="text-center text-black">
-                C'est parti !
+                Je refuse
               </MyText>
-            )}
-          </Stepper>
-        </View>
+            </Pressable>
+            <Pressable
+              onPress={onNext}
+              className="z-50 m-2  justify-center rounded-full bg-app-yellow px-8 pb-4 pt-3"
+            >
+              <MyText font="MarianneBold" className="text-center text-black">
+                J'accepte
+              </MyText>
+            </Pressable>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

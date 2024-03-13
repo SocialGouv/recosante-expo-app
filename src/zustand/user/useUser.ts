@@ -1,16 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { create, type StateCreator } from 'zustand';
+import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { MUNICIPALITY_FULL_NAME, USER_STORAGE } from '~/constants/municipality';
 import API from '~/services/api';
 import { type UserAddress } from '~/types/location';
 import { type User } from '~/types/user';
 import { NotificationIdEnum } from '~/types/notification';
+import { CookiesIdEnum } from '~/types/cookies';
 
 interface UserState {
   address: UserAddress | null;
   setAddress: (location: UserAddress) => void;
   notifications_preference: NotificationIdEnum[];
+  cookies_preference: CookiesIdEnum[];
+  setCookiesPreferences: (cookies: CookiesIdEnum[]) => void;
   setNotificationsPreferences: (notifications: NotificationIdEnum[]) => void;
   _hasHydrated: boolean;
   setHasHydrated: (hydrationState: boolean) => void;
@@ -28,6 +31,7 @@ const setUser = (
       municipality_zip_code: user.municipality_zip_code,
     },
     notifications_preference: user.notifications_preference,
+    cookies_preference: user.cookies_preference,
   }));
 };
 
@@ -50,7 +54,7 @@ export const useUser = create<UserState>()(
           if (res.data) {
             AsyncStorage.setItem(
               MUNICIPALITY_FULL_NAME,
-              address.title || '',
+              address.title ?? '',
             ).then(() => {
               const user: User = res.data;
               setUser(set, user);
@@ -58,11 +62,15 @@ export const useUser = create<UserState>()(
           }
         });
       },
+      cookies_preference: [CookiesIdEnum.META, CookiesIdEnum.GOOGLE],
       notifications_preference: [
         NotificationIdEnum.MORNING,
         NotificationIdEnum.EVENING,
         NotificationIdEnum.ALERT,
       ],
+      setCookiesPreferences: async (cookies_preference) => {
+        set({ cookies_preference });
+      },
       setNotificationsPreferences: async (notifications_preference) => {
         set({ notifications_preference });
         API.put({
@@ -108,6 +116,7 @@ export const useUser = create<UserState>()(
                 municipality_zip_code: user.municipality_zip_code,
               };
               state.setNotificationsPreferences(user.notifications_preference);
+              state.setCookiesPreferences(user.cookies_preference);
             }
           });
         }

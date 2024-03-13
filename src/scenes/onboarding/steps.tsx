@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { cn } from '~/utils/tailwind';
 import * as Haptics from 'expo-haptics';
 
 type StepperProps = {
-  step: 1 | 2 | 3 | 4;
+  step: 1 | 2 | 3 | 4 | 5;
   disabled?: boolean;
   onPress: () => void;
   children: React.ReactNode;

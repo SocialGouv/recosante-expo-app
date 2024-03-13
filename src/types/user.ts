@@ -1,3 +1,4 @@
+import { type CookiesIdEnum } from './cookies';
 import type { IndicatorsSlugEnum } from './indicator';
 import type { NotificationIdEnum } from './notification';
 
@@ -14,5 +15,6 @@ export type User = {
   created_at: string;
   updated_at: string;
   favorite_indicator: IndicatorsSlugEnum;
-  notifications_preference: Array<NotificationIdEnum>;
+  notifications_preference: NotificationIdEnum[];
+  cookies_preference: CookiesIdEnum[];
 };

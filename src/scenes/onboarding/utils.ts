@@ -9,6 +9,9 @@ import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
 import { capture } from '~/services/sentry';
 import { logEvent } from '~/services/logEventsWithMatomo';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+
+type State = OnboardingRouteEnum | RouteEnum.HOME;
 
 export function useOnboardingNavigation(): {
   onboardingScreen: OnboardingRouteEnum | RouteEnum.HOME;
@@ -17,11 +20,10 @@ export function useOnboardingNavigation(): {
   isLoading: boolean;
   onNext: () => void;
 } {
-  const [onboardingScreen, setOnboardingScreen] = useState<
-    OnboardingRouteEnum | RouteEnum.HOME
-  >(OnboardingRouteEnum.WELCOME);
+  const [onboardingScreen, setOnboardingScreen] = useState<State>(
+    OnboardingRouteEnum.WELCOME,
+  );
   const [skipVisible, setSkipVisible] = useState<boolean>(false);
-
   const { setAddress } = useUser((state) => state);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +32,6 @@ export function useOnboardingNavigation(): {
       force: false,
       expo: true,
     });
-
     if (token?.data) {
       API.put({
         path: '/user',
@@ -64,9 +65,14 @@ export function useOnboardingNavigation(): {
           action: 'SKIP',
           name: 'NOTIFICATIONS',
         });
+        setOnboardingScreen(OnboardingRouteEnum.COOKIES);
+        navigate(OnboardingRouteEnum.COOKIES);
+        break;
+      case OnboardingRouteEnum.COOKIES:
         logEvent({
           category: 'ONBOARDING',
-          action: 'COMPLETED',
+          action: 'SKIP',
+          name: 'COOKIES',
         });
         setOnboardingScreen(RouteEnum.HOME);
         resetNavigationTo(RouteEnum.HOME);
@@ -76,74 +82,111 @@ export function useOnboardingNavigation(): {
     }
   }
 
+  async function askRequestForCookie() {
+    const { status: requestTrackingPermissionsStatus } =
+      await requestTrackingPermissionsAsync();
+
+    if (requestTrackingPermissionsStatus === 'granted') {
+      logEvent({
+        category: 'ONBOARDING',
+        action: 'ENABLE_ADVERTISER_TRACKING',
+      });
+      logEvent({
+        category: 'ONBOARDING',
+        action: 'COMPLETED',
+      });
+      setOnboardingScreen(RouteEnum.HOME);
+      resetNavigationTo(RouteEnum.HOME);
+    }
+  }
+
+  async function askRequestForLocation() {
+    const { status, location } = await LocationService.requestLocation();
+    logEvent({
+      category: 'ONBOARDING',
+      action: 'ENABLE_GEOLOCATION',
+    });
+    setIsLoading(true);
+    if (!location) {
+      if (status === 'granted') {
+        Alert.alert(
+          "Nous n'avons pas réussi à vous localiser 🧐",
+          'Peut-être est-ce un problème de réseau ? Ne vous en faites pas, vous pourrez réessayer plus tard 😅',
+        );
+      }
+      setIsLoading(false);
+      onNextAfterGeolocation();
+      return;
+    }
+    LocationService.getAdressByCoordinates(
+      location.coords.latitude,
+      location.coords.longitude,
+    )
+      .then((address) => {
+        setIsLoading(false);
+        if (address) {
+          setAddress(address);
+        }
+        onNextAfterGeolocation();
+      })
+      .catch((err) => {
+        capture(err, {
+          extra: { location, method: 'get localisation onboarding' },
+        });
+        setIsLoading(false);
+      });
+  }
+
+  async function askRequestForNotification() {
+    if (process.env.NODE_ENV === 'development') {
+      logEvent({
+        category: 'ONBOARDING',
+        action: 'DEV_SKIP_NOTIFICATIONS',
+      });
+      setOnboardingScreen(OnboardingRouteEnum.COOKIES);
+      navigate(OnboardingRouteEnum.COOKIES);
+      return;
+    }
+    registerForPushNotificationsAsync({
+      force: true,
+      expo: true,
+    }).then((token) => {
+      logEvent({
+        category: 'ONBOARDING',
+        action: 'ENABLE_NOTIFICATIONS',
+      });
+      setOnboardingScreen(OnboardingRouteEnum.COOKIES);
+      navigate(OnboardingRouteEnum.COOKIES);
+      if (token) {
+        API.put({
+          path: '/user',
+          body: { push_notif_token: JSON.stringify(token) },
+        });
+      }
+    });
+  }
+
+  function onNextAfterWelcome() {
+    setOnboardingScreen(OnboardingRouteEnum.GEOLOCATION);
+    navigate(OnboardingRouteEnum.GEOLOCATION);
+    InteractionManager.runAfterInteractions(() => {
+      setSkipVisible(true);
+    });
+  }
+
   async function onNext() {
     switch (onboardingScreen) {
       case OnboardingRouteEnum.WELCOME:
-        setOnboardingScreen(OnboardingRouteEnum.GEOLOCATION);
-        navigate(OnboardingRouteEnum.GEOLOCATION);
-        InteractionManager.runAfterInteractions(() => {
-          setSkipVisible(true);
-        });
+        onNextAfterWelcome();
         break;
       case OnboardingRouteEnum.GEOLOCATION:
-        logEvent({
-          category: 'ONBOARDING',
-          action: 'ENABLE_GEOLOCATION',
-        });
-        setIsLoading(true);
-        // eslint-disable-next-line no-case-declarations
-        const { status, location } = await LocationService.requestLocation();
-        if (!location) {
-          if (status === 'granted') {
-            Alert.alert(
-              "Nous n'avons pas réussi à vous localiser 🧐",
-              'Peut-être est-ce un problème de réseau ? Ne vous en faites pas, vous pourrez réessayer plus tard 😅',
-            );
-          }
-          setIsLoading(false);
-          onNextAfterGeolocation();
-          return;
-        }
-        LocationService.getAdressByCoordinates(
-          location.coords.latitude,
-          location.coords.longitude,
-        )
-          .then((address) => {
-            setIsLoading(false);
-            if (address) {
-              setAddress(address);
-            }
-            onNextAfterGeolocation();
-          })
-          .catch((err) => {
-            capture(err, {
-              extra: { location, method: 'get localisation onboarding' },
-            });
-            setIsLoading(false);
-          });
+        askRequestForLocation();
         break;
       case OnboardingRouteEnum.NOTIFICATIONS:
-        registerForPushNotificationsAsync({
-          force: true,
-          expo: true,
-        }).then((token) => {
-          logEvent({
-            category: 'ONBOARDING',
-            action: 'ENABLE_NOTIFICATIONS',
-          });
-          setOnboardingScreen(RouteEnum.HOME);
-          resetNavigationTo(RouteEnum.HOME);
-          if (token) {
-            API.put({
-              path: '/user',
-              body: { push_notif_token: JSON.stringify(token) },
-            });
-          }
-          logEvent({
-            category: 'ONBOARDING',
-            action: 'COMPLETED',
-          });
-        });
+        askRequestForNotification();
+        break;
+      case OnboardingRouteEnum.COOKIES:
+        askRequestForCookie();
         break;
       default:
         break;
