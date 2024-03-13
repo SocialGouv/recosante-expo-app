@@ -1,4 +1,4 @@
-import { Dimensions, InteractionManager, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo, useEffect } from 'react';
 import MyText from '~/components/ui/my-text';
