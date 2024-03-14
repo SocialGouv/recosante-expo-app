@@ -26,6 +26,7 @@ import appJson from '~/../app.json';
 import { initSession, logEvent } from '~/services/logEventsWithMatomo';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
+import { Singular } from 'singular-react-native';
 
 export type SettingsProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.SETTINGS>,
@@ -62,6 +63,7 @@ export function SettingsPage(props: SettingsProps) {
         <TextRow
           text="Changer votre indicateur favori"
           onPress={() => {
+            Singular.event('SETTINGS_CHANGE_INDICATOR');
             props.navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
               eventCategory: 'SETTINGS',

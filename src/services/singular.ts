@@ -11,8 +11,9 @@ export namespace SingularService {
   config.withSkAdNetworkEnabled(true);
   // iOS - Wait 5m for tracking authorization before sending any events
   config.withWaitForTrackingAuthorizationWithTimeoutInterval(300);
-}
-export function init() {
-  Singular.init(config);
-  Singular.event('Init');
+
+  export function init() {
+    Singular.init(config);
+    Singular.event('Init');
+  }
 }

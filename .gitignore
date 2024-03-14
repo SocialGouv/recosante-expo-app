@@ -77,11 +77,12 @@ test-local.js
 !.yarn/sdks
 !.yarn/versions
 
+ios
+android
 ### EASINCLUDE! ###
 ### BELOW THIS LINE WILL NOT BE IGNORED BY EAS ###
 
 google-services.json
 GoogleService-Info.plist
 .env
-ios
-android
+

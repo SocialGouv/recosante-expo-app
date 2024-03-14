@@ -12,18 +12,22 @@
       "resizeMode": "contain",
       "backgroundColor": "#3643b6"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "32",
+      "buildNumber": "36",
       "config": {
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["recosante"]
+        "LSApplicationQueriesSchemes": [
+          "recosante"
+        ],
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       },
-      "googleServicesFile": "./GoogleService-Info.plist",
       "appStoreUrl": "https://apps.apple.com/fr/app/id6476136888"
     },
     "android": {
@@ -32,7 +36,6 @@
         "foregroundImage": "./assets/android_adaptive_icon.png",
         "backgroundColor": "#3643b6"
       },
-      "googleServicesFile": "./google-services.json",
       "package": "com.recosante.recosante",
       "versionCode": 27,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante",
@@ -58,16 +61,9 @@
     "owner": "recosante",
     "plugins": [
       [
-        "react-native-fbsdk-next",
+        "expo-tracking-transparency",
         {
-          "appID": "2091749431177634",
-          "clientToken": "336c13eb382494f41b9ea9faf3fccf3a",
-          "displayName": "Recosanté",
-          "scheme": "fb2091749431177634",
-          "advertiserIDCollectionEnabled": true,
-          "autoLogAppEventsEnabled": true,
-          "isAutoInitEnabled": true,
-          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ],
       "sentry-expo",
@@ -90,7 +86,6 @@
           }
         }
       ],
-      "@react-native-firebase/app",
       [
         "expo-build-properties",
         {

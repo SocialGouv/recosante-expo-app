@@ -10,11 +10,13 @@ import { Pressable, View, ScrollView, Linking } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RouteEnum, RootStackParamList } from '~/constants/route';
+import { type RouteEnum, type RootStackParamList } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { Close } from '~/assets/icons/close';
 import { MATOMO_TRACKING_ENABLED } from '~/constants/matomo';
 import Matomo from '~/services/matomo';
+import * as Application from 'expo-application';
+import { Singular } from 'singular-react-native';
 
 type ConfidentialityPageProps = NativeStackScreenProps<
   RootStackParamList,
@@ -26,6 +28,7 @@ export function ConfidentialityPage(props: ConfidentialityPageProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['90%'], []);
   const isOpenedRef = useRef(false);
+  const [id, setId] = useState<string | null>(null);
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
@@ -57,7 +60,29 @@ export function ConfidentialityPage(props: ConfidentialityPageProps) {
       setMatomoActive(true);
     }
   }
+  function handleSingularChange() {
+    if (matomoActive) {
+      Matomo.trackingEnabled = false;
+      AsyncStorage.setItem(MATOMO_TRACKING_ENABLED, 'false');
+      setMatomoActive(false);
+    } else {
+      AsyncStorage.removeItem(MATOMO_TRACKING_ENABLED);
+      Matomo.trackingEnabled = true;
+      setMatomoActive(true);
+    }
+  }
 
+  async function getId() {
+    const id = await Application.getIosIdForVendorAsync();
+    setId(id);
+  }
+  useEffect(() => {
+    getId();
+  }, []);
+
+  console.log(Singular);
+
+  console.log('id', id);
   return (
     <View className="bg-red flex-1">
       <BottomSheet
@@ -100,6 +125,7 @@ export function ConfidentialityPage(props: ConfidentialityPageProps) {
           <MyText font="MarianneBold" className="text-xl text-white">
             Politique de confidentialité
           </MyText>
+          <MyText>id:{id}</MyText>
         </View>
         <Pressable
           onPress={closeBottomSheet}
@@ -173,6 +199,20 @@ export function ConfidentialityPage(props: ConfidentialityPageProps) {
               >
                 Vous êtes suivis de manière anonyme.{'\n'}Décochez la case pour
                 ne pas être suivi même anonymement.
+              </MyText>
+            </View>
+            <View className="mt-8 w-full flex-row items-center justify-between rounded-xl  border border-gray-300 p-2 ">
+              <Switch
+                className=" w-1/5"
+                style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+                onValueChange={handleSingularChange}
+                value={matomoActive}
+              />
+              <MyText
+                font="MarianneRegular"
+                className="wrap text-wrap w-4/5	 text-[12px]"
+              >
+                Décochez la case pour ne pas être suivi par Singular.
               </MyText>
             </View>
           </View>
