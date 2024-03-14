@@ -197,7 +197,7 @@ const renderRules = {
       const orderedList = parent[orderedListIndex];
       let listItemNumber;
 
-      if (orderedList.attributes && orderedList.attributes.start) {
+      if (orderedList.attributes?.start) {
         listItemNumber = orderedList.attributes.start + node.index;
       } else {
         listItemNumber = node.index + 1;
@@ -302,7 +302,9 @@ const renderRules = {
     <MyText
       key={node.key}
       style={styles.link}
-      onPress={() => openUrl(node.attributes.href, onLinkPress)}
+      onPress={() => {
+        openUrl(node.attributes.href, onLinkPress);
+      }}
     >
       {children}
     </MyText>
@@ -310,7 +312,9 @@ const renderRules = {
   blocklink: (node, children, parent, styles, onLinkPress) => (
     <TouchableWithoutFeedback
       key={node.key}
-      onPress={() => openUrl(node.attributes.href, onLinkPress)}
+      onPress={() => {
+        openUrl(node.attributes.href, onLinkPress);
+      }}
       style={styles.blocklink}
     >
       <View style={styles.image}>{children}</View>
@@ -334,7 +338,7 @@ const renderRules = {
         return src.toLowerCase().startsWith(value.toLowerCase());
       }).length > 0;
 
-    if (show === false && defaultImageHandler === null) {
+    if (!show && defaultImageHandler === null) {
       return null;
     }
 
@@ -343,7 +347,7 @@ const renderRules = {
         key={node.key}
         className="h-96 w-full"
         source={{
-          uri: show === true ? src : `${defaultImageHandler}${src}`,
+          uri: show ? src : `${defaultImageHandler}${src}`,
         }}
         contentFit="contain"
         transition={1000}
