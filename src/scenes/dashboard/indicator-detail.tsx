@@ -71,6 +71,8 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     ); // almost to bottom
   }
 
+  console.log(indicator?.about_description);
+
   return (
     <BottomSheet
       style={{
@@ -197,11 +199,34 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   lineHeight: 20,
                   fontSize: 10,
                   textAlignVertical: 'top',
+                  textTransform: 'uppercase',
                 },
                 sub: {
                   lineHeight: Platform.select({ ios: 10, android: 20 }),
                   fontSize: 10,
                   textAlignVertical: 'bottom',
+                  textTransform: 'uppercase',
+                },
+                heading4: {
+                  fontSize: 10,
+                  lineHeight: 16,
+                  fontFamily: 'MarianneBold',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                },
+                heading3: {
+                  fontSize: 12,
+                  lineHeight: 20,
+                  fontFamily: 'MarianneBold',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                },
+                heading2: {
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontFamily: 'MarianneBold',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
                 },
               }}
               markdownit={markdownItInstance}
@@ -220,7 +245,7 @@ interface TitleProps {
 }
 function Title(props: TitleProps) {
   return (
-    <MyText font="MarianneExtraBold" className=" mt-6 text-xs uppercase">
+    <MyText font="MarianneBold" className=" mt-6 text-sm uppercase">
       {props.label}
     </MyText>
   );
