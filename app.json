@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "36",
+      "buildNumber": "37",
       "config": {
         "usesNonExemptEncryption": false
       },
