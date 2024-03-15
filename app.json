@@ -23,7 +23,6 @@
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["recosante"]
       },
-      "googleServicesFile": "./GoogleService-Info.plist",
       "appStoreUrl": "https://apps.apple.com/fr/app/id6476136888"
     },
     "android": {
@@ -49,19 +48,6 @@
     },
     "owner": "recosante",
     "plugins": [
-      [
-        "react-native-fbsdk-next",
-        {
-          "appID": "2091749431177634",
-          "clientToken": "336c13eb382494f41b9ea9faf3fccf3a",
-          "displayName": "Recosanté",
-          "scheme": "fb2091749431177634",
-          "advertiserIDCollectionEnabled": true,
-          "autoLogAppEventsEnabled": true,
-          "isAutoInitEnabled": true,
-          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-        }
-      ],
       "sentry-expo",
       [
         "expo-location",
@@ -82,7 +68,6 @@
           }
         }
       ],
-      "@react-native-firebase/app",
       [
         "expo-build-properties",
         {

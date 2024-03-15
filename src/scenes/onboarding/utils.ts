@@ -28,6 +28,15 @@ export function useOnboardingNavigation(): {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onNextAfterGeolocation() {
+    if (process.env.NODE_ENV === 'development') {
+      logEvent({
+        category: 'ONBOARDING',
+        action: 'DEV_SKIP_GEOLOCATION',
+      });
+      setOnboardingScreen(OnboardingRouteEnum.NOTIFICATIONS);
+      navigate(OnboardingRouteEnum.NOTIFICATIONS);
+      return;
+    }
     const token = await registerForPushNotificationsAsync({
       force: false,
       expo: true,
