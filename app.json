@@ -48,6 +48,19 @@
     },
     "owner": "recosante",
     "plugins": [
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "2091749431177634",
+          "clientToken": "336c13eb382494f41b9ea9faf3fccf3a",
+          "displayName": "Recosanté",
+          "scheme": "fb2091749431177634",
+          "advertiserIDCollectionEnabled": true,
+          "autoLogAppEventsEnabled": true,
+          "isAutoInitEnabled": false,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ],
       "sentry-expo",
       [
         "expo-location",

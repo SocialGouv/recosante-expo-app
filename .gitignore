@@ -9,6 +9,8 @@ dist/
 web-build/
 *.aab
 *.ipa
+ios
+android
 
 # Native
 *.orig.*

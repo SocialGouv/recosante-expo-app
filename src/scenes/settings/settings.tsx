@@ -12,10 +12,10 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
-  HomeTabRouteEnum,
+  type HomeTabRouteEnum,
   RouteEnum,
-  HomeTabParamList,
-  RootStackParamList,
+  type HomeTabParamList,
+  type RootStackParamList,
 } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
@@ -92,10 +92,11 @@ export function SettingsPage(props: SettingsProps) {
           text="Laisser une revue sur les stores"
           onPress={() => {
             Linking.openURL(
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               Platform.select({
                 ios: `${appJson.expo.ios.appStoreUrl}?action=write-review`,
                 android: `market://details?id=${appJson.expo.android.package}&showAllReviews=true`,
-              }) as string,
+              })!,
             );
           }}
         />

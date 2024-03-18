@@ -8,6 +8,17 @@ import { Navigators } from './src/navigators';
 import { initSession } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/environment-indicator';
 import ToastProvider from '~/services/toast';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { Settings } from 'react-native-fbsdk-next';
+async function initializeMeta() {
+  const { status } = await requestTrackingPermissionsAsync();
+  console.log('status', status);
+  if (status === 'granted') {
+    await Settings.setAdvertiserTrackingEnabled(true);
+  }
+}
+
+initializeMeta();
 
 LogBox.ignoreAllLogs(true);
 
