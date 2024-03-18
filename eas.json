@@ -19,7 +19,8 @@
       "env": {
         "EXPO_PUBLIC_API_SCHEME": "https",
         "EXPO_PUBLIC_API_HOST": "recosante-api-node.fabrique.social.gouv.fr",
-        "EXPO_PUBLIC_APP_ENV": "production"
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "SENTRY_AUTH_TOKEN": "50317f0dccca4091a23b6e2543c59f3b3b3c22d29ef045a8af0580a166ebc092"
       }
     }
   },

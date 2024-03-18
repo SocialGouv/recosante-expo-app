@@ -8,6 +8,19 @@ import { Navigators } from './src/navigators';
 import { initSession } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/environment-indicator';
 import ToastProvider from '~/services/toast';
+import { Singular, SingularConfig } from 'singular-react-native';
+
+const config = new SingularConfig(
+  'fragile_b0f032b7',
+  '878faa6f1413be1a744c78c791ef49f4',
+);
+
+// iOS - Enable SKAdNetwork
+config.withSkAdNetworkEnabled(true);
+// iOS - Wait 5m for tracking authorization before sending any events
+config.withWaitForTrackingAuthorizationWithTimeoutInterval(300);
+
+Singular.init(config);
 
 LogBox.ignoreAllLogs(true);
 
