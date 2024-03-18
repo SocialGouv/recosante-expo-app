@@ -25,7 +25,8 @@
     "build-local:android-apk": "eas build -p android --profile preview --local",
     "submit:ios": "eas submit -p ios",
     "submit:android": "eas submit -p android",
-    "prebuild": "node ./generate-easignore.js"
+    "prebuild": "node ./generate-easignore.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.6.0",
