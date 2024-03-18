@@ -71,8 +71,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     ); // almost to bottom
   }
 
-  console.log(indicator?.about_description);
-
   return (
     <BottomSheet
       style={{
