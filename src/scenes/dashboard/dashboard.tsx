@@ -6,10 +6,10 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
-  HomeTabRouteEnum,
+  type HomeTabRouteEnum,
   RouteEnum,
-  HomeTabParamList,
-  RootStackParamList,
+  type HomeTabParamList,
+  type RootStackParamList,
 } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { LocationIcon } from '~/assets/icons/location';
