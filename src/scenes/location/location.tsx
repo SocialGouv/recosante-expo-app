@@ -166,7 +166,6 @@ export function LocationPage(props: LocationPageProps) {
             <Search />
             <TextInput
               autoCorrect={false}
-              autoFocus
               placeholderTextColor="#3343BD"
               placeholder="Rechercher un lieu, ville"
               // clearButtonMode="always"
