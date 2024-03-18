@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RouteEnum, RootStackParamList } from '~/constants/route';
+import { type RouteEnum, type RootStackParamList } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { useUser } from '~/zustand/user/useUser';
 import { type GeoApiFeature, type UserAddress } from '~/types/location';
@@ -31,6 +31,7 @@ import { logEvent } from '~/services/logEventsWithMatomo';
 import { Loader } from '~/components/ui/loader';
 import { capture } from '~/services/sentry';
 import { Search } from '~/assets/icons/search';
+import * as Haptics from 'expo-haptics';
 
 type LocationPageProps = NativeStackScreenProps<
   RootStackParamList,
@@ -207,15 +208,16 @@ export function LocationPage(props: LocationPageProps) {
       >
         <View className=" h-full bg-app-gray px-6 pt-4">
           <View className="w-full">
-            <Pressable
+            <TouchableOpacity
+              hitSlop={{ top: 40, bottom: 40, left: 20, right: 20 }}
               disabled={isGeolocating}
               onPress={async () => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 logEvent({
                   category: 'LOCATION',
                   action: 'SELECT_GEOLOCATION',
                 });
                 setIsGeolocating(true);
-                // eslint-disable-next-line no-case-declarations
                 const { status, location } =
                   await LocationService.requestLocation();
                 if (!location) {
@@ -281,7 +283,7 @@ export function LocationPage(props: LocationPageProps) {
                   ? 'Géolocalisation en cours...'
                   : 'Utiliser ma géolocalisation'}
               </MyText>
-            </Pressable>
+            </TouchableOpacity>
           </View>
 
           {isLoading ? (
