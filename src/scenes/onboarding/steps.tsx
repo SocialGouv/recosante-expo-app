@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { cn } from '~/utils/tailwind';
 import * as Haptics from 'expo-haptics';
 

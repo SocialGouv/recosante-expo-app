@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "40",
+      "buildNumber": "41",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -32,7 +32,7 @@
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 52,
+      "versionCode": 57,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
     },
     "web": {
@@ -48,7 +48,15 @@
     },
     "owner": "recosante",
     "plugins": [
-      "sentry-expo",
+      ["expo-font"],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "incubateur",
+          "project": "recosante-expo-app",
+          "url": "https://sentry.fabrique.social.gouv.fr/"
+        }
+      ],
       [
         "expo-location",
         {
@@ -69,17 +77,6 @@
         }
       ]
     ],
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "incubateur",
-            "project": "recosante-expo-app",
-            "url": "https://sentry.fabrique.social.gouv.fr/"
-          }
-        }
-      ]
-    }
+    "hooks": {}
   }
 }
