@@ -1,4 +1,4 @@
-import { ExpoConfig, ConfigContext } from 'expo/config';
+import { type ExpoConfig, type ConfigContext } from 'expo/config';
 
 // FIXME: not working, env variables not loading
 export default ({ config }: ConfigContext): ExpoConfig => {
