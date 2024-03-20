@@ -126,10 +126,17 @@ export function DashboardPage(props: DashboardProps) {
             Découvrez{'\n'}vos indicateurs{'\u00A0'}!
           </MyText>
           {address?.municipality_name ? (
-            <View className="mt-2 flex max-w-[90%] flex-row items-center">
+            <TouchableOpacity
+              className="mt-2 flex w-fit flex-row items-center self-start "
+              onPress={() => {
+                props.navigation.navigate(RouteEnum.LOCATION, {
+                  isOnboarding: false,
+                });
+              }}
+            >
               <MyText
                 font="MarianneBold"
-                className="text-sm text-app-gray-100"
+                className="self-start  text-sm text-app-gray-100"
                 numberOfLines={1}
               >
                 {municipalityFullName || address?.municipality_name}
@@ -137,7 +144,7 @@ export function DashboardPage(props: DashboardProps) {
               <View className=" ml-2">
                 <LocationIcon color="#AEB1B7" />
               </View>
-            </View>
+            </TouchableOpacity>
           ) : null}
         </View>
       </SafeAreaView>
