@@ -94,16 +94,16 @@ export namespace IndicatorService {
           maxValue: 11,
           valuesToColor: {
             0: '#D9D9EF',
-            1: '#b1f3ef',
-            2: '#b1f3ef',
-            3: '#73c8ae',
-            4: '#73c8ae',
-            5: '#73c8ae',
-            6: '#ee817e',
-            7: '#ee817e',
-            8: '#a7546d',
-            9: '#a7546d',
-            10: '#a7546d',
+            1: '#73c8ae',
+            2: '#73c8ae',
+            3: '#fef799',
+            4: '#fef799',
+            5: '#fef799',
+            6: '#E38136',
+            7: '#E38136',
+            8: '#FF797A',
+            9: '#FF797A',
+            10: '#FF797A',
             11: '#965f9b', // could be until 16 but we show only until 11
           },
         };
@@ -136,7 +136,7 @@ export namespace IndicatorService {
           valuesToColor: {
             0: '#D9D9EF', // Site non classé - Site n'ayant pas suffisamment de prélèvements cette saison pour être classé
             1: '#b1f3ef', // bon qualité
-            2: '#73c8ae', // moyen qualité
+            2: '#fef799', // moyen qualité
             3: '#ee817e', // mauvais
             4: '#965f9b', // interdiction
           },
