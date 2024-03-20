@@ -145,4 +145,41 @@ export namespace IndicatorService {
         throw new Error(`No range found for ${slug as string}`);
     }
   }
+  export function getDataSourceByIndicator(slug: IndicatorsSlugEnum): {
+    label: string;
+    // logo: string;
+  } {
+    switch (slug) {
+      case IndicatorsSlugEnum.indice_atmospheric:
+        return {
+          label: 'ATMO France',
+          // logo: require('~/assets/data-source/atmo.png'),
+        };
+      case IndicatorsSlugEnum.indice_uv:
+        return {
+          label: 'Météo France',
+          // logo: require('~/assets/data-source/meteo.png'),
+        };
+      case IndicatorsSlugEnum.pollen_allergy:
+        return {
+          label: 'RNSA',
+          // logo: require('~/assets/data-source/rnsa.png'),
+        };
+      case IndicatorsSlugEnum.weather_alert:
+        return {
+          label: 'Météo France',
+          // logo: require('~/assets/data-source/meteo.png'),
+        };
+      case IndicatorsSlugEnum.bathing_water:
+        return {
+          label: 'Ministere de la Santé et de la prévention',
+          // logo: require('~/assets/data-source/atmo.png'),
+        };
+      default:
+        return {
+          label: 'ATMO France',
+          // logo: require('~/assets/data-source/atmo.png'),
+        };
+    }
+  }
 }

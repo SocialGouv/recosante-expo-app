@@ -8,6 +8,11 @@ import { DayEnum } from '~/types/day';
 import { Loader } from '~/components/ui/loader';
 import MyText from '~/components/ui/my-text';
 
+enum tabsEnum {
+  TODAY = 'TODAY',
+  TOMORROW = 'TOMORROW',
+}
+
 export type IndicatorsDaysTabParamList = {
   [tabsEnum.TODAY]: {
     day: DayEnum;
@@ -19,11 +24,6 @@ export type IndicatorsDaysTabParamList = {
 
 const IndicatorsDaysTab =
   createMaterialTopTabNavigator<IndicatorsDaysTabParamList>();
-
-enum tabsEnum {
-  TODAY = 'TODAY',
-  TOMORROW = 'TOMORROW',
-}
 
 type TabProps = MaterialTopTabScreenProps<IndicatorsDaysTabParamList>;
 
