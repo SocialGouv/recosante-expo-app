@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RouteEnum, RootStackParamList } from '~/constants/route';
+import { type RouteEnum, type RootStackParamList } from '~/constants/route';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import Button from '~/components/ui/button';
 import MyText from '~/components/ui/my-text';

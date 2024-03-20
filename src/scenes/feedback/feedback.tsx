@@ -12,7 +12,7 @@ import appJson from '~/../app.json';
 import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RouteEnum, RootStackParamList } from '~/constants/route';
+import { type RouteEnum, type RootStackParamList } from '~/constants/route';
 import { Close } from '~/assets/icons/close';
 import { InputCount } from './input-count';
 import Button from '~/components/ui/button';

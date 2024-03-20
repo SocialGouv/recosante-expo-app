@@ -12,10 +12,10 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
-  HomeTabRouteEnum,
+  type HomeTabRouteEnum,
   RouteEnum,
-  HomeTabParamList,
-  RootStackParamList,
+  type HomeTabParamList,
+  type RootStackParamList,
 } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
@@ -23,9 +23,10 @@ import { Arrow } from '~/assets/icons/arrow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
-import { initSession, logEvent } from '~/services/logEventsWithMatomo';
+import { logEvent } from '~/services/logEventsWithMatomo';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
+import { InitializationService } from '~/services/initialization';
 
 export type SettingsProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.SETTINGS>,
@@ -92,10 +93,11 @@ export function SettingsPage(props: SettingsProps) {
           text="Laisser une revue sur les stores"
           onPress={() => {
             Linking.openURL(
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               Platform.select({
                 ios: `${appJson.expo.ios.appStoreUrl}?action=write-review`,
                 android: `market://details?id=${appJson.expo.android.package}&showAllReviews=true`,
-              }) as string,
+              })!,
             );
           }}
         />
@@ -118,7 +120,7 @@ export function SettingsPage(props: SettingsProps) {
                 setOnVersionClicked((c) => c + 1);
               } else {
                 await AsyncStorage.clear();
-                await initSession();
+                InitializationService.initMatomo();
                 resetIndicatorsList();
                 const resetAction = CommonActions.reset({
                   index: 0,
