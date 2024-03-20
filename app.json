@@ -48,6 +48,7 @@
     },
     "owner": "recosante",
     "plugins": [
+      ["singular-react-native"],
       ["expo-font"],
       [
         "@sentry/react-native/expo",

@@ -8,6 +8,21 @@ import { Navigators } from './src/navigators';
 import { initSession } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/environment-indicator';
 import ToastProvider from '~/services/toast';
+import { Singular, SingularConfig } from 'singular-react-native';
+const config = new SingularConfig(
+  'fragile_b0f032b7',
+  '878faa6f1413be1a744c78c791ef49f4',
+);
+
+// To enable META Install Referrer
+config.withFacebookAppId('2091749431177634');
+// iOS - Enable SKAdNetwork
+config.withSkAdNetworkEnabled(true);
+// iOS - Wait 5m for tracking authorization before sending any events
+config.withWaitForTrackingAuthorizationWithTimeoutInterval(300);
+
+Singular.init(config);
+Singular.limitDataSharing(true);
 
 LogBox.ignoreAllLogs(true);
 
@@ -15,7 +30,7 @@ SplashScreen.preventAutoHideAsync();
 Sentry.init({
   dsn: 'https://011d0bf5c5f24f5eb273e83fed66e5eb@sentry.fabrique.social.gouv.fr/94',
   enabled: !__DEV__,
-  debug: true,
+  debug: !__DEV__,
   tracesSampleRate: 0.05,
 });
 

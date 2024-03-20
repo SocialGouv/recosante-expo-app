@@ -24,6 +24,7 @@ import { Illu } from '~/assets/share/illu';
 import { useToast } from '~/services/toast';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
+import { Singular } from 'singular-react-native';
 
 export type DashboardProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.DASHBOARD>,
@@ -107,8 +108,25 @@ export function DashboardPage(props: DashboardProps) {
         edges={['top', 'left', 'right']}
       >
         <View className="relative z-50 flex w-full items-end">
+          <Button
+            onPress={() => {
+              Singular.event('click_stop_tracking_button');
+              Singular.stopAllTracking();
+            }}
+          >
+            Stop tack
+          </Button>
+          <Button
+            onPress={() => {
+              Singular.event('click_resume_tracking_button');
+              Singular.resumeAllTracking();
+            }}
+          >
+            Resume
+          </Button>
           <TouchableOpacity
             onPress={() => {
+              Singular.event('click_location_button');
               props.navigation.navigate(RouteEnum.LOCATION, {
                 isOnboarding: false,
               });

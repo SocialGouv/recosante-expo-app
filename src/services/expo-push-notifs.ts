@@ -1,6 +1,5 @@
 import { Platform, Alert, Linking } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
 import { capture } from './sentry';
 
 Notifications.setNotificationHandler({
@@ -37,7 +36,6 @@ export async function registerForPushNotificationsAsync({
   expo = false,
 } = {}) {
   try {
-    // if (Device.isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -72,9 +70,6 @@ export async function registerForPushNotificationsAsync({
           // projectId: Constants.expoConfig?.extra?.eas.projectId,
         })
       : await Notifications.getDevicePushTokenAsync();
-    // } else {
-    //   // alert("Must use physical device for Push Notifications");
-    // }
 
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
@@ -87,6 +82,5 @@ export async function registerForPushNotificationsAsync({
     return token;
   } catch (e) {
     capture(e);
-    return;
   }
 }
