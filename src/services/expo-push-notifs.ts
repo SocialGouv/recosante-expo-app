@@ -1,6 +1,5 @@
 import { Platform, Alert, Linking } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
 import { capture } from './sentry';
 
 Notifications.setNotificationHandler({
@@ -11,33 +10,20 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
-// async function sendPushNotification(expoPushToken) {
-//   const message = {
-//     to: expoPushToken,
-//     sound: "default",
-//     title: "Original Title",
-//     body: "And here is the body!",
-//     data: { someData: "goes here" },
-//   };
-
-//   await fetch("https://exp.host/--/api/v2/push/send", {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       "Accept-encoding": "gzip, deflate",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(message),
-//   });
-// }
+// TO SEND A NOTIFICATION MANUALLY
+// Notifications.scheduleNotificationAsync({
+//   content: {
+//     title: 'Test Dev',
+//     body: "I'm working!",
+//   },
+//   trigger: null,
+// });
 
 export async function registerForPushNotificationsAsync({
   force = false,
   expo = false,
 } = {}) {
   try {
-    // if (Device.isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -66,15 +52,9 @@ export async function registerForPushNotificationsAsync({
     }
     const token = expo
       ? await Notifications.getExpoPushTokenAsync({
-          // https://docs.expo.dev/versions/latest/sdk/notifications/#expopushtokenoptions
-          // "[...] it is recommended to set it manually."
           projectId: '8d8b446e-c8db-4641-b730-5cef195e96da',
-          // projectId: Constants.expoConfig?.extra?.eas.projectId,
         })
       : await Notifications.getDevicePushTokenAsync();
-    // } else {
-    //   // alert("Must use physical device for Push Notifications");
-    // }
 
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
@@ -87,6 +67,5 @@ export async function registerForPushNotificationsAsync({
     return token;
   } catch (e) {
     capture(e);
-    return;
   }
 }

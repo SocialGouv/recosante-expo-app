@@ -7,9 +7,9 @@ import API from './api';
 import { MATOMO_TRACKING_ENABLED, USER_ID } from '~/constants/matomo';
 
 // storage.delete('USER_ID');
-export async function initSession() {
+export async function matomoInit() {
   let matomo_id = await AsyncStorage.getItem(USER_ID);
-  console.log('matomo_id', matomo_id);
+  // console.log('matomo_id', matomo_id);
   if (!matomo_id) {
     console.log('no matomo_id for matomo_id');
     matomo_id = Matomo.makeid();
@@ -18,7 +18,7 @@ export async function initSession() {
     API.post({
       path: '/user',
       body: {
-        matomo_id: matomo_id,
+        matomo_id,
       },
     });
   }

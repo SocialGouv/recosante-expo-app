@@ -5,23 +5,17 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import * as Sentry from '@sentry/react-native';
 import { Navigators } from './src/navigators';
-import { initSession } from '~/services/logEventsWithMatomo';
 import EnvironmentIndicator from '~/components/environment-indicator';
 import ToastProvider from '~/services/toast';
+import { InitializationService } from '~/services/initialization';
 
 LogBox.ignoreAllLogs(true);
-
 SplashScreen.preventAutoHideAsync();
-Sentry.init({
-  dsn: 'https://011d0bf5c5f24f5eb273e83fed66e5eb@sentry.fabrique.social.gouv.fr/94',
-  enabled: !__DEV__,
-  debug: true,
-  tracesSampleRate: 0.05,
-});
-
-initSession();
+InitializationService.initSentry();
+InitializationService.initMatomo();
 
 function App() {
+  InitializationService.useNotificationsListenerHook();
   const [fontsLoaded] = useFonts({
     MarianneBold: require('./src/assets/fonts/Marianne-Bold.otf'),
     MarianneBoldItalic: require('./src/assets/fonts/Marianne-BoldItalic.otf'),

@@ -6,7 +6,7 @@ export const capture = (err, context = {}) => {
   if (!!context.extra && typeof context.extra !== 'string') {
     try {
       const newExtra = {};
-      for (let extraKey of Object.keys(context.extra)) {
+      for (const extraKey of Object.keys(context.extra)) {
         if (typeof context.extra[extraKey] === 'string') {
           newExtra[extraKey] = context.extra[extraKey];
         } else {

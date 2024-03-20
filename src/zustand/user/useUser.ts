@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { create, type StateCreator } from 'zustand';
+import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { MUNICIPALITY_FULL_NAME, USER_STORAGE } from '~/constants/municipality';
 import API from '~/services/api';
@@ -50,7 +50,7 @@ export const useUser = create<UserState>()(
           if (res.data) {
             AsyncStorage.setItem(
               MUNICIPALITY_FULL_NAME,
-              address.title || '',
+              address.title ?? '',
             ).then(() => {
               const user: User = res.data;
               setUser(set, user);
