@@ -3,7 +3,9 @@ import { matomoInit, logEvent } from '~/services/logEventsWithMatomo';
 import * as Notifications from 'expo-notifications';
 import { useEffect, useRef, useState } from 'react';
 import API from './api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const __DEV__ = process.env.NODE_ENV === 'development';
 export namespace InitializationService {
   export function initSentry() {
     Sentry.init({
@@ -15,6 +17,17 @@ export namespace InitializationService {
   }
   export function initMatomo() {
     matomoInit();
+  }
+  export async function firstTimeLaunch() {
+    if (__DEV__) return;
+    const FIRST_TIME_LAUNCH = 'first_time_launch';
+    AsyncStorage.getItem(FIRST_TIME_LAUNCH).then((isFirstTime) => {
+      if (!isFirstTime) {
+        // log the event, backend will handle post webhook on mattermost.
+        logEvent({ category: 'APP', action: 'FIRST_TIME_LAUNCH' });
+        AsyncStorage.setItem(FIRST_TIME_LAUNCH, 'true');
+      }
+    });
   }
 
   export function useNotificationsListenerHook() {

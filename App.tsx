@@ -13,7 +13,7 @@ LogBox.ignoreAllLogs(true);
 SplashScreen.preventAutoHideAsync();
 InitializationService.initSentry();
 InitializationService.initMatomo();
-
+InitializationService.firstTimeLaunch();
 function App() {
   InitializationService.useNotificationsListenerHook();
   const [fontsLoaded] = useFonts({

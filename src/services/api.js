@@ -10,12 +10,10 @@ import { USER_ID } from '~/constants/matomo';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
 import { logEvent } from './logEventsWithMatomo';
 
-// AsyncStorage.clear();
-
 export const checkNetwork = async (test = false) => {
   const isConnected = await NetInfo.fetch().then((state) => state.isConnected);
   if (!isConnected || test) {
-    await new Promise((res) => setTimeout(res, 1500));
+    await new Promise((_resolve) => setTimeout(_resolve, 1500));
     // Alert.alert('Pas de réseau', 'Veuillez vérifier votre connexion');
     return false;
   }
@@ -76,20 +74,21 @@ class ApiService {
           if (readableRes.askForReview) {
             setTimeout(() => {
               StoreReview.isAvailableAsync().then((isAvailable) => {
-                if (isAvailable)
+                if (isAvailable) {
                   StoreReview.requestReview().then(() => {
                     logEvent({
                       category: 'STORE_REVIEW',
                       action: 'ASKED_FROM_API',
                     });
                   });
+                }
               });
             }, 2000);
           }
           if (readableRes.sendInApp) {
             const [title, subTitle, actions = [], options = {}] =
               readableRes.sendInApp;
-            if (!actions || !actions.length) {
+            if (!actions?.length) {
               Alert.alert(title, subTitle);
             } else {
               const actionsWithNavigation = actions.map((action) => {
