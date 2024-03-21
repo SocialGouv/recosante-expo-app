@@ -110,7 +110,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               <View className="shrink basis-6" />
             </View>
 
-            <View className="flex items-end">
+            <View className="mt-2 flex items-end">
               <Info />
             </View>
             <View
