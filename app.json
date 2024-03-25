@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "44",
+      "buildNumber": "45",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -49,6 +49,12 @@
     },
     "owner": "recosante",
     "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "recosante"
+        }
+      ],
       ["expo-font"],
       [
         "@sentry/react-native/expo",
