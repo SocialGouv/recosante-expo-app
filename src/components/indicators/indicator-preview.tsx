@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from 'react-native';
-import { type IndicatorItem, IndicatorsSlugEnum } from '~/types/indicator';
+import { type IndicatorItem } from '~/types/indicator';
 import type { DayEnum } from '~/types/day';
 import type { DashboardProps } from '~/scenes/dashboard/dashboard';
 import MyText from '../ui/my-text';
@@ -134,14 +134,6 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                   {props.isFavorite
                     ? props.indicator.name
                     : props.indicator.short_name}
-                </MyText>
-                <MyText
-                  className="text-wrap text-md ml-2 uppercase text-muted "
-                  font="MarianneBold"
-                >
-                  {props.indicator.slug === IndicatorsSlugEnum.indice_uv
-                    ? ` ${indicatorValue}/11`
-                    : ''}
                 </MyText>
               </View>
               <View
