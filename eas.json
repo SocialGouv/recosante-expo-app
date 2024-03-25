@@ -6,7 +6,11 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "development",
+      "ios": {
+        "simulator": true
+      }
     },
     "preview": {
       "channel": "preview",
@@ -17,12 +21,7 @@
     },
     "production": {
       "channel": "production",
-      "autoIncrement": true,
-      "env": {
-        "EXPO_PUBLIC_API_SCHEME": "https",
-        "EXPO_PUBLIC_API_HOST": "recosante-api-node.fabrique.social.gouv.fr",
-        "EXPO_PUBLIC_APP_ENV": "production"
-      }
+      "autoIncrement": true
     }
   },
   "submit": {

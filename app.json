@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "43",
+      "buildNumber": "45",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -26,13 +26,14 @@
       "appStoreUrl": "https://apps.apple.com/fr/app/id6476136888"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/android_adaptive_icon.png",
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 58,
+      "versionCode": 59,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
     },
     "web": {
@@ -48,6 +49,12 @@
     },
     "owner": "recosante",
     "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "recosante"
+        }
+      ],
       ["expo-font"],
       [
         "@sentry/react-native/expo",
