@@ -26,7 +26,7 @@ const notifications: NotificationType[] = [
     id: NotificationIdEnum.ALERT,
     label: '⚠️️ Notifié en cas de vigilance',
     description:
-      'Recevez une notification dès qu’un indicateur dépasse un seuil d’alerte',
+      'Recevez une notification dès qu’un indicateur dépasse un seuil d’alerte.',
   },
 ];
 
@@ -93,18 +93,18 @@ export function NotificationsList() {
         return (
           <View
             key={notification.id}
-            className="mt-4 flex flex-row items-center justify-between rounded-2xl bg-white  p-4"
+            className="mt-4 flex flex-row items-center justify-between rounded-md border  border-gray-200 bg-white p-4"
           >
             <View className="w-5/6">
               <View>
-                <MyText font="MarianneBold" className="text-sm">
+                <MyText font="MarianneBold" className="text-md">
                   {notification.label}
                 </MyText>
               </View>
               <View className="mt-1">
                 <MyText
                   font="MarianneRegular"
-                  className="text-xs text-gray-400"
+                  className="text-sm text-gray-400"
                 >
                   {notification.description}
                 </MyText>
@@ -112,7 +112,8 @@ export function NotificationsList() {
             </View>
             <View className="">
               <Switch
-                style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+                style={{ transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }] }}
+                trackColor={{ false: '#767577', true: '#3343BD' }}
                 onValueChange={() => {
                   toggleSwitch(notification.id);
                 }}
