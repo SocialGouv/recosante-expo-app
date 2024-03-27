@@ -114,6 +114,7 @@ export function NotificationsList() {
               <Switch
                 style={{ transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }] }}
                 trackColor={{ false: '#767577', true: '#3343BD' }}
+                thumbColor="#FFFFFF"
                 onValueChange={() => {
                   toggleSwitch(notification.id);
                 }}

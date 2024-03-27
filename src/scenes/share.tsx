@@ -5,10 +5,9 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
-  HomeTabRouteEnum,
-  RouteEnum,
-  HomeTabParamList,
-  RootStackParamList,
+  type HomeTabRouteEnum,
+  type HomeTabParamList,
+  type RootStackParamList,
 } from '~/constants/route';
 import { ShareLink } from '~/assets/icons/share-link';
 import { Illu } from '~/assets/share/illu';
@@ -34,7 +33,7 @@ export function SharePage(props: ShareProps) {
       >
         <View className="flex w-full">
           <MyText font="MarianneBold" className="text-2xl">
-            Partagez l’app{'\n'}ou vos indicateurs !
+            Partagez l’application{'\n'}Recosanté !
           </MyText>
           <MyText font="MarianneRegular" className="mt-4 text-[14px]">
             Pour agir ensemble en faveur de votre santé et de l'environnement.
