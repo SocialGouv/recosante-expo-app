@@ -1,6 +1,6 @@
 import type { DayEnum } from '~/types/day';
 import type { IndicatorsSlugEnum, Indicator } from '~/types/indicator';
-import { NavigatorScreenParams } from '@react-navigation/native';
+import { type NavigatorScreenParams } from '@react-navigation/native';
 
 export enum RouteEnum {
   INDICATORS_SELECTOR = 'INDICATORS_SELECTOR',
@@ -37,6 +37,7 @@ export type RootStackParamList = {
   [RouteEnum.INDICATOR_FAST_SELECTOR]: {
     indicatorSlug: IndicatorsSlugEnum;
   };
+  [RouteEnum.FEEDBACK]: undefined;
   [RouteEnum.FEEDBACK]: undefined;
 };
 

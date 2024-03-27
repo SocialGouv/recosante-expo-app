@@ -45,12 +45,12 @@ export function LineList(props: LineChartProps) {
             : {};
           return (
             <LineWrapper key={line.name} {...lineWrapperProps}>
-              <View className="bottom-1 flex flex-row items-center">
+              <View className="bottom-1 flex flex-row items-start ">
                 <View className="mx-1">
                   {!!line.link && <ArrowTopRightOnSquare />}
                 </View>
                 <MyText
-                  className="mr-3 basis-1/3 text-[11px] capitalize text-muted-100"
+                  className="-mt-1 basis-1/4 text-[11px] capitalize text-muted-100"
                   font="MarianneBold"
                   numberOfLines={1}
                 >
@@ -58,6 +58,7 @@ export function LineList(props: LineChartProps) {
                 </MyText>
                 <View className="mb-2 w-full flex-1 ">
                   <LineChart
+                    isSmall
                     color={valuesToColor[line.value]}
                     value={line.value}
                     maxValue={maxValue}
@@ -70,8 +71,8 @@ export function LineList(props: LineChartProps) {
         .slice(0, props.isPreviewMode ? MAX_LINE : undefined)}
       {showSeeMore ? (
         <TouchableOpacity onPress={props.onMorePress}>
-          <MyText className="text-center text-[10px] uppercase text-muted underline">
-            Voir plus d'indicateurs {'>'}
+          <MyText className="-mt-2 mb-2  text-center text-xs text-gray-400 ">
+            Voir plus d'indicateurs {'+'}
           </MyText>
         </TouchableOpacity>
       ) : null}

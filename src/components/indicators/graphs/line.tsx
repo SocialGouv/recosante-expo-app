@@ -1,12 +1,18 @@
 import { View } from 'react-native';
 import MyText from '~/components/ui/my-text';
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, {
+  ReduceMotion,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 import { useEffect, useMemo, useState } from 'react';
+import { cn } from '~/utils/tailwind';
 
 interface LineChartProps {
   value?: number;
   color?: string;
   maxValue: number;
+  isSmall?: boolean;
 }
 
 export function LineChart(props: LineChartProps) {
@@ -25,6 +31,9 @@ export function LineChart(props: LineChartProps) {
     initialWidth.value = withSpring(width, {
       damping: 50,
       stiffness: 100,
+      overshootClamping: false,
+      restDisplacementThreshold: 0.1,
+      reduceMotion: ReduceMotion.Never,
     });
   }, [width]);
 
@@ -32,8 +41,9 @@ export function LineChart(props: LineChartProps) {
     return <></>;
   }
 
+  const isDoubleDigit = value > 9;
   return (
-    <View className="relative">
+    <View>
       <View
         className="mr-2  h-[9px] flex-row rounded-full bg-app-gray"
         onLayout={(event) => {
@@ -49,23 +59,31 @@ export function LineChart(props: LineChartProps) {
           }}
         />
         <View
-          className="-left-[14px] -top-[6px]"
+          className="-left-[14px] -top-[4px]"
           style={{
             backgroundColor: props.color,
-            width: 21,
-            height: 21,
+            width: isDoubleDigit ? 20 : 17,
+            height: isDoubleDigit ? 20 : 17,
             borderRadius: 50,
           }}
         >
           <MyText
             font="MarianneBold"
-            className="-top-[1px] text-center text-white"
+            className={cn(
+              '-top-[2.5px] text-center text-white',
+              isDoubleDigit ? 'top-[1px] text-xs' : '-top-[2.5px]',
+            )}
           >
             {value}
           </MyText>
         </View>
       </View>
-      <View className="mt-[6px] flex-row justify-between">
+      <View
+        className={cn(
+          ' flex-row justify-between',
+          props.isSmall ? 'mt-[2px]' : 'mt-[6px]',
+        )}
+      >
         <MyText className="text-xs text-[#D1D1D1]">{minValue}</MyText>
         <MyText className="mr-2 text-xs text-[#D1D1D1]">
           {props.maxValue}

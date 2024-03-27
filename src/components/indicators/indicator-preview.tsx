@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from 'react-native';
-import { type IndicatorItem } from '~/types/indicator';
+import { IndicatorsSlugEnum, type IndicatorItem } from '~/types/indicator';
 import type { DayEnum } from '~/types/day';
 import type { DashboardProps } from '~/scenes/dashboard/dashboard';
 import MyText from '../ui/my-text';
@@ -18,12 +18,10 @@ interface IndicatorPreviewProps {
   isFavorite?: boolean;
   day: DayEnum;
   index: number;
-  isDetailedView?: boolean;
 }
 
 export function IndicatorPreview(props: IndicatorPreviewProps) {
   const navigation = useNavigation<DashboardProps['navigation']>();
-
   const { indicators } = useIndicators((state) => state);
   const currentIndicatorData = indicators?.find(
     (indicator) => indicator.slug === props.indicator.slug,
@@ -39,7 +37,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const indicatorColor = valuesToColor[indicatorValue];
   const isUnavailable = !indicatorDataInCurrentDay?.summary.value;
   const status = indicatorDataInCurrentDay?.summary.status;
-
+  const isWaterBathingIndicator = slug === IndicatorsSlugEnum.bathing_water;
   function handlePress() {
     if (!currentIndicatorData) return;
     if (!props.day) return;
@@ -132,18 +130,27 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               value={indicatorValue}
               maxValue={indicatorMaxValue}
             />
-            {props.isDetailedView ? (
-              <LineList
-                slug={currentIndicatorData?.slug}
-                values={indicatorDataInCurrentDay?.values}
-                isPreviewMode
-                onMorePress={() => {
-                  navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
-                    indicator: currentIndicatorData,
-                    day: props.day,
-                  });
-                }}
-              />
+
+            {props.isFavorite ? (
+              <>
+                <LineList
+                  slug={currentIndicatorData?.slug}
+                  values={indicatorDataInCurrentDay?.values}
+                  isPreviewMode
+                  onMorePress={() => {
+                    navigation.navigate(RouteEnum.INDICATOR_DETAIL, {
+                      indicator: currentIndicatorData,
+                      day: props.day,
+                    });
+                  }}
+                />
+              </>
+            ) : null}
+            {isUnavailable && isWaterBathingIndicator ? (
+              <MyText className="mt-1 text-[13px] text-muted">
+                La saison de la collecte des données des eaux de baignades n’a
+                pas encore commencée.
+              </MyText>
             ) : null}
             {isUnavailable ? (
               ''

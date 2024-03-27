@@ -51,7 +51,7 @@ export function SettingsPage(props: SettingsProps) {
         className="flex w-full flex-1 px-4 pb-20 "
         contentContainerStyle={{ paddingBottom: 200 }}
       >
-        <MyText font="MarianneBold" className="px-2 text-2xl">
+        <MyText font="MarianneRegular" className="px-2 text-xl">
           Vos préférences
         </MyText>
         <Title label="Notifications" />

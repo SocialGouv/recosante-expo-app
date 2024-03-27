@@ -1,12 +1,13 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerActions } from '@react-navigation/native';
-import { TouchableOpacity, View } from 'react-native';
+
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { TouchableOpacity } from 'react-native';
 import { BurgerIcon } from '~/assets/icons/burger';
 import { HomeTabRouteEnum, type HomeTabParamList } from '~/constants/route';
-import MyText from './ui/my-text';
 import { DashboardPage } from '~/scenes/dashboard/dashboard';
 import { SharePage } from '~/scenes/share';
 import { SettingsPage } from '~/scenes/settings/settings';
+import MyText from './ui/my-text';
 const Drawer = createDrawerNavigator<HomeTabParamList>();
 
 interface BurgerMenuProps {
@@ -22,14 +23,38 @@ export function BurgerMenu(props: BurgerMenuProps) {
           backgroundColor: '#ECF1FB',
           shadowColor: 'transparent',
         },
+        drawerContentStyle: {
+          paddingVertical: 40,
+        },
+        drawerLabelStyle: {
+          fontFamily: 'MarianneBold',
+          fontSize: 16,
+        },
+        drawerActiveTintColor: '#FFFFFF',
+        drawerInactiveTintColor: '#000',
         drawerPosition: 'right',
-        drawerType: 'slide',
+        drawerActiveBackgroundColor: '#3343BD',
+        drawerType: 'front',
         headerTitle: '',
-
         headerTintColor: '#FFFFFF',
+        headerLeft: () => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate(HomeTabRouteEnum.DASHBOARD);
+              }}
+              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+            >
+              <MyText font="MarianneRegular" className="ml-6  text-xl">
+                👋
+              </MyText>
+            </TouchableOpacity>
+          );
+        },
         headerRight: () => {
           return (
             <TouchableOpacity
+              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
               className="mr-4"
               onPress={() => {
                 props.navigation.dispatch(DrawerActions.openDrawer());
@@ -39,26 +64,28 @@ export function BurgerMenu(props: BurgerMenuProps) {
             </TouchableOpacity>
           );
         },
-
-        headerLeft: () => {
-          return (
-            <View>
-              <MyText font="MarianneRegular" className="ml-6  text-xl">
-                👋
-              </MyText>
-            </View>
-          );
-        },
       }}
     >
       <Drawer.Screen
         name={HomeTabRouteEnum.DASHBOARD}
         component={DashboardPage}
+        options={{
+          title: 'Tableau de bord',
+        }}
       />
-      <Drawer.Screen name={HomeTabRouteEnum.SHARE} component={SharePage} />
+      <Drawer.Screen
+        name={HomeTabRouteEnum.SHARE}
+        component={SharePage}
+        options={{
+          title: 'Partager Recosanté',
+        }}
+      />
       <Drawer.Screen
         name={HomeTabRouteEnum.SETTINGS}
         component={SettingsPage}
+        options={{
+          title: 'Paramètres',
+        }}
       />
     </Drawer.Navigator>
   );

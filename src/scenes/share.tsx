@@ -31,7 +31,7 @@ export function SharePage(props: ShareProps) {
         }}
       >
         <View className="flex w-full">
-          <MyText font="MarianneBold" className="text-2xl">
+          <MyText font="MarianneRegular" className="text-xl">
             Partagez l’application{'\n'}Recosanté !
           </MyText>
           <MyText font="MarianneRegular" className="mt-4 text-[14px]">
@@ -55,7 +55,7 @@ export function SharePage(props: ShareProps) {
           </MyText>
         </View>
 
-        <View className="mt-8">
+        <View className="mt-2">
           <Pressable
             className=" flex flex-row items-center justify-center space-x-4 rounded-full bg-app-yellow p-4 px-6"
             onPress={async () => {
