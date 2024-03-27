@@ -5,21 +5,20 @@ import type { DashboardProps } from '~/scenes/dashboard/dashboard';
 import MyText from '../ui/my-text';
 import { IndicatorService } from '~/services/indicator';
 import { cn } from '~/utils/tailwind';
-import { Info } from '~/assets/icons/info';
-import { LineChartWithCursor } from './graphs/line-with-cursor';
 import { useIndicators } from '~/zustand/indicator/useIndicators';
 import { useNavigation } from '@react-navigation/native';
 import { RouteEnum } from '~/constants/route';
-import { LineList } from './graphs/lines-list';
 import { LineChart } from './graphs/line';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import * as Haptics from 'expo-haptics';
+import { LineList } from './graphs/lines-list';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
   isFavorite?: boolean;
   day: DayEnum;
   index: number;
+  isDetailedView?: boolean;
 }
 
 export function IndicatorPreview(props: IndicatorPreviewProps) {
@@ -35,13 +34,11 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const indicatorMaxValue =
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
 
-  // const indicatorValue = 4;
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
   const indicatorColor = valuesToColor[indicatorValue];
-
-  const showLineList =
-    props.isFavorite && indicatorDataInCurrentDay?.values?.length;
+  const isUnavailable = !indicatorDataInCurrentDay?.summary.value;
+  const status = indicatorDataInCurrentDay?.summary.status;
 
   function handlePress() {
     if (!currentIndicatorData) return;
@@ -78,92 +75,64 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   return (
     <TouchableOpacity
       className={cn(
-        'my-5',
-        props.isFavorite ? 'mx-5 -mt-2' : 'basis-[50%] flex-row px-1.5',
-        props.isFavorite ? '' : props.index % 2 === 0 ? 'pl-5' : 'pr-5',
+        props.isFavorite ? ' shadow-sm ' : '',
+        'm-2 mx-3',
+        isUnavailable ? 'opacity-40' : '',
       )}
+      style={{
+        shadowColor: indicatorColor,
+      }}
       onPress={handlePress}
       onLongPress={handleLongPress}
       activeOpacity={1}
     >
       <View
-        className="self-stretch rounded-2xl border-[3px] bg-white p-2"
+        className="rounded-md border-[1px] bg-white px-3 py-4"
         style={{
-          borderColor: props.isFavorite ? indicatorColor : 'transparent',
+          borderColor: props.isFavorite ? indicatorColor : '#E5E5E5',
         }}
       >
         <View className="flex flex-row justify-between">
           <View className="flex w-full justify-center">
-            <View
-              className="mx-auto -mt-6 flex-row items-center justify-center rounded-full py-1"
-              style={{
-                backgroundColor: indicatorColor,
-              }}
-            >
-              <View className="shrink basis-6" />
-              <MyText
-                font="MarianneExtraBold"
-                className="-mt-0.5 text-center uppercase text-[#232323]"
-              >
-                {indicatorDataInCurrentDay?.summary.status}
-              </MyText>
-              <View className="shrink basis-6" />
-            </View>
-
-            <View className="mt-2 flex items-end">
-              <Info />
-            </View>
-            <View
-              className={cn(
-                props.isFavorite
-                  ? 'flex-row justify-between pb-2 '
-                  : 'mb-6 mt-3 flex-col-reverse items-center justify-between',
-                'items-center',
-              )}
-            >
+            <View className="flex-row items-center justify-between">
               <View
                 className={cn(
-                  'flex w-full flex-row items-center',
-                  props.isFavorite ? 'w-fit' : '',
+                  'flex w-full flex-row items-center justify-between',
+                  isUnavailable ? '' : ' pb-2',
                 )}
               >
                 <MyText
-                  className="text-wrap text-md uppercase text-muted "
-                  font="MarianneBold"
+                  className={cn(
+                    '"text-wrap  uppercase text-muted',
+                    props.isFavorite ? ' text-[17px]' : ' text-[15px]',
+                    isUnavailable ? '' : 'mb-2',
+                  )}
+                  font={props.isFavorite ? 'MarianneExtraBold' : 'MarianneBold'}
                 >
                   {props.isFavorite
                     ? props.indicator.name
-                    : props.indicator.short_name}
+                    : props.indicator.short_name}{' '}
+                  {isUnavailable ? null : `: ${status}`}
                 </MyText>
-              </View>
-              <View
-                className={cn(
-                  'flex items-center justify-center',
-                  props.isFavorite ? 'mr-6' : 'mb-6 ',
-                )}
-              >
-                {IndicatorService.getPicto({
-                  slug: props.indicator.slug,
-                  indicatorValue,
-                  color: indicatorColor,
-                })}
+                {isUnavailable ? (
+                  <View className="rounded-full border border-gray-300 px-2">
+                    <MyText
+                      className="text-wrap  ml-1 rounded-full  text-[15px] uppercase text-muted"
+                      font="MarianneExtraBold"
+                    >
+                      aucune donnée
+                    </MyText>
+                  </View>
+                ) : null}
               </View>
             </View>
-            {props.isFavorite ? (
-              <LineChartWithCursor
-                value={indicatorValue}
-                slug={currentIndicatorData?.slug}
-                showCursor={props.isFavorite}
-              />
-            ) : (
-              <LineChart
-                color={indicatorColor}
-                value={indicatorValue}
-                maxValue={indicatorMaxValue}
-              />
-            )}
 
-            {showLineList ? (
+            <LineChart
+              color={indicatorColor}
+              value={indicatorValue}
+              maxValue={indicatorMaxValue}
+            />
+            {props.isDetailedView ? (
               <LineList
                 slug={currentIndicatorData?.slug}
                 values={indicatorDataInCurrentDay?.values}
@@ -176,13 +145,13 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                 }}
               />
             ) : null}
-
-            <MyText className="mt-4 text-[10px] text-muted">
-              {indicatorDataInCurrentDay.summary.recommendations?.[0] ??
-                `Aucune donnée disponible pour cet indicateur dans cette zone ${
-                  props.day === 'j0' ? "aujourd'hui" : 'demain'
-                }`}
-            </MyText>
+            {isUnavailable ? (
+              ''
+            ) : (
+              <MyText className="mt-1 text-[13px] text-muted">
+                {indicatorDataInCurrentDay.summary.recommendations?.[0]}
+              </MyText>
+            )}
           </View>
         </View>
       </View>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, Pressable, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -21,10 +20,10 @@ export type ShareProps = CompositeScreenProps<
 
 export function SharePage(props: ShareProps) {
   return (
-    <SafeAreaView className="flex flex-1 items-center justify-start gap-y-6 bg-app-gray">
+    <View className="flex flex-1 items-center justify-start  bg-app-gray">
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        className="flex w-full flex-1 px-4 pb-20 pt-8"
+        className="flex w-full flex-1 px-6 pb-20 "
         contentContainerStyle={{
           paddingBottom: 200,
           alignItems: 'center',
@@ -70,6 +69,6 @@ export function SharePage(props: ShareProps) {
           </Pressable>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

@@ -4,27 +4,14 @@ import {
   type NativeStackScreenProps,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 import * as SplashScreen from 'expo-splash-screen';
 import { navigationRef } from '~/services/navigation';
 
 import { logEvent } from './services/logEventsWithMatomo';
-import { HomeIcon } from '~/assets/icons/home';
-import { SettingsIcon } from '~/assets/icons/settings';
-import { ShareIcon } from '~/assets/icons/share';
 
-import MyText from './components/ui/my-text';
-import { DashboardPage } from './scenes/dashboard/dashboard';
-import {
-  RouteEnum,
-  HomeTabRouteEnum,
-  type RootStackParamList,
-  type HomeTabParamList,
-} from './constants/route';
+import { RouteEnum, type RootStackParamList } from './constants/route';
 import { Onboarding } from './scenes/onboarding/onboarding';
-import { SharePage } from './scenes/share';
-import { SettingsPage } from './scenes/settings/settings';
 import { LocationPage } from '~/scenes/location/location';
 import { useUser } from './zustand/user/useUser';
 import { IndicatorSelectorSheet } from './scenes/dashboard/indicator-selector-sheet';
@@ -35,28 +22,9 @@ import { LegalPage } from './scenes/legal/legal';
 import { ConfidentialityPage } from './scenes/confidentiality/confidentiality';
 import { FeedbackPage } from './scenes/feedback/feedback';
 import { IndicatorFastSelector } from './scenes/dashboard/indicator-fast-selector';
-
-interface TabBarLabelProps {
-  children: React.ReactNode;
-  focused: boolean;
-}
-
-function TabBarLabel(props: TabBarLabelProps) {
-  return (
-    <MyText
-      font={props.focused ? 'MarianneBold' : 'MarianneRegular'}
-      className={[
-        '-mt-1 mb-1 text-xs',
-        props.focused ? 'text-app-950' : 'text-gray-500',
-      ].join(' ')}
-    >
-      {props.children}
-    </MyText>
-  );
-}
+import { BurgerMenu } from './components/burger-menu';
 
 type HomeProps = NativeStackScreenProps<RootStackParamList, RouteEnum.HOME>;
-const HomeBottomTab = createBottomTabNavigator<HomeTabParamList>();
 
 function Home(props: HomeProps) {
   const { favoriteIndicator } = useIndicatorsList((state) => state);
@@ -69,71 +37,9 @@ function Home(props: HomeProps) {
     }
   }, []);
 
-  return (
-    <HomeBottomTab.Navigator
-      sceneContainerStyle={{ backgroundColor: '#3343BD' }}
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: '#FFFFFF',
-        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.5)',
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          paddingHorizontal: 20,
-          paddingBottom: -10,
-          backgroundColor: '#3343BD',
-          borderTopWidth: 0,
-          borderRadius: 500,
-          marginHorizontal: 30,
-          position: 'absolute',
-          overflow: 'hidden',
-          zIndex: 100,
-          height: 70,
-          bottom: 20,
-        },
-        lazy: false,
-      }}
-    >
-      <HomeBottomTab.Screen
-        name={HomeTabRouteEnum.DASHBOARD}
-        options={{
-          tabBarLabel: (props) => (
-            <TabBarLabel {...props}>Dashboard</TabBarLabel>
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <HomeIcon size={20} color={color} focused={focused} />
-          ),
-        }}
-        component={DashboardPage}
-      />
-      <HomeBottomTab.Screen
-        name={HomeTabRouteEnum.SHARE}
-        options={{
-          tabBarLabel: (props) => (
-            <TabBarLabel {...props}>Partager</TabBarLabel>
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <ShareIcon size={20} color={color} focused={focused} />
-          ),
-        }}
-        component={SharePage}
-      />
-      <HomeBottomTab.Screen
-        name={HomeTabRouteEnum.SETTINGS}
-        component={SettingsPage}
-        options={{
-          tabBarLabel: (props) => (
-            <TabBarLabel {...props}>Paramètres</TabBarLabel>
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <SettingsIcon size={20} color={color} focused={focused} />
-          ),
-        }}
-      />
-    </HomeBottomTab.Navigator>
-  );
+  return <BurgerMenu navigation={props.navigation} />;
 }
 
-// https://github.com/react-navigation/react-navigation/issues/10802#issuecomment-1326687295
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 export function Navigators() {
   const { _hasHydrated, address } = useUser((state) => state);
@@ -185,8 +91,6 @@ export function Navigators() {
               options={() => ({
                 headerShown: false,
                 presentation: 'transparentModal',
-                //  TODO/FIXME: animation non on enter, fade on exit
-                // animation: 'none',
               })}
             />
             <RootStack.Screen
@@ -284,3 +188,68 @@ export function Navigators() {
     </AutocompleteDropdownContextProvider>
   );
 }
+
+// {
+/* </Drawer.Navigator>
+    <HomeBottomTab.Navigator
+      sceneContainerStyle={{ backgroundColor: '#3343BD' }}
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#FFFFFF',
+        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.5)',
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          display: 'none',
+          paddingHorizontal: 20,
+          paddingBottom: -10,
+          backgroundColor: '#3343BD',
+          borderTopWidth: 0,
+          borderRadius: 500,
+          marginHorizontal: 30,
+          position: 'absolute',
+          overflow: 'hidden',
+          zIndex: 100,
+          height: 70,
+          bottom: 20,
+        },
+        lazy: false,
+      }}
+    >
+      <HomeBottomTab.Screen
+        name={HomeTabRouteEnum.DASHBOARD}
+        options={{
+          tabBarLabel: (props) => (
+            <TabBarLabel {...props}>Dashboard</TabBarLabel>
+          ),
+          tabBarIcon: ({ color, focused }) => (
+            <HomeIcon size={20} color={color} focused={focused} />
+          ),
+        }}
+        component={DashboardPage}
+      />
+      <HomeBottomTab.Screen
+        name={HomeTabRouteEnum.SHARE}
+        options={{
+          tabBarLabel: (props) => (
+            <TabBarLabel {...props}>Partager</TabBarLabel>
+          ),
+          tabBarIcon: ({ color, focused }) => (
+            <ShareIcon size={20} color={color} focused={focused} />
+          ),
+        }}
+        component={SharePage}
+      />
+      <HomeBottomTab.Screen
+        name={HomeTabRouteEnum.SETTINGS}
+        component={SettingsPage}
+        options={{
+          tabBarLabel: (props) => (
+            <TabBarLabel {...props}>Paramètres</TabBarLabel>
+          ),
+          tabBarIcon: ({ color, focused }) => (
+            <SettingsIcon size={20} color={color} focused={focused} />
+          ),
+        }}
+      />
+    </HomeBottomTab.Navigator> */
+// }

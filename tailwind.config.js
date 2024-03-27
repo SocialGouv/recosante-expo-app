@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        inter: ['Inter', 'sans-serif'],
         MarianneBold: 'Marianne-Bold',
         MarianneBoldItalic: 'Marianne-BoldItalic',
         MarianneExtraBold: 'Marianne-ExtraBold',

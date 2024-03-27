@@ -1,5 +1,11 @@
-import { useMemo } from 'react';
-import { ScrollView, StyleSheet, View, RefreshControl } from 'react-native';
+import { useMemo, useState } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  RefreshControl,
+  Switch,
+} from 'react-native';
 import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { IndicatorPreview } from '~/components/indicators/indicator-preview';
 import { type IndicatorItem } from '~/types/indicator';
@@ -49,6 +55,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   }
 
   function IndicatorListView(tabProps: TabProps) {
+    const [isDetailedView, setIsDetailedView] = useState(false);
     return (
       <ScrollView
         refreshControl={
@@ -59,6 +66,18 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         }
         contentContainerStyle={styles.contentContainer}
       >
+        <View className="my-2  mr-2 flex-row items-center justify-end ">
+          <MyText className="text-center">Vue détaillée</MyText>
+          <Switch
+            style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+            trackColor={{ false: '#767577', true: '#3343BD' }}
+            onValueChange={(bool) => {
+              console.log(bool);
+              setIsDetailedView(bool);
+            }}
+            value={isDetailedView}
+          />
+        </View>
         {props.isLoading ? (
           <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
             <Loader label="Chargement des indicateurs ..." />
@@ -68,13 +87,14 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
             <MyText className="text-center">{props.isError}</MyText>
           </View>
         ) : (
-          <View className="flex-1 flex-row flex-wrap pb-24 pt-8">
+          <View className="pb-24 ">
             {props.favoriteIndicator ? (
               <IndicatorPreview
                 day={tabProps.route.params.day}
                 indicator={props.favoriteIndicator}
                 isFavorite
                 index={0}
+                isDetailedView={isDetailedView}
               />
             ) : null}
             {filteredIndicators?.map((indicator, index) => (
@@ -83,6 +103,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
                 key={indicator.slug}
                 indicator={indicator}
                 index={index}
+                isDetailedView={isDetailedView}
               />
             ))}
           </View>
@@ -102,7 +123,6 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           shadowOffset: { width: 0, height: 10 }, // change this for more shadow
           shadowOpacity: 0.1,
           shadowRadius: 10,
-          marginTop: -12,
         },
         tabBarLabelStyle: {
           fontSize: 14,
@@ -111,9 +131,9 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
         },
         tabBarIndicatorStyle: {
           backgroundColor: '#555555',
-          height: 2,
+          height: 1,
         },
-        tabBarActiveTintColor: '#555555',
+        tabBarActiveTintColor: '#000000',
         tabBarInactiveTintColor: '#AEB1B7',
       }}
     >

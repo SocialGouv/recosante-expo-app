@@ -20,7 +20,6 @@ import {
 import MyText from '~/components/ui/my-text';
 import { NotificationsList } from './notifications-list';
 import { Arrow } from '~/assets/icons/arrow';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appJson from '~/../app.json';
 import { logEvent } from '~/services/logEventsWithMatomo';
@@ -46,13 +45,13 @@ export function SettingsPage(props: SettingsProps) {
   }, []);
 
   return (
-    <SafeAreaView className="flex flex-1 items-center justify-around bg-app-gray">
+    <View className="flex flex-1 items-center justify-around bg-app-gray">
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        className="flex w-full flex-1 px-4 pb-20 pt-8"
+        className="flex w-full flex-1 px-4 pb-20 "
         contentContainerStyle={{ paddingBottom: 200 }}
       >
-        <MyText font="MarianneBold" className="text-2xl">
+        <MyText font="MarianneBold" className="px-2 text-2xl">
           Vos préférences
         </MyText>
         <Title label="Notifications" />
@@ -143,7 +142,7 @@ export function SettingsPage(props: SettingsProps) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

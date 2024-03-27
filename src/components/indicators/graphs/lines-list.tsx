@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Linking, Pressable, TouchableOpacity, View } from 'react-native';
 import {
   type IndicatorsSlugEnum,
@@ -6,9 +6,7 @@ import {
 } from '~/types/indicator';
 import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
-import { useMemo } from 'react';
 import { IndicatorService } from '~/services/indicator';
-import { cn } from '~/utils/tailwind';
 import ArrowTopRightOnSquare from '~/assets/icons/arrow-top-right-on-square';
 
 interface LineChartProps {
@@ -21,7 +19,6 @@ interface LineChartProps {
 const MAX_LINE = 4;
 
 export function LineList(props: LineChartProps) {
-  // TODO: this should be sorted in the backend
   const sortedValues = useMemo(
     () => props.values?.sort((a, b) => b.value - a.value),
     [props.values],
@@ -42,7 +39,8 @@ export function LineList(props: LineChartProps) {
           const LineWrapper = line.link ? Pressable : React.Fragment;
           const lineWrapperProps = line.link
             ? {
-                onPress: () => !!line.link && Linking.openURL(line.link),
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                onPress: async () => !!line.link ?? Linking.openURL(line.link!),
               }
             : {};
           return (
@@ -58,7 +56,7 @@ export function LineList(props: LineChartProps) {
                 >
                   {line.name}
                 </MyText>
-                <View className="w-full flex-1 ">
+                <View className="mb-2 w-full flex-1 ">
                   <LineChart
                     color={valuesToColor[line.value]}
                     value={line.value}

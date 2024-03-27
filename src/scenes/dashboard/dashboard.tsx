@@ -1,6 +1,5 @@
 import { View, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
@@ -12,7 +11,6 @@ import {
   type RootStackParamList,
 } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
-import { LocationIcon } from '~/assets/icons/location';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import { IndicatorsListPreview } from './indicators-list-preview';
 import API from '~/services/api';
@@ -24,6 +22,7 @@ import { Illu } from '~/assets/share/illu';
 import { useToast } from '~/services/toast';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
+import { EditIcon } from '~/assets/icons/edit';
 
 export type DashboardProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.DASHBOARD>,
@@ -102,52 +101,36 @@ export function DashboardPage(props: DashboardProps) {
 
   return (
     <>
-      <SafeAreaView
-        className="flex grow-0 items-center justify-start bg-app-gray px-4 py-2"
-        edges={['top', 'left', 'right']}
-      >
-        <View className="relative z-50 flex w-full items-end">
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate(RouteEnum.LOCATION, {
-                isOnboarding: false,
-              });
-            }}
-            className="absolute right-0"
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
-            <View className="w-fit rounded-full bg-app-primary p-3 text-sm text-white">
-              <LocationIcon />
-            </View>
-          </TouchableOpacity>
-        </View>
+      <View className="-top-2 -mb-2 flex grow-0 items-center justify-start bg-app-gray px-6 ">
         <View className="mt-2 flex w-full">
-          <MyText font="MarianneBold" className="text-2xl leading-6 text-black">
-            Découvrez{'\n'}vos indicateurs{'\u00A0'}!
+          <MyText font="MarianneRegular" className="text-xl  text-black">
+            Vos indicateurs autour de
           </MyText>
           {address?.municipality_name ? (
             <TouchableOpacity
-              className="mt-2 flex w-fit flex-row items-center self-start "
+              className="flex w-fit flex-row items-center justify-between "
               onPress={() => {
                 props.navigation.navigate(RouteEnum.LOCATION, {
                   isOnboarding: false,
                 });
               }}
             >
-              <MyText
-                font="MarianneBold"
-                className="self-start  text-sm text-app-gray-100"
-                numberOfLines={1}
-              >
-                {municipalityFullName || address?.municipality_name}
-              </MyText>
-              <View className=" ml-2">
-                <LocationIcon color="#AEB1B7" />
+              <View className="max-w-[90%] border-b border-app-primary">
+                <MyText
+                  font="MarianneRegular"
+                  className="self-start truncate text-xl text-app-primary "
+                  numberOfLines={1}
+                >
+                  {municipalityFullName || address?.municipality_name}
+                </MyText>
+              </View>
+              <View className="ml-4 w-fit rounded-full bg-app-primary p-2 text-sm text-white">
+                <EditIcon />
               </View>
             </TouchableOpacity>
           ) : null}
         </View>
-      </SafeAreaView>
+      </View>
       {!address?.municipality_name && (
         <NoLocationCallToAction
           onPress={() => {

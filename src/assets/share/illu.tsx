@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 export function Illu() {
   return (
-    <View className="h-56 w-full">
+    <View className="h-88 w-full">
       <Image
         className="h-full w-full"
         source={require('./illu.png')}
