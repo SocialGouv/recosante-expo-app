@@ -8,6 +8,7 @@ import { DayEnum } from '~/types/day';
 import { Loader } from '~/components/ui/loader';
 import MyText from '~/components/ui/my-text';
 import { Footer } from '~/components/footer';
+import { CallToAction } from '~/components/call-to-action';
 
 enum tabsEnum {
   TODAY = 'TODAY',
@@ -69,7 +70,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
             <MyText className="text-center">{props.isError}</MyText>
           </View>
         ) : (
-          <View className="pb-16 ">
+          <View className="pb-4 ">
             {props.favoriteIndicator ? (
               <IndicatorPreview
                 day={tabProps.route.params.day}
@@ -88,6 +89,7 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
             ))}
           </View>
         )}
+        <CallToAction />
         <Footer />
       </ScrollView>
     );
