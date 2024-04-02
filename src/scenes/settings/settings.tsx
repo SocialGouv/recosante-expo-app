@@ -94,7 +94,7 @@ export function SettingsPage(props: SettingsProps) {
             Linking.openURL(
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               Platform.select({
-                ios: `${appJson.expo.ios.appStoreUrl}?action=write-review`,
+                ios: 'itms-apps://itunes.apple.com/app/viewContentsUserReviews/id6476136888?action=write-review',
                 android: `market://details?id=${appJson.expo.android.package}&showAllReviews=true`,
               })!,
             );
