@@ -17,6 +17,7 @@ import renderRules from '~/utils/md-rules';
 import { LineChart } from '~/components/indicators/graphs/line';
 import { cn } from '~/utils/tailwind';
 import { Footer } from '~/components/footer';
+import { IndicatorsSlugEnum } from '~/types/indicator';
 
 const markdownItInstance = MarkdownIt({ typographer: true })
   .use(supPlugin)
@@ -50,7 +51,8 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     indicator.slug,
   );
   const indicatorColor = valuesToColor[indicatorValue ?? 0];
-
+  const slug = indicator.slug;
+  const isPollenIndicator = slug === IndicatorsSlugEnum.pollen_allergy;
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     isOpenedRef.current = false;
@@ -174,6 +176,15 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               {currentDayIndicatorData.values ? (
                 <>
                   <Title label="Sous indicateurs" />
+                  {isPollenIndicator ? (
+                    <MyText
+                      className="mt-1 text-gray-700"
+                      font="MarianneRegularItalic"
+                    >
+                      Seul les pollens en quantité non négligeables sont
+                      affichés
+                    </MyText>
+                  ) : null}
                   <View className="mt-2 rounded-md border border-gray-200 bg-white px-2 py-2 ">
                     <LineList
                       values={currentDayIndicatorData.values}
