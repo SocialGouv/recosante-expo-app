@@ -31,7 +31,6 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   if (!indicatorDataInCurrentDay) return <></>;
   const indicatorMaxValue =
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
-
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
   const indicatorColor = valuesToColor[indicatorValue];

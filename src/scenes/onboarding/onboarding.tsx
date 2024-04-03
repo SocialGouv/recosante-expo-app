@@ -45,7 +45,7 @@ export function Onboarding() {
           textClassName="text-right text-white text-sm"
           font="MarianneRegular"
         >
-          Passer <SkipArrow />
+          Passer <SkipArrow color="white" />
         </Button>
       </View>
       <View className="shrink basis-full justify-end bg-app-primary">

@@ -91,6 +91,14 @@ export function Navigators() {
               options={() => ({
                 headerShown: false,
                 presentation: 'transparentModal',
+                customAnimationOnGestureEnd: {
+                  animation: 'fade',
+                  duration: 400,
+                },
+                customAnimationOnGestureStart: {
+                  animation: 'fade',
+                  duration: 400,
+                },
               })}
             />
             <RootStack.Screen
@@ -188,68 +196,3 @@ export function Navigators() {
     </AutocompleteDropdownContextProvider>
   );
 }
-
-// {
-/* </Drawer.Navigator>
-    <HomeBottomTab.Navigator
-      sceneContainerStyle={{ backgroundColor: '#3343BD' }}
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: '#FFFFFF',
-        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.5)',
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          display: 'none',
-          paddingHorizontal: 20,
-          paddingBottom: -10,
-          backgroundColor: '#3343BD',
-          borderTopWidth: 0,
-          borderRadius: 500,
-          marginHorizontal: 30,
-          position: 'absolute',
-          overflow: 'hidden',
-          zIndex: 100,
-          height: 70,
-          bottom: 20,
-        },
-        lazy: false,
-      }}
-    >
-      <HomeBottomTab.Screen
-        name={HomeTabRouteEnum.DASHBOARD}
-        options={{
-          tabBarLabel: (props) => (
-            <TabBarLabel {...props}>Dashboard</TabBarLabel>
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <HomeIcon size={20} color={color} focused={focused} />
-          ),
-        }}
-        component={DashboardPage}
-      />
-      <HomeBottomTab.Screen
-        name={HomeTabRouteEnum.SHARE}
-        options={{
-          tabBarLabel: (props) => (
-            <TabBarLabel {...props}>Partager</TabBarLabel>
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <ShareIcon size={20} color={color} focused={focused} />
-          ),
-        }}
-        component={SharePage}
-      />
-      <HomeBottomTab.Screen
-        name={HomeTabRouteEnum.SETTINGS}
-        component={SettingsPage}
-        options={{
-          tabBarLabel: (props) => (
-            <TabBarLabel {...props}>Paramètres</TabBarLabel>
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <SettingsIcon size={20} color={color} focused={focused} />
-          ),
-        }}
-      />
-    </HomeBottomTab.Navigator> */
-// }

@@ -28,21 +28,21 @@ export default function Button({
         className={cn(
           'flex-col justify-center rounded-full px-4 py-2',
           disabled ? 'opacity-30' : 'opacity-100',
-          icon ? 'flex flex-row space-x-2' : 'flex-col',
+          icon ? 'flex flex-row space-x-6' : 'flex-col',
           viewClassName,
         )}
       >
-        {icon ? (
-          <View className={cn('flex h-8  justify-center', textClassName)}>
-            {icon}
-          </View>
-        ) : null}
         <MyText
           font={font}
-          className={cn('text-center text-white', textClassName)}
+          className={cn('-top-[2px] text-center text-white', textClassName)}
         >
           {children}
         </MyText>
+        {icon ? (
+          <View className={cn('flex justify-center ', textClassName)}>
+            {icon}
+          </View>
+        ) : null}
       </View>
     </TouchableOpacity>
   );

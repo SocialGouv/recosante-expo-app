@@ -4,6 +4,7 @@ export enum IndicatorsSlugEnum {
   pollen_allergy = 'pollen_allergy',
   weather_alert = 'weather_alert',
   bathing_water = 'bathing_water',
+  drinking_water = 'drinking_water',
 }
 export interface IndicatorItem {
   name: string;

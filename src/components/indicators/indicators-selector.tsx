@@ -5,6 +5,7 @@ import { cn } from '~/utils/tailwind';
 import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import Button from '../ui/button';
 import * as Haptics from 'expo-haptics';
+import { SkipArrow } from '~/assets/icons/skip';
 
 interface IndicatorsSelectorProps {
   indicators: IndicatorItem[] | null;
@@ -28,7 +29,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
 
   return (
     <View className="flex flex-col ">
-      <View className="flex  flex-row flex-wrap items-start ">
+      <View className="flex flex-col ">
         {props.indicators?.map((indicator) => {
           const isFavorite = state?.slug === indicator.slug;
           return (
@@ -38,12 +39,12 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
               }}
               viewClassName={cn(
                 isFavorite
-                  ? 'bg-app-yellow border-app-primary'
-                  : 'bg-app-primary border-white ',
-                'border-2 rounded-full m-2 items-center flex',
+                  ? ' border-app-primary bg-app-primary '
+                  : ' border-app-primary',
+                'border rounded-md mx-6 my-2 items-center flex py-2',
               )}
               textClassName={cn(
-                isFavorite ? 'text-app-primary' : 'text-white',
+                isFavorite ? 'text-white' : 'text-app-primary',
                 'text-[15px]',
               )}
               key={indicator.slug}
@@ -55,14 +56,15 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
         })}
       </View>
       {state?.slug ? (
-        <View className="mx-auto mt-6">
+        <View className="mr-6 mt-6 items-end">
           <Button
             onPress={handleSubmit}
-            viewClassName="bg-app-yellow px-8 pb-4 pt-3"
-            textClassName="text-black text-base"
+            viewClassName="bg-white px-6 py-3 border border-gray-200 rounded-md "
+            textClassName="text-black text-[15px] "
             font="MarianneBold"
+            icon={<SkipArrow color="black" />}
           >
-            C'est parti !
+            C'est parti
           </Button>
         </View>
       ) : null}

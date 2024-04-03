@@ -13,8 +13,8 @@ Notifications.setNotificationHandler({
 // TO SEND A NOTIFICATION MANUALLY
 // Notifications.scheduleNotificationAsync({
 //   content: {
-//     title: 'Test Dev',
-//     body: "I'm working!",
+//     title: 'Testsq Ddsev',
+//     body: "I'dsssdssqmdsd ss!",
 //   },
 //   trigger: null,
 // });

@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, useMemo } from 'react';
 import { Pressable, View, ScrollView } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RouteEnum, RootStackParamList } from '~/constants/route';
+import { type RouteEnum, type RootStackParamList } from '~/constants/route';
 import MyText from '~/components/ui/my-text';
 import { Close } from '~/assets/icons/close';
 
