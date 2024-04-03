@@ -7,7 +7,7 @@ export namespace IndicatorService {
   };
   export function getDataVisualisationBySlug(
     slug: IndicatorsSlugEnum,
-  ): DataVisualisation | undefined {
+  ): DataVisualisation {
     if (!slug) {
       return {
         maxValue: 0,
@@ -88,6 +88,16 @@ export namespace IndicatorService {
         };
       default:
         console.error(`No range found for ${slug as string}`);
+        return {
+          maxValue: 0,
+          valuesToColor: {
+            0: '#D9D9EF',
+            1: '#00A3FF',
+            2: '#FC373F',
+            3: '#820026',
+            4: '#6D50C6',
+          },
+        };
     }
   }
   export function getDataSourceByIndicator(slug: IndicatorsSlugEnum): {
