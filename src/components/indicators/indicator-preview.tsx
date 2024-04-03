@@ -1,5 +1,9 @@
 import { View, TouchableOpacity } from 'react-native';
-import { IndicatorsSlugEnum, type IndicatorItem } from '~/types/indicator';
+import {
+  type DrinkingWaterValues,
+  IndicatorsSlugEnum,
+  type IndicatorItem,
+} from '~/types/indicator';
 import type { DayEnum } from '~/types/day';
 import type { DashboardProps } from '~/scenes/dashboard/dashboard';
 import MyText from '../ui/my-text';
@@ -12,6 +16,7 @@ import { LineChart } from './graphs/line';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import * as Haptics from 'expo-haptics';
 import { LineList } from './graphs/lines-list';
+import { DrinkingWaterResult } from './graphs/drinking-water-result';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
@@ -35,9 +40,14 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
   const indicatorColor = valuesToColor[indicatorValue];
+
   const isUnavailable = !indicatorDataInCurrentDay?.summary.value;
   const status = indicatorDataInCurrentDay?.summary.status;
   const isWaterBathingIndicator = slug === IndicatorsSlugEnum.bathing_water;
+  const isDrinkingWaterIndicator = slug === IndicatorsSlugEnum.drinking_water;
+  const showLine = !isDrinkingWaterIndicator;
+  const showLineList = props.isFavorite && !isDrinkingWaterIndicator;
+
   function handlePress() {
     if (!currentIndicatorData) return;
     if (!props.day) return;
@@ -58,6 +68,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     if (!currentIndicatorData) return;
     if (!props.day) return;
     if (props.isFavorite) return;
+    if (isUnavailable) return;
     logEvent({
       category: 'DASHBOARD',
       action: 'INDICATOR_LONG_PRESS',
@@ -73,22 +84,18 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   return (
     <TouchableOpacity
       className={cn(
-        props.isFavorite ? ' shadow-sm ' : '',
         'm-2 mx-3',
         isUnavailable ? 'opacity-40' : '',
+        props.isFavorite ? ' shadow-md' : 'scale-[0.98]',
       )}
-      style={{
-        shadowColor: indicatorColor,
-      }}
       onPress={handlePress}
       onLongPress={handleLongPress}
       activeOpacity={1}
     >
       <View
-        className="rounded-md border-[1px] bg-white px-3 py-4"
-        style={{
-          borderColor: props.isFavorite ? indicatorColor : '#E5E5E5',
-        }}
+        className={cn(
+          'overflow-scroll rounded-md border-[1px] border-gray-300 bg-white px-3 py-4',
+        )}
       >
         <View className="flex flex-row justify-between">
           <View className="flex w-full justify-center">
@@ -99,19 +106,30 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                   isUnavailable ? '' : ' pb-2',
                 )}
               >
-                <MyText
-                  className={cn(
-                    '"text-wrap  uppercase text-muted',
-                    props.isFavorite ? ' text-[17px]' : ' text-[15px]',
-                    isUnavailable ? '' : 'mb-2',
-                  )}
-                  font={props.isFavorite ? 'MarianneExtraBold' : 'MarianneBold'}
-                >
-                  {props.isFavorite
-                    ? props.indicator.name
-                    : props.indicator.short_name}{' '}
-                  {isUnavailable ? null : `: ${status}`}
-                </MyText>
+                <View className="">
+                  <MyText
+                    className={cn(
+                      '"text-wrap  uppercase text-muted',
+                      props.isFavorite ? ' text-[17px]' : ' text-[15px]',
+                      isUnavailable ? '' : 'mb-2',
+                    )}
+                    font={
+                      props.isFavorite ? 'MarianneExtraBold' : 'MarianneBold'
+                    }
+                  >
+                    {props.isFavorite
+                      ? props.indicator.name
+                      : props.indicator.short_name}{' '}
+                    {isUnavailable || isDrinkingWaterIndicator
+                      ? null
+                      : `: ${status}`}
+                  </MyText>
+                  {isDrinkingWaterIndicator ? (
+                    <DrinkingWaterResult
+                      indicatorValue={indicatorValue as DrinkingWaterValues}
+                    />
+                  ) : null}
+                </View>
                 {isUnavailable ? (
                   <View className="rounded-full border border-gray-300 px-2">
                     <MyText
@@ -125,13 +143,15 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               </View>
             </View>
 
-            <LineChart
-              color={indicatorColor}
-              value={indicatorValue}
-              maxValue={indicatorMaxValue}
-            />
+            {showLine ? (
+              <LineChart
+                color={indicatorColor}
+                value={indicatorValue}
+                maxValue={indicatorMaxValue}
+              />
+            ) : null}
 
-            {props.isFavorite ? (
+            {showLineList ? (
               <>
                 <LineList
                   slug={currentIndicatorData?.slug}

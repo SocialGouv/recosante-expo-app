@@ -39,6 +39,7 @@ export const useUser = create<UserState>()(
         API.put({
           path: '/user',
           body: {
+            coordinates: address.coordinates,
             municipality_insee_code: address.municipality_insee_code,
             municipality_name: address.municipality_name,
             // can't send municipality_full_name to the DB for GDPR purposes

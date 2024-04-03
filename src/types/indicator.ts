@@ -19,6 +19,18 @@ export type IndicatorByPeriodValues = Array<{
   value: number;
   link?: string;
 }>;
+
+export enum DrinkingWaterValuesEnum {
+  C = 'C',
+  D = 'D',
+  N = 'N',
+  S = 'S',
+}
+export type DrinkingWaterValues = {
+  bacteriological: DrinkingWaterValuesEnum;
+  chemical: DrinkingWaterValuesEnum;
+};
+
 export interface IndicatorByPeriod {
   id: string;
   validity_start: string;
@@ -27,7 +39,7 @@ export interface IndicatorByPeriod {
   created_at: string;
   updated_at: string;
   summary: {
-    value: number | null;
+    value: (number & DrinkingWaterValues) | null;
     status: string;
     status_description?: string;
     recommendations?: string[];

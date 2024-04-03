@@ -17,7 +17,11 @@ import renderRules from '~/utils/md-rules';
 import { LineChart } from '~/components/indicators/graphs/line';
 import { cn } from '~/utils/tailwind';
 import { Footer } from '~/components/footer';
-import { IndicatorsSlugEnum } from '~/types/indicator';
+import {
+  type DrinkingWaterValues,
+  IndicatorsSlugEnum,
+} from '~/types/indicator';
+import { DrinkingWaterResult } from '~/components/indicators/graphs/drinking-water-result';
 
 const markdownItInstance = MarkdownIt({ typographer: true })
   .use(supPlugin)
@@ -41,6 +45,10 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const indicatorMaxValue = IndicatorService.getDataVisualisationBySlug(
     indicator.slug,
   )?.maxValue;
+
+  const slug = indicator.slug;
+  const isDrinkingWaterIndicator = slug === IndicatorsSlugEnum.drinking_water;
+
   const handleSheetChanges = useCallback((index: number) => {
     if (index < 0) {
       isOpenedRef.current = false;
@@ -51,8 +59,12 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
     indicator.slug,
   );
   const indicatorColor = valuesToColor[indicatorValue ?? 0];
-  const slug = indicator.slug;
-  const isPollenIndicator = slug === IndicatorsSlugEnum.pollen_allergy;
+
+  const showLines =
+    !isDrinkingWaterIndicator &&
+    indicatorValue !== 0 &&
+    indicatorValue !== null;
+
   function closeBottomSheet() {
     bottomSheetRef.current?.close();
     isOpenedRef.current = false;
@@ -156,13 +168,20 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 className="text-wrap  mb-2 text-[17px] uppercase text-muted"
                 font="MarianneExtraBold"
               >
-                {indicator.short_name} :{' '}
-                {currentDayIndicatorData.summary.status}
+                {indicator.short_name}
+                {isDrinkingWaterIndicator
+                  ? ''
+                  : `: ${currentDayIndicatorData.summary.status}`}
               </MyText>
             </View>
+            {isDrinkingWaterIndicator ? (
+              <DrinkingWaterResult
+                indicatorValue={indicatorValue as DrinkingWaterValues}
+              />
+            ) : null}
           </View>
 
-          {indicatorValue !== 0 && indicatorValue !== null && (
+          {showLines ? (
             <>
               <Title label="global" className="mt-0 border" />
               <View className="mt-2 rounded-md border border-gray-200 bg-white px-4 py-2 pr-2 pt-6">
@@ -220,7 +239,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                 Source des recommandations : Gouvernement Francais.
               </MyText>
             </>
-          )}
+          ) : null}
           <Title label={indicator?.about_title} />
           <View className="mt-2 w-full overflow-hidden">
             <Markdown
