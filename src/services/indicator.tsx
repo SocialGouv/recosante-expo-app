@@ -1,68 +1,13 @@
 import { IndicatorsSlugEnum } from '~/types/indicator';
-import { Uv } from '~/assets/icons/indicators/big/uv';
-import { Pollens } from '~/assets/icons/indicators/big/pollens';
-import { Weather } from '~/assets/icons/indicators/big/weather';
-import { Swimming } from '~/assets/icons/indicators/big/swimming';
-import { Atmo } from '~/assets/icons/indicators/big/atmo';
 
 export namespace IndicatorService {
-  export function getIconBySlug(slug: IndicatorsSlugEnum, selected: boolean) {
-    switch (slug) {
-      case IndicatorsSlugEnum.indice_atmospheric:
-        return <Atmo size={30} selected={selected} value={undefined} />;
-      case IndicatorsSlugEnum.indice_uv:
-        return (
-          <Uv size={28} value={11} color={selected ? '#3343BD' : '#D9D9EF'} />
-        );
-      case IndicatorsSlugEnum.pollen_allergy:
-        return <Pollens size={30} selected={selected} value={undefined} />;
-      case IndicatorsSlugEnum.weather_alert:
-        return <Weather size={30} selected={selected} value={undefined} />;
-      case IndicatorsSlugEnum.bathing_water:
-        return <Swimming size={30} selected={selected} value={undefined} />;
-      default:
-        throw new Error('No icon found');
-    }
-  }
-  export function getPicto({
-    slug,
-    indicatorValue,
-    color,
-  }: {
-    slug: IndicatorsSlugEnum;
-    indicatorValue: number | undefined;
-    color: string | undefined;
-  }) {
-    switch (slug) {
-      case IndicatorsSlugEnum.indice_atmospheric:
-        return <Atmo size={60} value={indicatorValue} selected={undefined} />;
-      case IndicatorsSlugEnum.indice_uv:
-        return <Uv size={60} value={indicatorValue} color={color} />;
-      case IndicatorsSlugEnum.pollen_allergy:
-        return (
-          <Pollens size={60} value={indicatorValue} selected={undefined} />
-        );
-      case IndicatorsSlugEnum.weather_alert:
-        return (
-          <Weather size={60} value={indicatorValue} selected={undefined} />
-        );
-      case IndicatorsSlugEnum.bathing_water:
-        return (
-          <Swimming size={60} value={indicatorValue} selected={undefined} />
-        );
-      default:
-        console.log('No picto found');
-      // throw new Error('No picto found');
-    }
-  }
-
   type DataVisualisation = {
     maxValue: number;
     valuesToColor: Record<number, string>;
   };
   export function getDataVisualisationBySlug(
     slug: IndicatorsSlugEnum,
-  ): DataVisualisation {
+  ): DataVisualisation | undefined {
     if (!slug) {
       return {
         maxValue: 0,
@@ -142,43 +87,36 @@ export namespace IndicatorService {
           },
         };
       default:
-        throw new Error(`No range found for ${slug as string}`);
+        console.error(`No range found for ${slug as string}`);
     }
   }
   export function getDataSourceByIndicator(slug: IndicatorsSlugEnum): {
     label: string;
-    // logo: string;
   } {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
         return {
           label: 'ATMO France',
-          // logo: require('~/assets/data-source/atmo.png'),
         };
       case IndicatorsSlugEnum.indice_uv:
         return {
           label: 'Météo France',
-          // logo: require('~/assets/data-source/meteo.png'),
         };
       case IndicatorsSlugEnum.pollen_allergy:
         return {
           label: 'RNSA',
-          // logo: require('~/assets/data-source/rnsa.png'),
         };
       case IndicatorsSlugEnum.weather_alert:
         return {
           label: 'Météo France',
-          // logo: require('~/assets/data-source/meteo.png'),
         };
       case IndicatorsSlugEnum.bathing_water:
         return {
           label: 'Ministere de la Santé et de la prévention',
-          // logo: require('~/assets/data-source/atmo.png'),
         };
       default:
         return {
           label: 'ATMO France',
-          // logo: require('~/assets/data-source/atmo.png'),
         };
     }
   }

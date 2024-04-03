@@ -48,7 +48,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
                 'text-[15px]',
               )}
               key={indicator.slug}
-              icon={IndicatorService.getIconBySlug(indicator.slug, isFavorite)}
+              icon={null}
             >
               {indicator.name}
             </Button>
