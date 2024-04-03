@@ -72,23 +72,15 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   return (
     <TouchableOpacity
       className={cn(
-        props.isFavorite ? ' shadow-sm ' : '',
+        props.isFavorite ? ' shadow-md ' : 'scale-[0.97]',
         'm-2 mx-3',
         isUnavailable ? 'opacity-40' : '',
       )}
-      style={{
-        shadowColor: indicatorColor,
-      }}
       onPress={handlePress}
       onLongPress={handleLongPress}
       activeOpacity={1}
     >
-      <View
-        className="rounded-md border-[1px] bg-white px-3 py-4"
-        style={{
-          borderColor: props.isFavorite ? indicatorColor : '#E5E5E5',
-        }}
-      >
+      <View className="rounded-md border-[1px] border-gray-300 bg-white px-3 py-4">
         <View className="flex flex-row justify-between">
           <View className="flex w-full justify-center">
             <View className="flex-row items-center justify-between">

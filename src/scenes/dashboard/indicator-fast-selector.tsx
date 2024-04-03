@@ -54,20 +54,20 @@ export function IndicatorFastSelector(props: IndicatorFastSelectorProps) {
         </MyText>
         <View className="mt-6 flex flex-row justify-end ">
           <Button
-            onPress={handleSubmit}
-            viewClassName="bg-white px-6 py-3 border border-gray-200 rounded-md mr-4 "
-            textClassName="text-black text-[15px] "
-            font="MarianneBold"
-          >
-            Oui
-          </Button>
-          <Button
             onPress={handleSkip}
-            viewClassName="bg-white px-6 py-3 border border-gray-200 rounded-md opacity-80 "
+            viewClassName="bg-white px-6 py-3 border border-gray-200 rounded-md opacity-60 mr-2 "
             textClassName="text-black text-[15px] "
             font="MarianneBold"
           >
             Non
+          </Button>
+          <Button
+            onPress={handleSubmit}
+            viewClassName="bg-white px-6 py-3 border border-gray-200 rounded-md  "
+            textClassName="text-black text-[15px] "
+            font="MarianneBold"
+          >
+            Oui
           </Button>
         </View>
       </View>
