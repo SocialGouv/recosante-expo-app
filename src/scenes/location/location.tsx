@@ -292,7 +292,9 @@ export function LocationPage(props: LocationPageProps) {
           ) : null}
           {status === StatusEnum.IDLE ? (
             <View className="mt-16 h-full w-full">
-              <Illu />
+              <View className="h-88 w-full">
+                <Illu />
+              </View>
               <MyText
                 font="MarianneMedium"
                 className="mt-4 px-6 text-center text-[14px] text-[rgba(0,0,0,0.6)]"
@@ -304,7 +306,9 @@ export function LocationPage(props: LocationPageProps) {
           ) : null}
           {status === StatusEnum.NO_RESULT ? (
             <View className="mt-16 h-full w-full">
-              <Illu />
+              <View className="h-88 w-full">
+                <Illu />
+              </View>
               <MyText
                 font="MarianneMedium"
                 className="mt-4 px-4 text-center text-[14px] text-gray-700"
