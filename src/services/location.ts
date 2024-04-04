@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
-import { type UserAddress, type GeoApiProperty } from '~/types/location';
+import { type UserAddress, type GeoApiFeature } from '~/types/location';
 import { capture } from './sentry';
 
 type LocationRequestResponse = {
@@ -21,6 +21,7 @@ export namespace LocationService {
         };
       }
       const requestLocationPromise = new Promise<LocationRequestResponse>(
+        // eslint-disable-next-line no-async-promise-executor
         async (resolve, reject) => {
           try {
             console.log('requestLocationPromise');
@@ -83,17 +84,30 @@ export namespace LocationService {
     };
   }
 
-  export function formatPropertyToAddress(
-    property: GeoApiProperty,
-  ): UserAddress {
+  export function formatPropertyToAddress(feature: GeoApiFeature): UserAddress {
     return {
-      id: property.id,
-      title: property.label, // technical field for autocomplete
-      label: property.label, // technical field for autocomplete
-      municipality_name: property.city,
-      municipality_insee_code: property.citycode,
-      municipality_zip_code: property.postcode,
+      coordinates: feature?.geometry.coordinates, // Not saved in the database but used to get Udi for drinking water
+      id: feature?.properties.id,
+      title: feature?.properties.label, // technical field for autocomplete
+      label: feature?.properties.label, // technical field for autocomplete
+      municipality_name: feature?.properties.city,
+      municipality_insee_code: feature?.properties.citycode,
+      municipality_zip_code: feature?.properties.postcode,
     };
+  }
+
+  export async function getAdressMetadatByFullAdress(
+    query: string,
+  ): Promise<UserAddress | undefined> {
+    const url = new URL('https://api-adresse.data.gouv.fr/search/');
+    url.searchParams.append('q', query);
+    url.searchParams.append('limit', '1');
+    const response = await fetch(url).then(async (res) => await res.json());
+    const features = response?.features as GeoApiFeature[];
+    const formatedAdresses = features.map((feature) =>
+      LocationService.formatPropertyToAddress(feature),
+    );
+    return formatedAdresses?.[0];
   }
 
   export async function getAdressByCoordinates(
@@ -105,7 +119,7 @@ export namespace LocationService {
     url.searchParams.append('lon', longitude.toString());
     url.searchParams.append('lat', latitude.toString());
     const response = await fetch(url).then(async (res) => await res.json());
-    const currentAdress = response?.features?.[0]?.properties as GeoApiProperty;
+    const currentAdress = response?.features?.[0] as GeoApiFeature;
 
     if (!currentAdress) {
       await new Promise((resolve) => {

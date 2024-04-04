@@ -1,4 +1,5 @@
 export interface UserAddress {
+  coordinates?: [number, number];
   municipality_insee_code: string;
   municipality_name: string;
   municipality_zip_code: string;

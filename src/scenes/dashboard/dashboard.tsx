@@ -23,6 +23,7 @@ import { useToast } from '~/services/toast';
 import { ERROR_NO_NETWORK } from '~/constants/errors';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
 import { EditIcon } from '~/assets/icons/edit';
+import { LocationService } from '~/services/location';
 
 export type DashboardProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.DASHBOARD>,
@@ -37,7 +38,7 @@ export function DashboardPage(props: DashboardProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string>('');
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-  const { address } = useUser((state) => state);
+  const { address, udi } = useUser((state) => state);
   const { show } = useToast();
 
   async function getIndicators(refresh = true) {
@@ -78,11 +79,30 @@ export function DashboardPage(props: DashboardProps) {
     if (!address?.municipality_insee_code) return;
     let ignore = false;
     getIndicators(false);
-    AsyncStorage.getItem(MUNICIPALITY_FULL_NAME).then((name) => {
-      if (ignore) return;
-      if (!name) return;
-      setMunicipalityFullName(name);
-    });
+    AsyncStorage.getItem(MUNICIPALITY_FULL_NAME).then(
+      async (oneLineFullAddress) => {
+        if (ignore) return;
+        if (!oneLineFullAddress) return;
+        setMunicipalityFullName(oneLineFullAddress);
+        console.log({ udi });
+        if (udi) return;
+        // if the user has already oboarded on a version where we didn't save the udi
+        // we need to save it now incognito to the user
+        const address = await LocationService.getAdressMetadatByFullAdress(
+          oneLineFullAddress,
+        );
+        if (!address?.coordinates) return;
+        API.put({
+          path: '/user',
+          body: {
+            coordinates: {
+              lat: address.coordinates[1],
+              lon: address.coordinates[0],
+            },
+          },
+        });
+      },
+    );
     registerForPushNotificationsAsync({
       force: false,
       expo: true,

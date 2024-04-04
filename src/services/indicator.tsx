@@ -86,6 +86,19 @@ export namespace IndicatorService {
             4: '#965f9b', // interdiction
           },
         };
+
+      // TODO: FIX THIS
+      case IndicatorsSlugEnum.drinking_water:
+        return {
+          maxValue: 4,
+          valuesToColor: {
+            0: '#D9D9EF', // Site non classé - Site n'ayant pas suffisamment de prélèvements cette saison pour être classé
+            1: '#b1f3ef', // bon qualité
+            2: '#fef799', // moyen qualité
+            3: '#ee817e', // mauvais
+            4: '#965f9b', // interdiction
+          },
+        };
       default:
         console.error(`No range found for ${slug as string}`);
         return {

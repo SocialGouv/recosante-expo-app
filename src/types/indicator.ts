@@ -4,6 +4,7 @@ export enum IndicatorsSlugEnum {
   pollen_allergy = 'pollen_allergy',
   weather_alert = 'weather_alert',
   bathing_water = 'bathing_water',
+  drinking_water = 'drinking_water',
 }
 export interface IndicatorItem {
   name: string;
@@ -12,12 +13,35 @@ export interface IndicatorItem {
 }
 
 export type IndicatorDay = 'j0' | 'j1';
-export type IndicatorByPeriodValues = Array<{
+
+export enum DrinkingWaterValuesEnum {
+  C = 'C',
+  D = 'D',
+  N = 'N',
+  S = 'S',
+}
+
+export type DrinkingWaterValue = {
+  bacteriological: DrinkingWaterValuesEnum;
+  chemical: DrinkingWaterValuesEnum;
+};
+
+export type DrinkingWaterMetadata = {
+  parameters_count: number;
+  prelevement_code: string;
+  prelevement_date: string;
+};
+
+export type IndicatorByPeriodValue = {
   slug: string;
   name: string;
-  value: number;
-  link?: string;
-}>;
+  value: number | string | DrinkingWaterValue;
+  link?: string; // specific for bathing water
+  drinkingWater?: DrinkingWaterMetadata;
+};
+
+export type IndicatorByPeriodValues = Array<IndicatorByPeriodValue>;
+
 export interface IndicatorByPeriod {
   id: string;
   validity_start: string;
@@ -26,7 +50,7 @@ export interface IndicatorByPeriod {
   created_at: string;
   updated_at: string;
   summary: {
-    value: number | null;
+    value: (number & DrinkingWaterValue) | null;
     status: string;
     status_description?: string;
     recommendations?: string[];

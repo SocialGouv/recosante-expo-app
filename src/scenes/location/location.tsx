@@ -76,7 +76,7 @@ export function LocationPage(props: LocationPageProps) {
       if (searchRef.current !== search) return; // too late
       const adressReponse: UserAddress[] =
         items?.features?.map((feature: GeoApiFeature) => {
-          return LocationService.formatPropertyToAddress(feature.properties);
+          return LocationService.formatPropertyToAddress(feature);
         }) ?? [];
       if (searchRef.current !== search) return; // too late
       setSuggestedAddress(adressReponse);
@@ -168,7 +168,6 @@ export function LocationPage(props: LocationPageProps) {
               autoCorrect={false}
               placeholderTextColor="#3343BD"
               placeholder="Rechercher un lieu, ville"
-              // clearButtonMode="always"
               value={query}
               className="w-full px-2 text-[16px] placeholder:text-[16px]"
               onChange={getSuggestions}
