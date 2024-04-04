@@ -101,45 +101,68 @@ export function DashboardPage(props: DashboardProps) {
 
   return (
     <>
-      <View className="-top-2 -mb-2 flex grow-0 items-center justify-start bg-app-gray px-6 ">
-        <View className="mt-2 flex w-full">
-          <MyText font="MarianneRegular" className="text-xl  text-black">
-            Vos indicateurs autour de
-          </MyText>
+      <View className="flex flex-1 items-center justify-start bg-app-gray px-6">
+        <View className="flex w-full flex-1">
           {address?.municipality_name ? (
-            <TouchableOpacity
-              className="flex w-fit flex-row items-center justify-between "
-              onPress={() => {
-                props.navigation.navigate(RouteEnum.LOCATION, {
-                  isOnboarding: false,
-                });
-              }}
-            >
-              <View className="max-w-[90%] border-b border-app-primary">
-                <MyText
-                  font="MarianneRegular"
-                  className="self-start truncate text-xl text-app-primary "
-                  numberOfLines={1}
-                >
-                  {municipalityFullName || address?.municipality_name}
+            <>
+              <View>
+                <MyText font="MarianneRegular" className="text-xl text-black">
+                  Vos indicateurs autour de
                 </MyText>
               </View>
-              <View className="ml-4 w-fit rounded-full bg-app-primary p-2 text-sm text-white">
-                <EditIcon />
+              <TouchableOpacity
+                className="flex w-fit flex-row items-center justify-between "
+                onPress={() => {
+                  props.navigation.navigate(RouteEnum.LOCATION, {
+                    isOnboarding: false,
+                  });
+                }}
+              >
+                <View className="max-w-[90%] border-b border-app-primary">
+                  <MyText
+                    font="MarianneRegular"
+                    className="self-start truncate text-xl text-app-primary "
+                    numberOfLines={1}
+                  >
+                    {municipalityFullName ??
+                      address?.municipality_name ??
+                      'pas de nom'}
+                  </MyText>
+                </View>
+                <View className="ml-4 w-fit rounded-full bg-app-primary p-2 text-sm text-white">
+                  <EditIcon />
+                </View>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <View className="flex-1 bg-app-gray px-4">
+              <View className="h-1/2 w-full">
+                <Illu />
               </View>
-            </TouchableOpacity>
-          ) : null}
+              <MyText
+                font="MarianneRegular"
+                className="mb-12 px-8 text-center text-base"
+              >
+                Choisissez une ville afin de découvrir vos indicateurs favoris !
+              </MyText>
+              <View className="px-8">
+                <Button
+                  onPress={() => {
+                    props.navigation.navigate(RouteEnum.LOCATION, {
+                      isOnboarding: false,
+                    });
+                  }}
+                  viewClassName="bg-app-yellow px-8 pb-4 pt-3"
+                  textClassName="text-black text-base"
+                  font="MarianneBold"
+                >
+                  <MyText>Choisir une ville</MyText>
+                </Button>
+              </View>
+            </View>
+          )}
         </View>
       </View>
-      {!address?.municipality_name && (
-        <NoLocationCallToAction
-          onPress={() => {
-            props.navigation.navigate(RouteEnum.LOCATION, {
-              isOnboarding: false,
-            });
-          }}
-        />
-      )}
       {!!address?.municipality_name && (
         <IndicatorsListPreview
           indicators={indicators}
@@ -151,29 +174,5 @@ export function DashboardPage(props: DashboardProps) {
         />
       )}
     </>
-  );
-}
-
-function NoLocationCallToAction(props: { onPress: () => void }) {
-  return (
-    <View className="h-full flex-1 bg-app-gray px-4">
-      <Illu />
-      <MyText
-        font="MarianneRegular"
-        className="mb-12 px-8 text-center text-base"
-      >
-        Choisissez une ville afin de découvrir vos indicateurs favoris !
-      </MyText>
-      <View className="px-8">
-        <Button
-          onPress={props.onPress}
-          viewClassName="bg-app-yellow px-8 pb-4 pt-3"
-          textClassName="text-black text-base"
-          font="MarianneBold"
-        >
-          <MyText>Choisir une ville</MyText>
-        </Button>
-      </View>
-    </View>
   );
 }

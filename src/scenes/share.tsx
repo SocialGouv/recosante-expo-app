@@ -38,7 +38,7 @@ export function SharePage(props: ShareProps) {
             Pour agir ensemble en faveur de votre santé et de l'environnement.
           </MyText>
         </View>
-        <View className="w-full">
+        <View className="h-2/3 w-full">
           <Illu />
         </View>
         <View>
