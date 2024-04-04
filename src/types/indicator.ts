@@ -13,12 +13,6 @@ export interface IndicatorItem {
 }
 
 export type IndicatorDay = 'j0' | 'j1';
-export type IndicatorByPeriodValues = Array<{
-  slug: string;
-  name: string;
-  value: number;
-  link?: string;
-}>;
 
 export enum DrinkingWaterValuesEnum {
   C = 'C',
@@ -26,10 +20,27 @@ export enum DrinkingWaterValuesEnum {
   N = 'N',
   S = 'S',
 }
-export type DrinkingWaterValues = {
+
+export type DrinkingWaterValue = {
   bacteriological: DrinkingWaterValuesEnum;
   chemical: DrinkingWaterValuesEnum;
 };
+
+export type DrinkingWaterMetadata = {
+  parameters_count: number;
+  prelevement_code: string;
+  prelevement_date: string;
+};
+
+export type IndicatorByPeriodValue = {
+  slug: string;
+  name: string;
+  value: number | string | DrinkingWaterValue;
+  link?: string; // specific for bathing water
+  drinkingWater?: DrinkingWaterMetadata;
+};
+
+export type IndicatorByPeriodValues = Array<IndicatorByPeriodValue>;
 
 export interface IndicatorByPeriod {
   id: string;
@@ -39,7 +50,7 @@ export interface IndicatorByPeriod {
   created_at: string;
   updated_at: string;
   summary: {
-    value: (number & DrinkingWaterValues) | null;
+    value: (number & DrinkingWaterValue) | null;
     status: string;
     status_description?: string;
     recommendations?: string[];

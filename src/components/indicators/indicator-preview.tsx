@@ -1,6 +1,6 @@
 import { View, TouchableOpacity } from 'react-native';
 import {
-  type DrinkingWaterValues,
+  type DrinkingWaterValue,
   IndicatorsSlugEnum,
   type IndicatorItem,
 } from '~/types/indicator';
@@ -126,7 +126,9 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                   </MyText>
                   {isDrinkingWaterIndicator ? (
                     <DrinkingWaterResult
-                      indicatorValue={indicatorValue as DrinkingWaterValues}
+                      indicatorValue={
+                        indicatorValue as DrinkingWaterValue | null
+                      }
                     />
                   ) : null}
                 </View>

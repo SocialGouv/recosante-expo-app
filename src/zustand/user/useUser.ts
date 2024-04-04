@@ -9,6 +9,7 @@ import { NotificationIdEnum } from '~/types/notification';
 
 interface UserState {
   address: UserAddress | null;
+  udi: string | null;
   setAddress: (location: UserAddress) => void;
   notifications_preference: NotificationIdEnum[];
   setNotificationsPreferences: (notifications: NotificationIdEnum[]) => void;
@@ -27,6 +28,7 @@ const setUser = (
       municipality_name: user.municipality_name,
       municipality_zip_code: user.municipality_zip_code,
     },
+    udi: user.udi,
     notifications_preference: user.notifications_preference,
   }));
 };
@@ -39,7 +41,13 @@ export const useUser = create<UserState>()(
         API.put({
           path: '/user',
           body: {
-            coordinates: address.coordinates,
+            coordinates:
+              address.coordinates?.length === 2
+                ? {
+                    lat: address.coordinates[1],
+                    lon: address.coordinates[0],
+                  }
+                : null,
             municipality_insee_code: address.municipality_insee_code,
             municipality_name: address.municipality_name,
             // can't send municipality_full_name to the DB for GDPR purposes
@@ -64,6 +72,7 @@ export const useUser = create<UserState>()(
         NotificationIdEnum.EVENING,
         NotificationIdEnum.ALERT,
       ],
+      udi: null,
       setNotificationsPreferences: async (notifications_preference) => {
         set({ notifications_preference });
         API.put({
@@ -108,6 +117,7 @@ export const useUser = create<UserState>()(
                 municipality_name: user.municipality_name,
                 municipality_zip_code: user.municipality_zip_code,
               };
+              state.udi = user.udi;
               state.setNotificationsPreferences(user.notifications_preference);
             }
           });

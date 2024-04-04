@@ -4,13 +4,14 @@ import { NotValidIcon } from '~/assets/icons/not-valid';
 import MyText from '~/components/ui/my-text';
 import {
   DrinkingWaterValuesEnum,
-  type DrinkingWaterValues,
+  type DrinkingWaterValue,
 } from '~/types/indicator';
 
 interface DrinkingWaterResultProps {
-  indicatorValue: DrinkingWaterValues;
+  indicatorValue: DrinkingWaterValue | null;
 }
 export function DrinkingWaterResult(props: DrinkingWaterResultProps) {
+  if (!props.indicatorValue) return null;
   return (
     <View className="flex-row">
       <Label
@@ -46,7 +47,7 @@ function renderValue({ value }: { value: DrinkingWaterValuesEnum }) {
 
 interface LabelProps {
   label: string;
-  value: DrinkingWaterValues[keyof DrinkingWaterValues];
+  value: DrinkingWaterValue[keyof DrinkingWaterValue];
 }
 function Label({ label, value }: LabelProps) {
   return (

@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "51",
+      "buildNumber": "62",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -33,7 +33,7 @@
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 61,
+      "versionCode": 62,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
     },
     "web": {

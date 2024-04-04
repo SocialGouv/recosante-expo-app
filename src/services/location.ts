@@ -96,6 +96,20 @@ export namespace LocationService {
     };
   }
 
+  export async function getAdressMetadatByFullAdress(
+    query: string,
+  ): Promise<UserAddress | undefined> {
+    const url = new URL('https://api-adresse.data.gouv.fr/search/');
+    url.searchParams.append('q', query);
+    url.searchParams.append('limit', '1');
+    const response = await fetch(url).then(async (res) => await res.json());
+    const features = response?.features as GeoApiFeature[];
+    const formatedAdresses = features.map((feature) =>
+      LocationService.formatPropertyToAddress(feature),
+    );
+    return formatedAdresses?.[0];
+  }
+
   export async function getAdressByCoordinates(
     latitude: number,
     longitude: number,
