@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Linking, Pressable, TouchableOpacity, View } from 'react-native';
 import {
   type IndicatorsSlugEnum,
-  type IndicatorByPeriod,
+  type GenericIndicatorByPeriodValue,
 } from '~/types/indicator';
 import { LineChart } from './line';
 import MyText from '~/components/ui/my-text';
@@ -10,7 +10,7 @@ import { IndicatorService } from '~/services/indicator';
 import ArrowTopRightOnSquare from '~/assets/icons/arrow-top-right-on-square';
 
 interface LineChartProps {
-  values: IndicatorByPeriod['values'];
+  values?: Array<GenericIndicatorByPeriodValue>;
   isPreviewMode?: boolean;
   onMorePress?: () => void;
   slug: IndicatorsSlugEnum;

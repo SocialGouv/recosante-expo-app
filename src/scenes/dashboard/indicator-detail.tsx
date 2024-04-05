@@ -1,5 +1,5 @@
-import { View, Pressable, Platform } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import { View, Pressable, Platform, Linking } from 'react-native';
+import BottomSheet, { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { useRef, useMemo, useCallback, useEffect } from 'react';
 import supPlugin from 'markdown-it-sup';
 import subPlugin from 'markdown-it-sub';
@@ -17,7 +17,11 @@ import renderRules from '~/utils/md-rules';
 import { LineChart } from '~/components/indicators/graphs/line';
 import { cn } from '~/utils/tailwind';
 import { Footer } from '~/components/footer';
-import { type DrinkingWaterValue, IndicatorsSlugEnum } from '~/types/indicator';
+import {
+  type DrinkingWaterValue,
+  type GenericIndicatorByPeriodValue,
+  IndicatorsSlugEnum,
+} from '~/types/indicator';
 import { DrinkingWaterResult } from '~/components/indicators/graphs/drinking-water-result';
 import dayjs from 'dayjs';
 
@@ -205,7 +209,11 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   ) : null}
                   <View className="mt-2 rounded-md border border-gray-200 bg-white px-2 py-2 ">
                     <LineList
-                      values={currentDayIndicatorData.values}
+                      values={
+                        currentDayIndicatorData.values as
+                          | GenericIndicatorByPeriodValue[]
+                          | undefined
+                      }
                       slug={indicator.slug}
                     />
                   </View>
@@ -225,38 +233,44 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             <>
               {currentDayIndicatorData?.values?.length ? (
                 <>
-                  <Title label="tests précédents" />
+                  <Title label="derniers tests effectués" />
                   <View className="mt-2 rounded-md border border-gray-200 bg-white">
                     {currentDayIndicatorData.values.map((test, index) => {
                       if (!test.drinkingWater) return null;
                       return (
-                        <View
-                          className={cn(
-                            'px-2 py-2',
-                            index > 0 ? 'border-t border-t-gray-100' : '',
-                          )}
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (test.link) Linking.openURL(test.link);
+                          }}
                           key={test.drinkingWater.prelevement_code}
                         >
-                          <View className="mb-1 flex-row justify-between">
-                            <MyText className="text-gray-700">
-                              Test du{' '}
-                              {dayjs(
-                                test.drinkingWater?.prelevement_date,
-                              ).format('DD MMM YYYY')}{' '}
-                            </MyText>
-                            <MyText className="text-xs text-gray-400">
-                              ({test.drinkingWater?.parameters_count} paramètres
-                              testés)
-                            </MyText>
+                          <View
+                            className={cn(
+                              'px-2 py-2',
+                              index > 0 ? 'border-t border-t-gray-100' : '',
+                            )}
+                          >
+                            <View className="mb-1 flex-row justify-between">
+                              <MyText className="text-gray-700">
+                                Test du{' '}
+                                {dayjs(
+                                  test.drinkingWater?.prelevement_date,
+                                ).format('DD MMM YYYY')}{' '}
+                              </MyText>
+                              <MyText className="text-xs text-gray-400">
+                                ({test.drinkingWater?.parameters_count}{' '}
+                                paramètres testés)
+                              </MyText>
+                            </View>
+                            <View className="ml-4">
+                              <DrinkingWaterResult
+                                indicatorValue={
+                                  test.value as DrinkingWaterValue | null
+                                }
+                              />
+                            </View>
                           </View>
-                          <View className="ml-4">
-                            <DrinkingWaterResult
-                              indicatorValue={
-                                test.value as DrinkingWaterValue | null
-                              }
-                            />
-                          </View>
-                        </View>
+                        </TouchableOpacity>
                       );
                     })}
                   </View>

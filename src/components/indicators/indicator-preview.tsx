@@ -2,6 +2,7 @@ import { View, TouchableOpacity } from 'react-native';
 import {
   type DrinkingWaterValue,
   IndicatorsSlugEnum,
+  type GenericIndicatorByPeriodValue,
   type IndicatorItem,
 } from '~/types/indicator';
 import type { DayEnum } from '~/types/day';
@@ -106,7 +107,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                   isUnavailable ? '' : ' pb-2',
                 )}
               >
-                <View className="">
+                <View>
                   <MyText
                     className={cn(
                       '"text-wrap  uppercase text-muted',
@@ -157,7 +158,11 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               <>
                 <LineList
                   slug={currentIndicatorData?.slug}
-                  values={indicatorDataInCurrentDay?.values}
+                  values={
+                    indicatorDataInCurrentDay?.values as
+                      | GenericIndicatorByPeriodValue[]
+                      | undefined
+                  }
                   isPreviewMode
                   onMorePress={() => {
                     navigation.navigate(RouteEnum.INDICATOR_DETAIL, {

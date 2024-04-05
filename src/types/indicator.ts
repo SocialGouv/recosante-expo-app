@@ -32,13 +32,20 @@ export type DrinkingWaterMetadata = {
   prelevement_date: string;
 };
 
+export type GenericIndicatorValue = number;
+
 export type IndicatorByPeriodValue = {
   slug: string;
   name: string;
-  value: number | string | DrinkingWaterValue;
+  value: GenericIndicatorValue | DrinkingWaterValue;
   link?: string; // specific for bathing water
   drinkingWater?: DrinkingWaterMetadata;
 };
+
+export interface GenericIndicatorByPeriodValue
+  extends Omit<IndicatorByPeriodValue, 'drinkingWater'> {
+  value: GenericIndicatorValue;
+}
 
 export type IndicatorByPeriodValues = Array<IndicatorByPeriodValue>;
 

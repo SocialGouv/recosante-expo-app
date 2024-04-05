@@ -10,10 +10,18 @@ import {
 interface DrinkingWaterResultProps {
   indicatorValue: DrinkingWaterValue | null;
 }
+
 export function DrinkingWaterResult(props: DrinkingWaterResultProps) {
   if (!props.indicatorValue) return null;
   return (
-    <View className="flex-row">
+    <View
+      className={
+        props.indicatorValue.bacteriological === DrinkingWaterValuesEnum.S ||
+        props.indicatorValue.chemical === DrinkingWaterValuesEnum.S
+          ? 'flex-col'
+          : 'flex-row'
+      }
+    >
       <Label
         label="Bacteriologique"
         value={props.indicatorValue.bacteriological}
