@@ -235,6 +235,7 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                             'px-2 py-2',
                             index > 0 ? 'border-t border-t-gray-100' : '',
                           )}
+                          key={test.drinkingWater.prelevement_code}
                         >
                           <View className="mb-1 flex-row justify-between">
                             <MyText className="text-gray-700">
