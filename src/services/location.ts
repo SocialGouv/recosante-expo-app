@@ -119,13 +119,14 @@ export namespace LocationService {
     url.searchParams.append('lon', longitude.toString());
     url.searchParams.append('lat', latitude.toString());
     const response = await fetch(url).then(async (res) => await res.json());
+
     const currentAdress = response?.features?.[0] as GeoApiFeature;
 
     if (!currentAdress) {
       await new Promise((resolve) => {
         Alert.alert(
           "Désolé, votre lieu n'est pas disponible",
-          'Les indicateurs fournis par Recosanté sont uniquement valable en France 🇫🇷, DOM-TOM compris',
+          'Les indicateurs fournis par Recosanté sont uniquement valable en France 🇫🇷, DOM-TOM compris.\n Vous êtes en France ? Essayez de rentrer manuelement la ville la plus proche.',
           [
             {
               text: 'OK',

@@ -10,13 +10,13 @@ import { IndicatorService } from '~/services/indicator';
 import ArrowTopRightOnSquare from '~/assets/icons/arrow-top-right-on-square';
 
 interface LineChartProps {
-  values?: Array<GenericIndicatorByPeriodValue>;
+  values?: GenericIndicatorByPeriodValue[];
   isPreviewMode?: boolean;
   onMorePress?: () => void;
   slug: IndicatorsSlugEnum;
 }
 
-const MAX_LINE = 4;
+const MAX_LINE = 5;
 
 export function LineList(props: LineChartProps) {
   const sortedValues = useMemo(
@@ -39,8 +39,10 @@ export function LineList(props: LineChartProps) {
           const LineWrapper = line.link ? Pressable : React.Fragment;
           const lineWrapperProps = line.link
             ? {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                onPress: async () => !!line.link ?? Linking.openURL(line.link!),
+                onPress: async () =>
+                  line.link !== undefined
+                    ? await Linking.openURL(line.link)
+                    : null,
               }
             : {};
           return (
@@ -50,11 +52,11 @@ export function LineList(props: LineChartProps) {
                   {!!line.link && <ArrowTopRightOnSquare />}
                 </View>
                 <MyText
-                  className="-mt-1 basis-1/4 text-[11px] capitalize text-muted-100"
+                  className="-mt-1 basis-1/4 text-[11px] text-muted-100"
                   font="MarianneBold"
                   numberOfLines={1}
                 >
-                  {line.name}
+                  {line.name.charAt(0).toUpperCase() + line.name.slice(1)}
                 </MyText>
                 <View className="mb-2 w-full flex-1 ">
                   <LineChart
