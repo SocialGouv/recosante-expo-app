@@ -45,12 +45,14 @@ export enum HomeTabRouteEnum {
   SETTINGS = 'SETTINGS',
   DASHBOARD = 'DASHBOARD',
   SHARE = 'SHARE',
+  FEEDBACK = 'FEEDBACK',
 }
 
 export type HomeTabParamList = {
   [HomeTabRouteEnum.DASHBOARD]: NavigatorScreenParams<RootStackParamList>;
   [HomeTabRouteEnum.SHARE]: undefined;
   [HomeTabRouteEnum.SETTINGS]: undefined;
+  [HomeTabRouteEnum.FEEDBACK]: undefined;
 };
 
 export enum OnboardingRouteEnum {
