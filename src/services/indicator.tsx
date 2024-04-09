@@ -28,7 +28,7 @@ export namespace IndicatorService {
             0: '#D9D9EF',
             1: '#b1f3ef',
             2: '#73c8ae',
-            3: '#fef799',
+            3: '#fcbf49',
             4: '#ee817e',
             5: '#a7546d',
             6: '#965f9b',
@@ -41,9 +41,9 @@ export namespace IndicatorService {
             0: '#D9D9EF',
             1: '#73c8ae',
             2: '#73c8ae',
-            3: '#fef799',
-            4: '#fef799',
-            5: '#fef799',
+            3: '#fcbf49',
+            4: '#fcbf49',
+            5: '#fcbf49',
             6: '#E38136',
             7: '#E38136',
             8: '#FF797A',
@@ -59,7 +59,7 @@ export namespace IndicatorService {
             0: '#D9D9EF',
             1: '#b1f3ef',
             2: '#73c8ae',
-            3: '#fef799',
+            3: '#fcbf49',
             4: '#ee817e',
             5: '#a7546d',
           },
@@ -70,7 +70,7 @@ export namespace IndicatorService {
           valuesToColor: {
             0: '#D9D9EF',
             1: '#73c8ae',
-            2: '#fef799',
+            2: '#fcbf49',
             3: '#ee817e',
             4: '#a7546d',
           },
@@ -81,7 +81,7 @@ export namespace IndicatorService {
           valuesToColor: {
             0: '#D9D9EF', // Site non classé - Site n'ayant pas suffisamment de prélèvements cette saison pour être classé
             1: '#b1f3ef', // bon qualité
-            2: '#fef799', // moyen qualité
+            2: '#fcbf49', // moyen qualité
             3: '#ee817e', // mauvais
             4: '#965f9b', // interdiction
           },
@@ -94,7 +94,7 @@ export namespace IndicatorService {
           valuesToColor: {
             0: '#D9D9EF', // Site non classé - Site n'ayant pas suffisamment de prélèvements cette saison pour être classé
             1: '#b1f3ef', // bon qualité
-            2: '#fef799', // moyen qualité
+            2: '#fcbf49', // moyen qualité
             3: '#ee817e', // mauvais
             4: '#965f9b', // interdiction
           },
