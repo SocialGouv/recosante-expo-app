@@ -1,6 +1,6 @@
 import { View, Pressable, Platform, Linking } from 'react-native';
 import BottomSheet, { TouchableOpacity } from '@gorhom/bottom-sheet';
-import { useRef, useMemo, useCallback, useEffect } from 'react';
+import { useRef, useMemo, useCallback, useEffect, useState } from 'react';
 import supPlugin from 'markdown-it-sup';
 import subPlugin from 'markdown-it-sub';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -36,7 +36,7 @@ type IndicatorSelectorSheetProps = NativeStackScreenProps<
 
 export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
-
+  const [showMoreDrinkingWater, setShowMoreDrinkingWater] = useState(false);
   const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
   const isOpenedRef = useRef(false);
   const hasScrollToEnd = useRef(false);
@@ -229,63 +229,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             </>
           ) : null}
 
-          {isDrinkingWaterIndicator ? (
-            <>
-              {currentDayIndicatorData?.values?.length ? (
-                <>
-                  <Title label="derniers tests effectués" />
-                  <View className="mt-2 rounded-md border border-gray-200 bg-white">
-                    {currentDayIndicatorData.values.map((test, index) => {
-                      if (!test.drinkingWater) return null;
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            if (test.link) Linking.openURL(test.link);
-                          }}
-                          key={test.drinkingWater.prelevement_code}
-                        >
-                          <View
-                            className={cn(
-                              'px-2 py-2',
-                              index > 0 ? 'border-t border-t-gray-100' : '',
-                            )}
-                          >
-                            <View className="mb-1 flex-row justify-between">
-                              <MyText className="text-gray-700">
-                                Test du{' '}
-                                {dayjs(
-                                  test.drinkingWater?.prelevement_date,
-                                ).format('DD MMM YYYY')}{' '}
-                              </MyText>
-                              <MyText className="text-xs text-gray-400">
-                                ({test.drinkingWater?.parameters_count}{' '}
-                                paramètres testés)
-                              </MyText>
-                            </View>
-                            <View className="ml-4">
-                              <DrinkingWaterResult
-                                indicatorValue={
-                                  test.value as DrinkingWaterValue | null
-                                }
-                              />
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </>
-              ) : null}
-              <MyText className="mt-4" font="MarianneRegularItalic">
-                Source des données :{' '}
-                {
-                  IndicatorService.getDataSourceByIndicator(indicator.slug)
-                    .label
-                }
-              </MyText>
-            </>
-          ) : null}
-
           <Title label="Nos recommandations" />
           {currentDayIndicatorData.summary?.recommendations?.map(
             (recommendation: any) => {
@@ -302,8 +245,92 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
             },
           )}
           <MyText className="mt-2" font="MarianneRegularItalic">
-            Source des recommandations : Gouvernement Francais.
+            Source des recommandations :{' '}
+            {isDrinkingWaterIndicator
+              ? 'Ministere de la Santé et de la prévention'
+              : 'Gouvernement Francais'}
+            .
           </MyText>
+          {isDrinkingWaterIndicator ? (
+            <>
+              {currentDayIndicatorData?.values?.length ? (
+                <>
+                  <Title label="derniers tests effectués" />
+                  <MyText
+                    className="mt-1 text-xs text-gray-500"
+                    font="MarianneRegular"
+                  >
+                    Différents paramètres sont testés sur le réseau concerné et
+                    son réseau amont, retrouvez ci-dessous la liste des
+                    résultats et paramètres testés pour votre emplacement :
+                  </MyText>
+                  <View className="mt-2 rounded-md border border-gray-200 bg-white">
+                    {currentDayIndicatorData.values
+                      .map((test, index) => {
+                        if (!test.drinkingWater) return null;
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              if (test.link) Linking.openURL(test.link);
+                            }}
+                            key={test.drinkingWater.prelevement_code}
+                          >
+                            <View
+                              className={cn(
+                                'px-2 py-2',
+                                index > 0 ? 'border-t border-t-gray-100' : '',
+                              )}
+                            >
+                              <View className="mb-1 flex-row justify-between">
+                                <MyText className="text-xs text-gray-400">
+                                  Test du{' '}
+                                  {dayjs(
+                                    test.drinkingWater?.prelevement_date,
+                                  ).format('DD MMM YYYY')}{' '}
+                                </MyText>
+                                <MyText className="text-xs text-gray-400">
+                                  {test.drinkingWater?.parameters_count}{' '}
+                                  paramètres
+                                </MyText>
+                              </View>
+                              <View>
+                                <DrinkingWaterResult
+                                  indicatorValue={
+                                    test.value as DrinkingWaterValue | null
+                                  }
+                                />
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        );
+                      })
+                      .slice(0, showMoreDrinkingWater ? undefined : 5)}
+                    {showMoreDrinkingWater ? null : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setShowMoreDrinkingWater(true);
+                        }}
+                      >
+                        <View className="border-t border-t-gray-100 px-2 py-2">
+                          <MyText className="text-center text-xs text-gray-600 underline">
+                            Voir tous les tests
+                          </MyText>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </>
+              ) : null}
+              <MyText className="mt-4" font="MarianneRegularItalic">
+                Source des données :{' '}
+                {
+                  IndicatorService.getDataSourceByIndicator(indicator.slug)
+                    .label
+                }
+              </MyText>
+            </>
+          ) : null}
+
           <Title label={indicator?.about_title} />
           <View className="mt-2 w-full overflow-hidden">
             <Markdown

@@ -135,6 +135,10 @@ export namespace IndicatorService {
         };
       case IndicatorsSlugEnum.bathing_water:
         return {
+          label: ' ',
+        };
+      case IndicatorsSlugEnum.drinking_water:
+        return {
           label: 'Ministere de la Santé et de la prévention',
         };
       default:
