@@ -12,7 +12,7 @@ export namespace ShareService {
       });
       const result = await Share.share({
         message:
-          "Bonjour, je te recommande l'application gratuite et totalement anonyme Recosanté. Bonne découverte !" +
+          'Bonjour, je te recommande l’application Recosanté du ministère de la santé et de l’environnement pour obtenir des informations et recommandations sur comment l’environnement impacte la santé.' +
           (Platform.OS === 'android' ? '\n' + url : ''),
         url: Platform.OS === 'ios' ? url : undefined,
       });
