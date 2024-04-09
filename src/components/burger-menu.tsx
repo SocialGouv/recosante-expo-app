@@ -8,6 +8,7 @@ import { DashboardPage } from '~/scenes/dashboard/dashboard';
 import { SharePage } from '~/scenes/share';
 import { SettingsPage } from '~/scenes/settings/settings';
 import MyText from './ui/my-text';
+import { FeedbackPage } from '~/scenes/feedback/feedback';
 const Drawer = createDrawerNavigator<HomeTabParamList>();
 
 interface BurgerMenuProps {
@@ -85,6 +86,13 @@ export function BurgerMenu(props: BurgerMenuProps) {
         component={SettingsPage}
         options={{
           title: 'Paramètres',
+        }}
+      />
+      <Drawer.Screen
+        name={HomeTabRouteEnum.FEEDBACK}
+        component={FeedbackPage}
+        options={{
+          title: 'Laisser un avis',
         }}
       />
     </Drawer.Navigator>

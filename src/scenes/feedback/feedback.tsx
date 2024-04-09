@@ -1,20 +1,15 @@
-import React, { useCallback, useRef, useEffect, useMemo } from 'react';
+import React from 'react';
 import {
-  Pressable,
   View,
-  ScrollView,
   StyleSheet,
   Platform,
+  TextInput,
+  ScrollView,
 } from 'react-native';
 import MyText from '~/components/ui/my-text';
 import * as Notifications from 'expo-notifications';
 import appJson from '~/../app.json';
-import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { type RouteEnum, type RootStackParamList } from '~/constants/route';
-import { Close } from '~/assets/icons/close';
-import { InputCount } from './input-count';
 import Button from '~/components/ui/button';
 import { useToast } from '~/services/toast';
 import API from '~/services/api';
@@ -22,37 +17,25 @@ import { MailService } from '~/services/mail';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import { USER_ID } from '~/constants/matomo';
 import { useUser } from '~/zustand/user/useUser';
-
-type InterfacePageProps = NativeStackScreenProps<
-  RootStackParamList,
-  RouteEnum.FEEDBACK
->;
+import { Score } from './score';
+import { cn } from '~/utils/tailwind';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const initialState = {
-  score: 8,
+  helpful: 'pas de réponse',
   message: '',
   contact: '',
 };
 
-export function FeedbackPage(props: InterfacePageProps) {
+interface FeedbackProps {
+  navigation: any;
+}
+
+export function FeedbackPage(props: FeedbackProps) {
   const { show } = useToast();
   const { address, notifications_preference } = useUser((state) => state);
   const [values, setValues] = React.useState(initialState);
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['90%'], []);
-  const isOpenedRef = useRef(false);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    if (index < 0) {
-      isOpenedRef.current = false;
-    }
-  }, []);
-
-  function closeBottomSheet() {
-    bottomSheetRef.current?.close();
-    isOpenedRef.current = false;
-    props.navigation.goBack();
-  }
   function handleChange({ id, value }: { id: string; value: string | number }) {
     setValues({ ...values, [id]: value });
   }
@@ -61,29 +44,33 @@ export function FeedbackPage(props: InterfacePageProps) {
     logEvent({
       category: 'FEEDBACK',
       action: 'SEND_FEEDBACK',
-      name: 'SCORE',
-      value: values.score,
     });
     API.post({
       path: '/feedback',
       body: {
         ...values,
       },
+    }).then((res) => {
+      if (res.ok) {
+        setValues(initialState);
+        props.navigation.goBack();
+      } else {
+        show('Une erreur est survenue, veuillez réessayer plus tard', 4000);
+      }
     });
     const notifs = await Notifications.getPermissionsAsync();
     const textEmail = `
-Message : ${values.message}
-
----
-MatomoId : ${userId}
-Ville: ${address?.municipality_insee_code} - ${address?.municipality_name}
-Notifications : ${notifications_preference}
-Notifications activées : ${notifs.status === 'granted' ? 'Oui' : 'Non'}
-Score : ${values.score}
-Contact : ${values.contact}
-Device : ${Platform.OS}
-Device Version : ${Platform.Version}
-App Version : ${appJson.expo.version} (${Platform.select({
+    Message : ${values.message}
+    ---
+    MatomoId : ${userId}
+    Ville: ${address?.municipality_insee_code} - ${address?.municipality_name}
+    Notifications : ${notifications_preference?.join(', ')}
+    Notifications activées : ${notifs.status === 'granted' ? 'Oui' : 'Non'}
+    Application utile : ${values.helpful}
+    Contact : ${values.contact}
+    Device : ${Platform.OS}
+    Device Version : ${Platform.Version}
+    App Version : ${appJson.expo.version} (${Platform.select({
       ios: appJson.expo.ios.buildNumber,
       android: `${appJson.expo.android.versionCode}`,
     })})
@@ -94,7 +81,6 @@ App Version : ${appJson.expo.version} (${Platform.select({
       text: textEmail,
     }).then((res) => {
       if (res.ok) {
-        closeBottomSheet();
         show('💌 Message envoyé, Merci pour votre retour !', 4000);
       } else {
         show('Une erreur est survenue, veuillez réessayer plus tard', 4000);
@@ -102,89 +88,39 @@ App Version : ${appJson.expo.version} (${Platform.select({
     });
   }
 
-  useEffect(() => {
-    bottomSheetRef.current?.expand();
-  }, []);
-
   return (
-    <BottomSheet
-      style={{
-        backgroundColor: '#3343BD',
-        borderRadius: 35,
-        shadowColor: '#3343BD',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.7,
-        shadowRadius: 20,
-        elevation: 2,
-      }}
-      enablePanDownToClose={true}
-      ref={bottomSheetRef}
-      index={0}
-      snapPoints={snapPoints}
-      onChange={handleSheetChanges}
-      onClose={closeBottomSheet}
-      backgroundStyle={{
-        borderTopRightRadius: 35,
-        borderTopLeftRadius: 35,
-      }}
-      handleStyle={{
-        backgroundColor: '#3343BD',
-        borderTopLeftRadius: 35,
-        borderTopRightRadius: 35,
-      }}
-      handleIndicatorStyle={{
-        backgroundColor: 'white',
-        height: 7,
-        width: 83,
-      }}
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
     >
-      <View className="-mt-2 flex items-center justify-center border-t border-app-primary bg-app-primary p-2 pb-6">
-        <MyText font="MarianneBold" className="text-xl text-white">
-          Améliorons ensemble Recosanté
+      <View className=" flex  flex-1 bg-app-gray px-6">
+        <MyText font="MarianneRegular" className="text-xl">
+          Donnez votre avis et améliorons ensemble Recosante.
         </MyText>
-        <MyText font="MarianneRegular" className=" text-white">
-          en 20 secondes !
+        <MyText font="MarianneRegular" className="mt-1 text-[14px]">
+          Moins de 20 secondes.
         </MyText>
-      </View>
-      <Pressable
-        onPress={() => {
-          logEvent({
-            category: 'FEEDBACK',
-            action: 'CLOSE_FEEDBACK',
-            name: 'SCORE',
-            value: values.score,
-          });
-          closeBottomSheet();
-        }}
-        className="absolute right-2 top-0"
-      >
-        <Close />
-      </Pressable>
-
-      <ScrollView className="flex flex-1 bg-app-gray px-4">
-        <View className="border-b border-gray-200 pb-6 pt-4">
-          <MyText font="MarianneBold" className=" text-[15px] text-black">
-            1. Ce service vous a-t-il été utile ?
+        <View className="mt-12 border-b border-gray-200 pb-6">
+          <MyText font="MarianneRegular" className=" text-[15px] text-black">
+            L'application est utile ?
           </MyText>
-          <InputCount
-            max={10}
-            value={values.score}
-            onChange={(value) => {
+
+          <Score
+            selected={values.helpful}
+            handleSelect={(value) => {
               handleChange({
-                id: 'score',
+                id: 'helpful',
                 value,
               });
             }}
           />
         </View>
         <View className="border-b border-gray-200 pb-6 pt-4">
-          <MyText font="MarianneBold" className=" text-[15px] text-black">
-            2. Avez-vous des suggestions pour améliorer Recosanté ?
+          <MyText font="MarianneRegular" className=" text-[15px] text-black">
+            Avez-vous des suggestions pour l'améliorer ?
           </MyText>
-          <BottomSheetTextInput
+          <TextInput
+            focusable
             style={styles.textArea}
             value={values.message}
             onChange={(event) => {
@@ -194,17 +130,20 @@ App Version : ${appJson.expo.version} (${Platform.select({
               });
             }}
             multiline={true}
-            numberOfLines={10}
-            className="mt-4 h-24  rounded-lg bg-white px-4 py-4"
+            className={cn(
+              'mt-2 h-24  rounded-sm border border-gray-200 bg-white px-4 py-4',
+            )}
             placeholderTextColor="#9C9C9C"
-            placeholder="Un besoin sur de nouveaux indicateurs ? Une amélioration sur l'interface ? (facultatif)"
+            placeholder={
+              "Un besoin sur de nouveaux indicateurs ?\nUne amélioration sur l'interface ? (facultatif)"
+            }
           />
         </View>
-        <View className="border-b border-gray-200 pb-6 pt-4 ">
-          <MyText font="MarianneBold" className=" text-[15px] text-black">
-            3. Peut-on vous recontacter pour en savoir plus ?
+        <View className="pb-6 pt-4 ">
+          <MyText font="MarianneRegular" className=" text-[15px] text-black">
+            Peut-on vous recontacter pour en savoir plus ?
           </MyText>
-          <BottomSheetTextInput
+          <TextInput
             style={styles.textInput}
             value={values.contact}
             onChange={(event) => {
@@ -216,38 +155,36 @@ App Version : ${appJson.expo.version} (${Platform.select({
             autoComplete="email"
             autoCapitalize="none"
             placeholderTextColor="#9C9C9C"
-            className="mt-4 rounded-lg bg-white px-4 py-4"
-            placeholder="Votre numéro de téléphone ou adresse mail (facultatif)"
+            className="mt-2 rounded-sm border border-gray-200 bg-white px-4 py-4"
+            placeholder="Téléphone ou adresse mail (facultatif)"
           />
         </View>
-        <Button onPress={onSend} viewClassName="bg-app-primary py-4 mb-10">
-          Envoyer
-        </Button>
-      </ScrollView>
-    </BottomSheet>
+        <View className="flex-row items-center  justify-end">
+          <TouchableOpacity
+            onPress={() => {
+              setValues(initialState);
+              props.navigation.goBack();
+            }}
+          >
+            <MyText className="mr-8 text-sm text-app-primary">Annuler</MyText>
+          </TouchableOpacity>
+          <Button onPress={onSend} viewClassName="bg-app-primary   rounded-sm ">
+            Envoyer
+          </Button>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   textArea: {
-    marginTop: 12,
-    marginBottom: 12,
-    padding: 12,
-    fontSize: 16,
-    minHeight: 100,
-    borderRadius: 4,
     backgroundColor: 'white',
     color: 'black',
     textAlign: 'left',
   },
   textInput: {
-    fontSize: 16,
-    marginTop: 12,
-    alignSelf: 'stretch',
-    marginBottom: 12,
-    padding: 12,
     minHeight: 50,
-    borderRadius: 4,
     backgroundColor: 'white',
     color: 'black',
     textAlign: 'left',
