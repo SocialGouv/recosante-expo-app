@@ -93,6 +93,7 @@ export namespace LocationService {
       municipality_name: feature?.properties.city,
       municipality_insee_code: feature?.properties.citycode,
       municipality_zip_code: feature?.properties.postcode,
+      granularity: feature.properties.street ? 'street' : 'city',
     };
   }
 
@@ -119,7 +120,6 @@ export namespace LocationService {
     url.searchParams.append('lon', longitude.toString());
     url.searchParams.append('lat', latitude.toString());
     const response = await fetch(url).then(async (res) => await res.json());
-
     const currentAdress = response?.features?.[0] as GeoApiFeature;
 
     if (!currentAdress) {

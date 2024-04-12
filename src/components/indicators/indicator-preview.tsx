@@ -18,6 +18,7 @@ import { logEvent } from '~/services/logEventsWithMatomo';
 import * as Haptics from 'expo-haptics';
 import { LineList } from './graphs/lines-list';
 import { DrinkingWaterResult } from './graphs/drinking-water-result';
+import { NoValuePils } from './no-value-pils';
 
 interface IndicatorPreviewProps {
   indicator: IndicatorItem;
@@ -42,9 +43,8 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
   const indicatorColor = valuesToColor[indicatorValue];
 
-  const isUnavailable = !indicatorDataInCurrentDay?.summary.value;
+  const indicatorHasNoValue = !indicatorDataInCurrentDay?.summary.value;
   const status = indicatorDataInCurrentDay?.summary.status;
-  const isWaterBathingIndicator = slug === IndicatorsSlugEnum.bathing_water;
   const isDrinkingWaterIndicator = slug === IndicatorsSlugEnum.drinking_water;
   const showLine = !isDrinkingWaterIndicator;
   const showLineList = props.isFavorite && !isDrinkingWaterIndicator;
@@ -69,7 +69,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     if (!currentIndicatorData) return;
     if (!props.day) return;
     if (props.isFavorite) return;
-    if (isUnavailable) return;
+    if (indicatorHasNoValue) return;
     logEvent({
       category: 'DASHBOARD',
       action: 'INDICATOR_LONG_PRESS',
@@ -86,7 +86,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
     <TouchableOpacity
       className={cn(
         'm-2 mx-3',
-        isUnavailable ? 'opacity-40' : '',
+        indicatorHasNoValue ? 'opacity-50' : '',
         props.isFavorite ? ' shadow-md' : 'scale-[0.98]',
       )}
       onPress={handlePress}
@@ -104,7 +104,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
               <View
                 className={cn(
                   'flex w-full flex-row items-center justify-between',
-                  isUnavailable ? '' : ' pb-2',
+                  indicatorHasNoValue ? '' : ' pb-2',
                 )}
               >
                 <View>
@@ -112,7 +112,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                     className={cn(
                       '"text-wrap  uppercase text-muted',
                       props.isFavorite ? ' text-[17px]' : ' text-[15px]',
-                      isUnavailable ? '' : 'mb-2',
+                      indicatorHasNoValue ? '' : 'mb-2',
                     )}
                     font={
                       props.isFavorite ? 'MarianneExtraBold' : 'MarianneBold'
@@ -121,7 +121,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                     {props.isFavorite
                       ? props.indicator.name
                       : props.indicator.short_name}{' '}
-                    {isUnavailable || isDrinkingWaterIndicator
+                    {indicatorHasNoValue || isDrinkingWaterIndicator
                       ? null
                       : `: ${status}`}
                   </MyText>
@@ -133,16 +133,7 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                     />
                   ) : null}
                 </View>
-                {isUnavailable ? (
-                  <View className="rounded-full border border-gray-300 px-2">
-                    <MyText
-                      className="text-wrap  ml-1 rounded-full  text-[15px] uppercase text-muted"
-                      font="MarianneExtraBold"
-                    >
-                      aucune donnée
-                    </MyText>
-                  </View>
-                ) : null}
+                {indicatorHasNoValue ? <NoValuePils slug={slug} /> : null}
               </View>
             </View>
 
@@ -173,19 +164,12 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
                 />
               </>
             ) : null}
-            {isUnavailable && isWaterBathingIndicator ? (
-              <MyText className="mt-1 text-[13px] text-muted">
-                La saison de la collecte des données des eaux de baignades n’a
-                pas encore commencée.
-              </MyText>
-            ) : null}
-            {isUnavailable ? (
-              ''
-            ) : (
-              <MyText className="mt-1 text-[13px] text-muted">
-                {indicatorDataInCurrentDay.summary.recommendations?.[0]}
-              </MyText>
-            )}
+
+            <MyText className="mt-1 text-[13px] text-muted">
+              {indicatorHasNoValue
+                ? currentIndicatorData?.j0.help_text
+                : indicatorDataInCurrentDay.summary.recommendations?.[0]}
+            </MyText>
           </View>
         </View>
       </View>

@@ -10,6 +10,7 @@ export type User = {
   municipality_insee_code: string;
   municipality_name: string;
   municipality_zip_code: string;
+  granularity: 'street' | 'city';
   udi: string;
   push_notif_token: string;
   created_at: string;

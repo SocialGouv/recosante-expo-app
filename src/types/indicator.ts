@@ -47,7 +47,7 @@ export interface GenericIndicatorByPeriodValue
   value: GenericIndicatorValue;
 }
 
-export type IndicatorByPeriodValues = Array<IndicatorByPeriodValue>;
+export type IndicatorByPeriodValues = IndicatorByPeriodValue[];
 
 export interface IndicatorByPeriod {
   id: string;
@@ -63,6 +63,7 @@ export interface IndicatorByPeriod {
     recommendations?: string[];
   };
   values?: IndicatorByPeriodValues;
+  help_text?: string;
 }
 
 export interface Indicator {

@@ -6,6 +6,7 @@ export interface UserAddress {
   id?: string;
   title?: string; // but required in autocomplete
   label?: string; // but required in autocomplete
+  granularity: 'street' | 'city';
 }
 
 export interface GeoApiFeature {

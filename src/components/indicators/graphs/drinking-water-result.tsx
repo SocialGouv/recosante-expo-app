@@ -14,19 +14,15 @@ interface DrinkingWaterResultProps {
 export function DrinkingWaterResult(props: DrinkingWaterResultProps) {
   if (!props.indicatorValue) return null;
   return (
-    <View
-      className={
-        props.indicatorValue.bacteriological === DrinkingWaterValuesEnum.S ||
-        props.indicatorValue.chemical === DrinkingWaterValuesEnum.S
-          ? 'flex-col'
-          : 'flex-row'
-      }
-    >
+    <View className="flex-col">
       <Label
-        label="Bacteriologique"
+        label="Conformité Bacteriologique"
         value={props.indicatorValue.bacteriological}
       />
-      <Label label="Chimique" value={props.indicatorValue.chemical} />
+      <Label
+        label="Conformité Chimique"
+        value={props.indicatorValue.chemical}
+      />
     </View>
   );
 }
@@ -59,13 +55,15 @@ interface LabelProps {
 }
 function Label({ label, value }: LabelProps) {
   return (
-    <View className="mr-6 flex-row">
-      <MyText
-        font="MarianneRegular"
-        className=" mr-1 flex items-center text-xs uppercase text-muted"
-      >
-        {label}
-      </MyText>
+    <View className="mb-1 mr-6 flex-row items-center">
+      <View className="  min-w-[215px] ">
+        <MyText
+          font="MarianneRegular"
+          className="mr-1  items-center border text-xs uppercase text-muted"
+        >
+          {label}
+        </MyText>
+      </View>
       {renderValue({ value })}
     </View>
   );

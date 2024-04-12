@@ -78,6 +78,7 @@ export function LocationPage(props: LocationPageProps) {
         items?.features?.map((feature: GeoApiFeature) => {
           return LocationService.formatPropertyToAddress(feature);
         }) ?? [];
+
       if (searchRef.current !== search) return; // too late
       setSuggestedAddress(adressReponse);
       setIsLoading(false);
