@@ -30,6 +30,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
     <View className="flex flex-col ">
       <View className="flex  flex-row flex-wrap items-start ">
         {props.indicators?.map((indicator) => {
+          if (indicator.slug === 'drinking_water' && !__DEV__) return null;
           const isFavorite = state?.slug === indicator.slug;
           return (
             <Button

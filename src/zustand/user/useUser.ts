@@ -27,6 +27,7 @@ const setUser = (
       municipality_insee_code: user.municipality_insee_code,
       municipality_name: user.municipality_name,
       municipality_zip_code: user.municipality_zip_code,
+      granularity: user.granularity,
     },
     udi: user.udi,
     notifications_preference: user.notifications_preference,
@@ -48,6 +49,7 @@ export const useUser = create<UserState>()(
                     lon: address.coordinates[0],
                   }
                 : null,
+            granularity: address.granularity,
             municipality_insee_code: address.municipality_insee_code,
             municipality_name: address.municipality_name,
             // can't send municipality_full_name to the DB for GDPR purposes
@@ -107,6 +109,7 @@ export const useUser = create<UserState>()(
               municipality_insee_code: state.address.municipality_insee_code,
               municipality_name: state.address.municipality_name,
               municipality_zip_code: state.address.municipality_zip_code,
+              granularity: state.address.granularity,
             },
           }).then((res) => {
             // user reconciliation
@@ -116,6 +119,7 @@ export const useUser = create<UserState>()(
                 municipality_insee_code: user.municipality_insee_code,
                 municipality_name: user.municipality_name,
                 municipality_zip_code: user.municipality_zip_code,
+                granularity: user.granularity,
               };
               state.udi = user.udi;
               state.setNotificationsPreferences(user.notifications_preference);

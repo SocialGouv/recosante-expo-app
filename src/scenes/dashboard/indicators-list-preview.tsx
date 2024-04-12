@@ -42,7 +42,9 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
   const filteredIndicators = useMemo(
     () =>
       props.indicators?.filter(
-        (indicator) => indicator.slug !== props.favoriteIndicator?.slug,
+        (indicator) =>
+          indicator.slug !== props.favoriteIndicator?.slug &&
+          (__DEV__ ? !undefined : indicator.slug !== 'drinking_water'),
       ),
     [props.indicators, props.favoriteIndicator],
   );
