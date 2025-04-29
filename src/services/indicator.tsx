@@ -118,16 +118,13 @@ export namespace IndicatorService {
   } {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
+      case IndicatorsSlugEnum.pollen_allergy:
         return {
           label: 'ATMO France',
         };
       case IndicatorsSlugEnum.indice_uv:
         return {
           label: 'Météo France',
-        };
-      case IndicatorsSlugEnum.pollen_allergy:
-        return {
-          label: 'RNSA',
         };
       case IndicatorsSlugEnum.weather_alert:
         return {
