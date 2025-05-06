@@ -101,12 +101,12 @@ export enum LabelEnum {
 // Pollens
 
 export enum PollensRiskNumberEnum {
-  NO_RISK = 0,
   VERY_LOW = 1,
   LOW = 2,
   MODERATE = 3,
   HIGH = 4,
   VERY_HIGH = 5,
+  EXTREMEMLY_HIGH = 6,
 }
 
 export interface PollensDto {

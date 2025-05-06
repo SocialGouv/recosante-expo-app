@@ -38,14 +38,16 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
   if (!indicatorDataInCurrentDay) return <></>;
   const indicatorMaxValue =
     IndicatorService.getDataVisualisationBySlug(slug)?.maxValue;
+  const indicatorMinValue =
+    IndicatorService.getDataVisualisationBySlug(slug)?.minValue;
 
   const indicatorValue = indicatorDataInCurrentDay?.summary.value ?? 0;
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(slug);
-  const indicatorColor = valuesToColor[indicatorValue];
 
   const indicatorHasNoValue = !indicatorDataInCurrentDay?.summary.value;
   const status = indicatorDataInCurrentDay?.summary.status;
   const isDrinkingWaterIndicator = slug === IndicatorsSlugEnum.drinking_water;
+
   const showLine = !isDrinkingWaterIndicator;
   const showLineList = props.isFavorite && !isDrinkingWaterIndicator;
 
@@ -139,9 +141,10 @@ export function IndicatorPreview(props: IndicatorPreviewProps) {
 
             {showLine ? (
               <LineChart
-                color={indicatorColor}
+                color={valuesToColor[indicatorValue]}
                 value={indicatorValue}
                 maxValue={indicatorMaxValue}
+                minValue={indicatorMinValue}
               />
             ) : null}
 

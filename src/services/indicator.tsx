@@ -3,6 +3,7 @@ import { IndicatorsSlugEnum } from '~/types/indicator';
 export namespace IndicatorService {
   type DataVisualisation = {
     maxValue: number;
+    minValue?: number;
     valuesToColor: Record<number, string>;
   };
   export function getDataVisualisationBySlug(
@@ -54,14 +55,15 @@ export namespace IndicatorService {
         };
       case IndicatorsSlugEnum.pollen_allergy:
         return {
-          maxValue: 5,
+          maxValue: 6,
+          minValue: 1,
           valuesToColor: {
-            0: '#D9D9EF',
-            1: '#b1f3ef',
-            2: '#73c8ae',
-            3: '#fcbf49',
-            4: '#ee817e',
-            5: '#a7546d',
+            1: '#50f0e6',
+            2: '#50ccaa',
+            3: '#f0e641',
+            4: '#ff5050',
+            5: '#960032',
+            6: '#7d2181',
           },
         };
       case IndicatorsSlugEnum.weather_alert:
@@ -118,7 +120,6 @@ export namespace IndicatorService {
   } {
     switch (slug) {
       case IndicatorsSlugEnum.indice_atmospheric:
-      case IndicatorsSlugEnum.pollen_allergy:
         return {
           label: 'ATMO France',
         };
