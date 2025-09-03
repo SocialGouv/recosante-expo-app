@@ -12,20 +12,28 @@ interface LineChartProps {
   value?: number;
   color?: string;
   maxValue: number;
+  minValue?: number;
   isSmall?: boolean;
 }
 
 export function LineChart(props: LineChartProps) {
   const [viewWidth, setViewWitdh] = useState(0);
   const value = props.value ?? 0;
+  const maxValue = props.maxValue ?? 0;
+  const minValue = props.minValue ?? 0;
+
 
   const initialWidth = useSharedValue(0);
 
   const width = useMemo(
-    () => Math.round((value * viewWidth) / props.maxValue),
-    [value, viewWidth],
+    () => {
+      if (value <= minValue) {
+        return 9; // Largeur minimale pour visualiser
+      }
+      return Math.round(((value - minValue) * viewWidth) / (maxValue - minValue));
+    },
+    [value, viewWidth, props.maxValue, minValue],
   );
-  const minValue = 0;
 
   useEffect(() => {
     initialWidth.value = withSpring(width, {
@@ -37,7 +45,7 @@ export function LineChart(props: LineChartProps) {
     });
   }, [width]);
 
-  if (value === 0) {
+  if (value < 0) {
     return <></>;
   }
 

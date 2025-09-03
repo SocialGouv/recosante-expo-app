@@ -47,6 +47,9 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const indicatorMaxValue = IndicatorService.getDataVisualisationBySlug(
     indicator.slug,
   )?.maxValue;
+  const indicatorMinValue = IndicatorService.getDataVisualisationBySlug(
+    indicator.slug,
+  )?.minValue;
 
   const slug = indicator.slug;
   const isPollenIndicator = slug === IndicatorsSlugEnum.pollen_allergy;
@@ -61,7 +64,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
   const { valuesToColor } = IndicatorService.getDataVisualisationBySlug(
     indicator.slug,
   );
-  const indicatorColor = valuesToColor[indicatorValue ?? 0];
 
   const showLines =
     !isDrinkingWaterIndicator &&
@@ -190,8 +192,9 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               <View className="mt-2 rounded-md border border-gray-200 bg-white px-4 py-2 pr-2 pt-6">
                 <LineChart
                   value={indicatorValue}
-                  color={indicatorColor}
+                  color={valuesToColor[indicatorValue ?? 0]}
                   maxValue={indicatorMaxValue}
+                  minValue={indicatorMinValue}
                 />
               </View>
 
@@ -219,13 +222,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   </View>
                 </>
               ) : null}
-              <MyText className="mt-4" font="MarianneRegularItalic">
-                Source des données :{' '}
-                {
-                  IndicatorService.getDataSourceByIndicator(indicator.slug)
-                    .label
-                }
-              </MyText>
             </>
           ) : null}
 

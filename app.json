@@ -3,6 +3,7 @@
     "name": "Recosante",
     "slug": "recosante",
     "version": "1.1.0",
+    "runtimeVersion": "1.0.13",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -28,6 +29,9 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "icon": "./assets/icon.png",
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 21,
       "adaptiveIcon": {
         "foregroundImage": "./assets/android_adaptive_icon.png",
         "backgroundColor": "#3643b6"
@@ -38,7 +42,7 @@
     },
     "updates": {
       "enabled": true,
-      "fallbackToCacheTimeout": 15000,
+      "fallbackToCacheTimeout": 5000,
       "url": "https://u.expo.dev/8d8b446e-c8db-4641-b730-5cef195e96da"
     },
     "web": {

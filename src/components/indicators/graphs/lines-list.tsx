@@ -27,7 +27,7 @@ export function LineList(props: LineChartProps) {
     ? sortedValues.length > MAX_LINE && props.isPreviewMode
     : false;
   if (!props.slug) return <></>;
-  const { valuesToColor, maxValue } =
+  const { valuesToColor, maxValue, minValue } =
     IndicatorService.getDataVisualisationBySlug(props.slug);
 
   if (!sortedValues?.length) return <></>;
@@ -64,6 +64,7 @@ export function LineList(props: LineChartProps) {
                     color={valuesToColor[line.value]}
                     value={line.value}
                     maxValue={maxValue}
+                    minValue={minValue}
                   />
                 </View>
               </View>
