@@ -7,7 +7,6 @@ import { navigate, resetNavigationTo } from '~/services/navigation';
 import { useUser } from '~/zustand/user/useUser';
 import { registerForPushNotificationsAsync } from '~/services/expo-push-notifs';
 import API from '~/services/api';
-import { capture } from '~/services/sentry';
 import { logEvent } from '~/services/logEventsWithMatomo';
 
 export function useOnboardingNavigation(): {
@@ -116,9 +115,6 @@ export function useOnboardingNavigation(): {
             onNextAfterGeolocation();
           })
           .catch((err) => {
-            capture(err, {
-              extra: { location, method: 'get localisation onboarding' },
-            });
             setIsLoading(false);
           });
         break;

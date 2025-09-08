@@ -1,8 +1,5 @@
-// This replaces `const { getDefaultConfig } = require('expo/metro-config');`
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { getSentryExpoConfig } = require('@sentry/react-native/metro');
+const { getDefaultConfig } = require('expo/metro-config');
 
-// This replaces `const config = getDefaultConfig(__dirname);`
-const config = getSentryExpoConfig(__dirname);
+const config = getDefaultConfig(__dirname);
 
 module.exports = config;

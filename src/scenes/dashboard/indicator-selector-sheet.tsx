@@ -99,11 +99,13 @@ export function IndicatorSelectorSheet({
           Choisissez votre indicateur favori, les autres s'afficheront aussi.
         </MyText>
         <IndicatorsSelector
-          onSubmit={(favoriteIndicator) => {
+          onSubmit={(favoriteIndicators) => {
             logEvent({
               category: eventCategory,
               action: 'FAVORITE_INDICATOR_SELECTED',
-              name: favoriteIndicator.toLocaleUpperCase(),
+              name: favoriteIndicators
+                .map((slug) => slug.toLocaleUpperCase())
+                .join(','),
             });
             closeBottomSheet();
           }}

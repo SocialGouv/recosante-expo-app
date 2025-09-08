@@ -1,6 +1,5 @@
 import { Platform, Alert, Linking } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { capture } from './sentry';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -66,6 +65,6 @@ export async function registerForPushNotificationsAsync({
     }
     return token;
   } catch (e) {
-    capture(e);
+    // capture(e);
   }
 }

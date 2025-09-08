@@ -31,7 +31,7 @@
   "dependencies": {
     "@babel/helper-module-imports": "^7.24.3",
     "@gorhom/bottom-sheet": "^4.6.0",
-    "@react-native-async-storage/async-storage": "1.21.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/netinfo": "11.1.0",
     "@react-native-community/slider": "4.4.2",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -40,7 +40,6 @@
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.21",
-    "@sentry/react-native": "5.19.1",
     "@types/react": "~18.2.14",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
@@ -77,6 +76,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-toast-message": "^2.3.0",
     "react-native-webview": "13.6.4",
     "tailwind-merge": "^2.2.0",
     "zustand": "^4.4.7"

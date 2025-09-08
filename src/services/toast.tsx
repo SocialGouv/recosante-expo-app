@@ -1,7 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Animated, View } from 'react-native';
-
-import MyText from '~/components/ui/my-text';
+import React from 'react';
+import Toast from 'react-native-toast-message';
 
 const ViewContext = React.createContext({
   show: (caption: string | null, timeout?: number) => {},
@@ -13,7 +11,6 @@ export const useToast = () => {
   if (context === undefined) {
     throw new Error('useToast must be used within a ToastProvider');
   }
-
   return context;
 };
 
@@ -22,66 +19,28 @@ interface ToastProviderProps {
 }
 
 const ToastProvider = (props: ToastProviderProps) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const show = React.useCallback((caption: string | null, timeout = 1500) => {
+    console.log('Toast show called with:', caption);
+    if (!caption) return;
 
-  const [caption, setCaption] = useState<string | null>('');
+    Toast.show({
+      type: 'success',
+      text1: caption,
+      position: 'top',
+      visibilityTime: timeout,
+      autoHide: true,
+      topOffset: 60,
+    });
+  }, []);
 
-  const hide = useCallback(() => {
-    setCaption(null);
-  }, [setCaption]);
-
-  const show = useCallback(
-    (caption: string | null, timeout = 1500) => {
-      const fadeIn = () => {
-        // Will change fadeAnim value to 1 in 5 seconds
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 250,
-          useNativeDriver: true,
-        }).start();
-      };
-
-      const fadeOut = () => {
-        // Will change fadeAnim value to 0 in 3 seconds
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 250,
-          useNativeDriver: true,
-        }).start();
-      };
-      setCaption(caption);
-      fadeIn();
-      setTimeout(() => {
-        fadeOut();
-        setTimeout(() => {
-          setCaption(null);
-        }, 150);
-      }, timeout);
-    },
-    [setCaption, fadeAnim],
-  );
+  const hide = React.useCallback(() => {
+    Toast.hide();
+  }, []);
 
   return (
     <ViewContext.Provider value={{ hide, show }} {...props}>
       {props.children}
-      {Boolean(caption) && (
-        <Animated.View
-          style={{ opacity: fadeAnim }}
-          className="absolute top-[65px] flex w-full flex-row justify-center"
-          pointerEvents={'box-none'}
-        >
-          <View className="mb-4 flex w-[90%]  items-start  justify-start rounded-md  bg-white px-4 py-4 shadow-md">
-            <MyText
-              font="MarianneBold"
-              maxFontSizeMultiplier={2}
-              testID="toast"
-              className="py-2 text-left"
-            >
-              {caption}
-            </MyText>
-          </View>
-        </Animated.View>
-      )}
+      <Toast />
     </ViewContext.Provider>
   );
 };

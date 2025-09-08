@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react-native';
 import { matomoInit, logEvent } from '~/services/logEventsWithMatomo';
 import * as Notifications from 'expo-notifications';
 import { useEffect, useRef, useState } from 'react';
@@ -7,16 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const __DEV__ = process.env.NODE_ENV === 'development';
 export namespace InitializationService {
-  export function initSentry() {
-    Sentry.init({
-      dsn: 'https://011d0bf5c5f24f5eb273e83fed66e5eb@sentry.fabrique.social.gouv.fr/94',
-      enabled: !__DEV__,
-      debug: !__DEV__,
-      tracesSampleRate: 0.05,
-    });
-  }
-  export function initMatomo() {
-    matomoInit();
+  export async function initMatomo() {
+    await matomoInit();
   }
   export async function firstTimeLaunch() {
     if (__DEV__) return;

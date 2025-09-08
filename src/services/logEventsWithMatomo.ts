@@ -1,5 +1,4 @@
 import NetInfo from '@react-native-community/netinfo';
-import * as Sentry from '@sentry/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Matomo from './matomo';
 import { MATOMO_URL, MATOMO_IDSITE } from '../config';
@@ -22,7 +21,6 @@ export async function matomoInit() {
       },
     });
   }
-  Sentry.setUser({ id: matomo_id });
 
   const prevVisits = await AsyncStorage.getItem('STORAGE_MATOMO_VISITS');
   const newVisits = prevVisits ? Number(prevVisits) + 1 : 1;

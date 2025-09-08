@@ -5,6 +5,7 @@ import { useIndicatorsList } from '~/zustand/indicator/useIndicatorsList';
 import Button from '~/components/ui/button';
 import MyText from '~/components/ui/my-text';
 import { logEvent } from '~/services/logEventsWithMatomo';
+import { useUser } from '~/zustand/user/useUser';
 
 type IndicatorFastSelectorProps = NativeStackScreenProps<
   RootStackParamList,
@@ -14,9 +15,12 @@ type IndicatorFastSelectorProps = NativeStackScreenProps<
 export function IndicatorFastSelector(props: IndicatorFastSelectorProps) {
   const selected = props.route.params.indicatorSlug;
 
-  const { setFavoriteIndicator, indicators } = useIndicatorsList(
+  const { indicators, setFavoriteIndicators } = useIndicatorsList(
     (state) => state,
   );
+
+  const { address } = useUser((state) => state);
+  const hasAddress = !!address?.municipality_insee_code;
 
   const indicatorItem = indicators.find(
     (indicator) => indicator.slug === selected,
@@ -28,8 +32,9 @@ export function IndicatorFastSelector(props: IndicatorFastSelectorProps) {
         category: 'DASHBOARD',
         action: 'INDICATOR_FAVORITE_SELECTED',
         name: indicatorItem.slug,
+        value: hasAddress ? Number(address?.municipality_insee_code) : null,
       });
-      setFavoriteIndicator(indicatorItem);
+      setFavoriteIndicators([indicatorItem]);
       props.navigation.goBack();
     }
   };

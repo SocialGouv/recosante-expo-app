@@ -14,7 +14,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
 
   extra: {
-    SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
     EXPO_PUBLIC_API_SCHEME: process.env.EXPO_PUBLIC_API_SCHEME,
     EXPO_PUBLIC_API_HOST: process.env.EXPO_PUBLIC_API_HOST,
     EXPO_PUBLIC_APP_ENV: process.env.EXPO_PUBLIC_APP_ENV,

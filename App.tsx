@@ -3,17 +3,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import * as Sentry from '@sentry/react-native';
 import { Navigators } from './src/navigators';
 import EnvironmentIndicator from '~/components/environment-indicator';
-import ToastProvider from '~/services/toast';
 import { InitializationService } from '~/services/initialization';
+import ToastProvider from '~/services/toast';
+import { toastConfig } from '~/services/toast-config';
+import Toast from 'react-native-toast-message';
 
 LogBox.ignoreAllLogs(true);
 SplashScreen.preventAutoHideAsync();
-InitializationService.initSentry();
-InitializationService.initMatomo();
 InitializationService.firstTimeLaunch();
+InitializationService.initMatomo();
 function App() {
   InitializationService.useNotificationsListenerHook();
   const [fontsLoaded] = useFonts({
@@ -43,16 +43,15 @@ function App() {
 
 function AppWrapper() {
   return (
-    <>
-      <SafeAreaProvider>
-        <GestureHandlerRootView className="flex-1">
-          <ToastProvider>
-            <App />
-          </ToastProvider>
-        </GestureHandlerRootView>
-      </SafeAreaProvider>
-      <EnvironmentIndicator />
-    </>
+    <SafeAreaProvider>
+      <GestureHandlerRootView className="flex-1">
+        <ToastProvider>
+          <App />
+          <EnvironmentIndicator />
+        </ToastProvider>
+      </GestureHandlerRootView>
+      <Toast config={toastConfig} />
+    </SafeAreaProvider>
   );
 }
-export default Sentry.wrap(AppWrapper);
+export default AppWrapper;

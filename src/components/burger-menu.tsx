@@ -1,7 +1,8 @@
 import { DrawerActions } from '@react-navigation/native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BurgerIcon } from '~/assets/icons/burger';
 import { HomeTabRouteEnum, type HomeTabParamList } from '~/constants/route';
 import { DashboardPage } from '~/scenes/dashboard/dashboard';
@@ -16,6 +17,9 @@ interface BurgerMenuProps {
 }
 
 export function BurgerMenu(props: BurgerMenuProps) {
+  const screenWidth = Dimensions.get('window').width;
+  const insets = useSafeAreaInsets();
+
   return (
     <Drawer.Navigator
       initialRouteName={HomeTabRouteEnum.DASHBOARD}
@@ -26,7 +30,15 @@ export function BurgerMenu(props: BurgerMenuProps) {
         },
         drawerContentStyle: {
           paddingVertical: 40,
+          width: screenWidth, // Force la largeur complète
+          paddingTop: insets.top, // Ajoute le padding pour la safe area
+          paddingBottom: insets.bottom, // Ajoute le padding pour la safe area
         },
+        drawerStyle: {
+          width: screenWidth, // Force la largeur complète
+          backgroundColor: 'white',
+        },
+        overlayColor: 'rgba(0, 0, 0, 0.5)', // Assure que l'overlay couvre tout
         drawerLabelStyle: {
           fontFamily: 'MarianneBold',
           fontSize: 16,

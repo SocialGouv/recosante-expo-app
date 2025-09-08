@@ -24,6 +24,8 @@ import { ERROR_NO_NETWORK } from '~/constants/errors';
 import { MUNICIPALITY_FULL_NAME } from '~/constants/municipality';
 import { EditIcon } from '~/assets/icons/edit';
 import { LocationService } from '~/services/location';
+import { useNavigation } from '@react-navigation/native';
+import { LocationIcon } from '~/assets/icons/location';
 
 export type DashboardProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, HomeTabRouteEnum.DASHBOARD>,
@@ -31,7 +33,8 @@ export type DashboardProps = CompositeScreenProps<
 >;
 
 export function DashboardPage(props: DashboardProps) {
-  const { favoriteIndicator, indicators, setIndicatorsList } =
+  const navigation = useNavigation<any>();
+  const { favoriteIndicators, indicators, setIndicatorsList } =
     useIndicatorsList((state) => state);
   const { setIndicators } = useIndicators((state) => state);
   const [municipalityFullName, setMunicipalityFullName] = useState<string>('');
@@ -57,6 +60,7 @@ export function DashboardPage(props: DashboardProps) {
       return;
     }
     if (!response.ok) {
+      console.log('response', response);
       show(
         `Erreur lors du chargement des indicateurs ${response.message ?? ''}`,
       );
@@ -84,7 +88,7 @@ export function DashboardPage(props: DashboardProps) {
         if (ignore) return;
         if (!oneLineFullAddress) return;
         setMunicipalityFullName(oneLineFullAddress);
-        console.log({ udi });
+
         if (udi) return;
         // if the user has already oboarded on a version where we didn't save the udi
         // we need to save it now incognito to the user
@@ -123,20 +127,13 @@ export function DashboardPage(props: DashboardProps) {
     <>
       {address?.municipality_name ? (
         <>
-          <View className="flex-0 flex w-full bg-app-gray px-6">
-            <MyText font="MarianneRegular" className="text-xl text-black">
+          <View className="flex-0 mr-12 flex w-full bg-app-gray px-6">
+            <MyText font="MarianneRegular" className="text-sm text-black">
               Vos indicateurs autour de
             </MyText>
           </View>
-          <TouchableOpacity
-            className="flex w-fit flex-row items-center justify-between bg-app-gray px-6"
-            onPress={() => {
-              props.navigation.navigate(RouteEnum.LOCATION, {
-                isOnboarding: false,
-              });
-            }}
-          >
-            <View className="max-w-[90%] border-b border-app-primary ">
+          <View className="flex w-fit flex-row items-center justify-between bg-app-gray px-6">
+            <View className="mr-12 max-w-[90%] flex-1 border-b border-app-primary">
               <MyText
                 font="MarianneRegular"
                 className="self-start truncate text-xl text-app-primary "
@@ -147,10 +144,28 @@ export function DashboardPage(props: DashboardProps) {
                   'pas de nom'}
               </MyText>
             </View>
-            <View className="ml-4 w-fit rounded-full bg-app-primary p-2 text-sm text-white">
-              <EditIcon />
+            <View className="flex-row items-center gap-2">
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate(RouteEnum.LOCATION, {
+                    isOnboarding: false,
+                  });
+                }}
+                className="mr-4 rounded-full bg-app-primary p-2 text-sm text-white"
+              >
+                <EditIcon />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('FavoriteCities')}
+                className="ml-2 flex-row items-center"
+              >
+                <LocationIcon color="#3343BD" />
+                <MyText className="ml-2 font-bold text-app-primary">
+                  Mes villes
+                </MyText>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </View>
         </>
       ) : (
         <View className="flex-1 bg-app-gray px-4">
@@ -182,7 +197,7 @@ export function DashboardPage(props: DashboardProps) {
       {!!address?.municipality_name && (
         <IndicatorsListPreview
           indicators={indicators}
-          favoriteIndicator={favoriteIndicator}
+          favoriteIndicators={favoriteIndicators}
           isError={isError}
           isLoading={isLoading}
           isRefreshing={isRefreshing}

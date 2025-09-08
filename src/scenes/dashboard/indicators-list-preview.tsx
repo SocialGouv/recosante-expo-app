@@ -31,22 +31,23 @@ type TabProps = MaterialTopTabScreenProps<IndicatorsDaysTabParamList>;
 
 interface IndicatorsListPreviewProps {
   indicators: IndicatorItem[] | null;
-  favoriteIndicator: IndicatorItem | null;
+  favoriteIndicators: IndicatorItem[];
   isLoading: boolean;
   isRefreshing: boolean;
   isError: string;
   onRefresh: () => void;
 }
 export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
-  //   Remove the favorite indicator from the list of indicators
+  //   Remove the favorite indicators from the list of indicators
   const filteredIndicators = useMemo(
     () =>
       props.indicators?.filter(
         (indicator) =>
-          indicator.slug !== props.favoriteIndicator?.slug &&
-          (__DEV__ ? !undefined : indicator.slug !== 'drinking_water'),
+          !props.favoriteIndicators.some(
+            (fav) => fav.slug === indicator.slug,
+          ) && (__DEV__ ? !undefined : indicator.slug !== 'drinking_water'),
       ),
-    [props.indicators, props.favoriteIndicator],
+    [props.indicators, props.favoriteIndicators],
   );
   if (!props.indicators) {
     return null;
@@ -73,22 +74,46 @@ export function IndicatorsListPreview(props: IndicatorsListPreviewProps) {
           </View>
         ) : (
           <View className="pb-4 ">
-            {props.favoriteIndicator ? (
+            {/* Encart d'avertissement pour les pollens */}
+            <View className="mx-4 mb-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
+              <View className="flex-row items-start">
+                <View className="mr-3 mt-1">
+                  <MyText className="text-lg text-yellow-600">⚠️</MyText>
+                </View>
+                <View className="flex-1">
+                  <MyText
+                    font="MarianneBold"
+                    className="mb-1 text-sm text-yellow-800"
+                  >
+                    Indicateur pollens temporairement indisponible
+                  </MyText>
+                  <MyText className="text-xs text-yellow-700">
+                    Pour des raisons techniques, les données pollens ne sont pas
+                    disponibles actuellement. Elles reviendront bientôt !
+                  </MyText>
+                </View>
+              </View>
+            </View>
+
+            {props.favoriteIndicators?.map((fav, idx) => (
               <IndicatorPreview
                 day={tabProps.route.params.day}
-                indicator={props.favoriteIndicator}
+                indicator={fav}
                 isFavorite
-                index={0}
-              />
-            ) : null}
-            {filteredIndicators?.map((indicator, index) => (
-              <IndicatorPreview
-                day={tabProps.route.params.day}
-                key={indicator.slug}
-                indicator={indicator}
-                index={index}
+                index={idx}
+                key={fav.slug}
               />
             ))}
+            {filteredIndicators?.map((indicator, index) => {
+              return (
+                <IndicatorPreview
+                  day={tabProps.route.params.day}
+                  key={indicator.slug}
+                  indicator={indicator}
+                  index={index}
+                />
+              );
+            })}
           </View>
         )}
         <CallToAction />

@@ -23,13 +23,14 @@ import { ConfidentialityPage } from './scenes/confidentiality/confidentiality';
 import { FeedbackPage } from './scenes/feedback/feedback';
 import { IndicatorFastSelector } from './scenes/dashboard/indicator-fast-selector';
 import { BurgerMenu } from './components/burger-menu';
+import { FavoriteCitiesScreen } from '~/scenes/location/favorite-cities';
 
 type HomeProps = NativeStackScreenProps<RootStackParamList, RouteEnum.HOME>;
 
 function Home(props: HomeProps) {
-  const { favoriteIndicator } = useIndicatorsList((state) => state);
+  const { favoriteIndicators } = useIndicatorsList((state) => state);
   useEffect(() => {
-    if (!favoriteIndicator) {
+    if (!favoriteIndicators || favoriteIndicators.length === 0) {
       props.navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
         enablePanDownToClose: false,
         eventCategory: 'ONBOARDING',
@@ -168,6 +169,15 @@ export function Navigators() {
                 headerShown: false,
                 presentation: 'transparentModal',
                 animation: 'fade',
+              })}
+            />
+            <RootStack.Screen
+              name="FavoriteCities"
+              component={FavoriteCitiesScreen}
+              options={() => ({
+                headerShown: true,
+                title: 'Mes villes',
+                presentation: 'modal',
               })}
             />
           </RootStack.Navigator>

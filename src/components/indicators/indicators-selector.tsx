@@ -8,22 +8,29 @@ import * as Haptics from 'expo-haptics';
 
 interface IndicatorsSelectorProps {
   indicators: IndicatorItem[] | null;
-  onSubmit: (slug: string) => void;
+  onSubmit: (slugs: string[]) => void;
 }
 export function IndicatorsSelector(props: IndicatorsSelectorProps) {
-  const { setFavoriteIndicator, favoriteIndicator } = useIndicatorsList(
+  const { setFavoriteIndicators, favoriteIndicators } = useIndicatorsList(
     (state) => state,
   );
-  const [state, setState] = useState<IndicatorItem | null>(favoriteIndicator);
+  const [state, setState] = useState<IndicatorItem[]>(favoriteIndicators ?? []);
 
-  function handleSelectIndicator(indicator: IndicatorItem) {
+  function handleToggleIndicator(indicator: IndicatorItem) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setState(indicator);
+    setState((prev) => {
+      const exists = prev.find((i) => i.slug === indicator.slug);
+      if (exists) {
+        return prev.filter((i) => i.slug !== indicator.slug);
+      } else {
+        return [...prev, indicator];
+      }
+    });
   }
 
   function handleSubmit() {
-    setFavoriteIndicator(state);
-    props.onSubmit(state?.slug ?? '');
+    setFavoriteIndicators(state);
+    props.onSubmit(state.map((i) => i.slug));
   }
 
   return (
@@ -31,20 +38,20 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
       <View className="flex  flex-row flex-wrap items-start ">
         {props.indicators?.map((indicator) => {
           if (indicator.slug === 'drinking_water' && !__DEV__) return null;
-          const isFavorite = state?.slug === indicator.slug;
+          const isSelected = state.some((i) => i.slug === indicator.slug);
           return (
             <Button
               onPress={() => {
-                handleSelectIndicator(indicator);
+                handleToggleIndicator(indicator);
               }}
               viewClassName={cn(
-                isFavorite
+                isSelected
                   ? 'bg-app-yellow border-app-primary'
                   : 'bg-app-primary border-white ',
                 'border-2 rounded-full m-2 items-center flex',
               )}
               textClassName={cn(
-                isFavorite ? 'text-app-primary' : 'text-white',
+                isSelected ? 'text-app-primary' : 'text-white',
                 'text-[15px]',
               )}
               key={indicator.slug}
@@ -55,7 +62,7 @@ export function IndicatorsSelector(props: IndicatorsSelectorProps) {
           );
         })}
       </View>
-      {state?.slug ? (
+      {state.length > 0 ? (
         <View className="mx-auto mt-6">
           <Button
             onPress={handleSubmit}

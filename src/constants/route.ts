@@ -38,7 +38,7 @@ export type RootStackParamList = {
     indicatorSlug: IndicatorsSlugEnum;
   };
   [RouteEnum.FEEDBACK]: undefined;
-  [RouteEnum.FEEDBACK]: undefined;
+  FavoriteCities: undefined;
 };
 
 export enum HomeTabRouteEnum {

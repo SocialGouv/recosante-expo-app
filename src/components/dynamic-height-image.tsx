@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Image as ExpoImage, type ImageSource } from 'expo-image';
 
 const windowWidth = Dimensions.get('window').width;
+const DEFAULT_IMAGE_HEIGHT = 120;
 
 interface DynamicHeightImageProps {
   source: ImageSource;
@@ -10,14 +11,27 @@ interface DynamicHeightImageProps {
 }
 
 export function DynamicHeightImage({ source, alt }: DynamicHeightImageProps) {
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState(DEFAULT_IMAGE_HEIGHT);
   const imageWidth = windowWidth * 0.85;
 
   useEffect(() => {
     if (source.uri === undefined) return;
-    Image.getSize(source.uri, (width, height) => {
-      setHeight((imageWidth * height) / width);
-    });
+    Image.getSize(
+      source.uri,
+      (width, height) => {
+        if (width && height) {
+          const computed = (imageWidth * height) / width;
+          setHeight(
+            Number.isFinite(computed) && computed > 0
+              ? computed
+              : DEFAULT_IMAGE_HEIGHT,
+          );
+        } else {
+          setHeight(DEFAULT_IMAGE_HEIGHT);
+        }
+      },
+      () => setHeight(DEFAULT_IMAGE_HEIGHT),
+    );
   }, [source]);
 
   return (
