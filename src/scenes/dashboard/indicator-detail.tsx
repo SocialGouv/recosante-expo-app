@@ -240,13 +240,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
               );
             },
           )}
-          <MyText className="mt-2" font="MarianneRegularItalic">
-            Source des recommandations :{' '}
-            {isDrinkingWaterIndicator
-              ? 'Ministere de la Santé et de la prévention'
-              : 'Gouvernement Francais'}
-            .
-          </MyText>
           {isDrinkingWaterIndicator ? (
             <>
               {currentDayIndicatorData?.values?.length ? (
@@ -317,13 +310,6 @@ export function IndicatorDetail(props: IndicatorSelectorSheetProps) {
                   </View>
                 </>
               ) : null}
-              <MyText className="mt-4" font="MarianneRegularItalic">
-                Source des données :{' '}
-                {
-                  IndicatorService.getDataSourceByIndicator(indicator.slug)
-                    .label
-                }
-              </MyText>
             </>
           ) : null}
 

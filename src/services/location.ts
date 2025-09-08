@@ -1,7 +1,6 @@
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
 import { type UserAddress, type GeoApiFeature } from '~/types/location';
-import { capture } from './sentry';
 
 type LocationRequestResponse = {
   status: Location.PermissionStatus;
@@ -75,7 +74,7 @@ export namespace LocationService {
       console.log('faster', faster);
       return faster;
     } catch (error) {
-      capture(error);
+      // capture(error);
     }
     console.log('return');
     return {

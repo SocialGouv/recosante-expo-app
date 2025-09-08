@@ -13,6 +13,10 @@ interface UserState {
   setAddress: (location: UserAddress) => void;
   notifications_preference: NotificationIdEnum[];
   setNotificationsPreferences: (notifications: NotificationIdEnum[]) => void;
+  favoriteCities: UserAddress[];
+  setFavoriteCities: (cities: UserAddress[]) => void;
+  addFavoriteCity: (city: UserAddress) => void;
+  removeFavoriteCity: (city: UserAddress) => void;
   _hasHydrated: boolean;
   setHasHydrated: (hydrationState: boolean) => void;
 }
@@ -36,7 +40,7 @@ const setUser = (
 
 export const useUser = create<UserState>()(
   persist(
-    (set, _get) => ({
+    (set, get) => ({
       address: null,
       setAddress: async (address) => {
         API.put({
@@ -88,6 +92,25 @@ export const useUser = create<UserState>()(
             const user: User = res.data;
             setUser(set, user);
           }
+        });
+      },
+      favoriteCities: [],
+      setFavoriteCities: (cities) => set({ favoriteCities: cities }),
+      addFavoriteCity: (city) => {
+        const current = get().favoriteCities;
+        if (
+          !current.some(
+            (c) => c.municipality_insee_code === city.municipality_insee_code,
+          )
+        ) {
+          set({ favoriteCities: [...current, city] });
+        }
+      },
+      removeFavoriteCity: (city) => {
+        set({
+          favoriteCities: get().favoriteCities.filter(
+            (c) => c.municipality_insee_code !== city.municipality_insee_code,
+          ),
         });
       },
       _hasHydrated: false,

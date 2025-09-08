@@ -27,7 +27,7 @@ export function LineList(props: LineChartProps) {
     ? sortedValues.length > MAX_LINE && props.isPreviewMode
     : false;
   if (!props.slug) return <></>;
-  const { valuesToColor, maxValue, minValue } =
+  const { valuesToColor, maxValue, maxValueLabel } =
     IndicatorService.getDataVisualisationBySlug(props.slug);
 
   if (!sortedValues?.length) return <></>;
@@ -48,24 +48,26 @@ export function LineList(props: LineChartProps) {
           return (
             <LineWrapper key={line.name} {...lineWrapperProps}>
               <View className="bottom-1 flex flex-row items-start ">
-                <View className="mx-1">
-                  {!!line.link && <ArrowTopRightOnSquare />}
-                </View>
                 <MyText
-                  className="-mt-1 basis-1/4 text-[11px] text-muted-100"
+                  className="-mt-1 basis-2/4 text-[11px] text-muted-100"
                   font="MarianneBold"
-                  numberOfLines={1}
+                  numberOfLines={2}
                 >
                   {line.name.charAt(0).toUpperCase() + line.name.slice(1)}
                 </MyText>
                 <View className="mb-2 w-full flex-1 ">
-                  <LineChart
-                    isSmall
-                    color={valuesToColor[line.value]}
-                    value={line.value}
-                    maxValue={maxValue}
-                    minValue={minValue}
-                  />
+                  {maxValueLabel && line.value === maxValue + 1 ? (
+                    <MyText className="mb-2 w-full text-xs text-muted-100">
+                      {maxValueLabel}
+                    </MyText>
+                  ) : (
+                    <LineChart
+                      isSmall
+                      color={valuesToColor[line.value]}
+                      value={line.value}
+                      maxValue={maxValue}
+                    />
+                  )}
                 </View>
               </View>
             </LineWrapper>

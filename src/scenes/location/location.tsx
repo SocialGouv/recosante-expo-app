@@ -15,6 +15,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -29,7 +30,6 @@ import { Close } from '~/assets/icons/close';
 import { Illu } from '~/assets/location/illu';
 import { logEvent } from '~/services/logEventsWithMatomo';
 import { Loader } from '~/components/ui/loader';
-import { capture } from '~/services/sentry';
 import { Search } from '~/assets/icons/search';
 import * as Haptics from 'expo-haptics';
 
@@ -46,7 +46,8 @@ enum StatusEnum {
 }
 
 export function LocationPage(props: LocationPageProps) {
-  const { setAddress } = useUser((state) => state);
+  const { setAddress, favoriteCities, addFavoriteCity, removeFavoriteCity } =
+    useUser();
   const [query, setQuery] = useState('');
   const hadMin3Char = query.length >= 3;
 
@@ -112,6 +113,18 @@ export function LocationPage(props: LocationPageProps) {
   useEffect(() => {
     bottomSheetRef.current?.expand();
   }, []);
+
+  const isFavorite = (address: UserAddress) =>
+    favoriteCities.some(
+      (c) => c.municipality_insee_code === address.municipality_insee_code,
+    );
+  const handleToggleFavorite = (address: UserAddress) => {
+    if (isFavorite(address)) {
+      removeFavoriteCity(address);
+    } else {
+      addFavoriteCity(address);
+    }
+  };
 
   return (
     <BottomSheet
@@ -254,17 +267,16 @@ export function LocationPage(props: LocationPageProps) {
                   .then((address) => {
                     setIsGeolocating(false);
                     if (address) {
+                      logEvent({
+                        category: 'LOCATION',
+                        action: 'SELECT_GEOLOCATION_SUCCESS',
+                        name: address.municipality_name,
+                      });
                       handleSelect(address);
                     }
                   })
                   .catch((err: any) => {
                     setIsGeolocating(false);
-                    capture(err, {
-                      extra: {
-                        location,
-                        method: 'get localisation',
-                      },
-                    });
                   });
               }}
               className="flex flex-row items-center justify-start "
@@ -300,7 +312,7 @@ export function LocationPage(props: LocationPageProps) {
                 className="mt-4 px-6 text-center text-[14px] text-[rgba(0,0,0,0.6)]"
               >
                 Optimisez votre expérience en activant la géolocalisation afin
-                d’améliorer votre utilisation de l'application.
+                d'améliorer votre utilisation de l'application.
               </MyText>
             </View>
           ) : null}
@@ -322,7 +334,7 @@ export function LocationPage(props: LocationPageProps) {
             return (
               <View
                 key={`${address.id}-${address.municipality_zip_code}$}`}
-                className="w-full  border-b border-gray-300 py-4"
+                className="w-full  flex-row items-center justify-between border-b border-gray-300 py-4"
               >
                 <TouchableOpacity
                   onPress={() => {
@@ -332,6 +344,7 @@ export function LocationPage(props: LocationPageProps) {
                     });
                     handleSelect(address);
                   }}
+                  className="flex-1"
                 >
                   <MyText
                     font="MarianneRegular"
@@ -345,6 +358,21 @@ export function LocationPage(props: LocationPageProps) {
                   >
                     {address.municipality_zip_code} {address.municipality_name}
                   </MyText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleToggleFavorite(address)}
+                  style={{ marginLeft: 12 }}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: isFavorite(address) ? '#FFD700' : '#B0B0B0',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {isFavorite(address) ? '★' : '☆'}
+                  </Text>
                 </TouchableOpacity>
               </View>
             );

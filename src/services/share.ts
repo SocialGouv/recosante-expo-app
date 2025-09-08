@@ -1,6 +1,5 @@
 import { Platform, Share } from 'react-native';
 import { logEvent } from './logEventsWithMatomo';
-import { capture } from './sentry';
 
 export namespace ShareService {
   export async function shareApp() {
@@ -12,7 +11,7 @@ export namespace ShareService {
       });
       const result = await Share.share({
         message:
-          'Bonjour, je te recommande l’application Recosanté du ministère de la santé et de l’environnement pour obtenir des informations et recommandations sur comment l’environnement impacte la santé.' +
+          "Bonjour, je te recommande l'application Recosante du ministere de la sante et de l'environnement pour obtenir des informations et recommandations sur comment l'environnement impacte la sante." +
           (Platform.OS === 'android' ? '\n' + url : ''),
         url: Platform.OS === 'ios' ? url : undefined,
       });
@@ -36,7 +35,6 @@ export namespace ShareService {
         });
       }
     } catch (error: any) {
-      capture('share app failure ' + error);
       logEvent({
         category: 'SHARE_APP',
         action: 'ERROR',

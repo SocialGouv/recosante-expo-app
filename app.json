@@ -2,8 +2,7 @@
   "expo": {
     "name": "Recosante",
     "slug": "recosante",
-    "version": "1.1.0",
-    "runtimeVersion": "1.0.13",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "64",
+      "buildNumber": "82",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -37,7 +36,7 @@
         "backgroundColor": "#3643b6"
       },
       "package": "com.recosante.recosante",
-      "versionCode": 64,
+      "versionCode": 75,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.recosante.recosante"
     },
     "updates": {
@@ -66,14 +65,6 @@
       ],
       ["expo-font"],
       [
-        "@sentry/react-native/expo",
-        {
-          "organization": "incubateur",
-          "project": "recosante-expo-app",
-          "url": "https://sentry.fabrique.social.gouv.fr/"
-        }
-      ],
-      [
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Nous n'enregistrons pas vos coordonnées mais nous conservons seulement votre code INSEE de commune, afin de vous fournir des indicateurs précis.",
@@ -88,7 +79,7 @@
             "enableProguardInReleaseBuilds": true
           },
           "ios": {
-            "deploymentTarget": "13.4"
+            "deploymentTarget": "18.0"
           }
         }
       ]

@@ -60,7 +60,7 @@ export function SettingsPage(props: SettingsProps) {
         <Title label="Indicateurs" />
 
         <TextRow
-          text="Changer votre indicateur favori"
+          text="Gérer mes indicateurs favoris"
           onPress={() => {
             props.navigation.navigate(RouteEnum.INDICATORS_SELECTOR, {
               enablePanDownToClose: true,
@@ -119,7 +119,7 @@ export function SettingsPage(props: SettingsProps) {
                 setOnVersionClicked((c) => c + 1);
               } else {
                 await AsyncStorage.clear();
-                InitializationService.initMatomo();
+                await InitializationService.initMatomo();
                 resetIndicatorsList();
                 const resetAction = CommonActions.reset({
                   index: 0,
