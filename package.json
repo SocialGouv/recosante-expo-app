@@ -40,6 +40,7 @@
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.21",
+    "@sentry/react-native": "^7.1.0",
     "@types/react": "~18.2.14",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",

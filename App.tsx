@@ -9,6 +9,21 @@ import { InitializationService } from '~/services/initialization';
 import ToastProvider from '~/services/toast';
 import { toastConfig } from '~/services/toast-config';
 import Toast from 'react-native-toast-message';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: 'https://e520427fc12683d34b17aee2fa67c866@sentry2.fabrique.social.gouv.fr/51',
+
+  // Adds more context data to events (IP address, cookies, user, etc.)
+  // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
+  sendDefaultPii: true,
+
+  // Enable Logs
+  enableLogs: true,
+
+  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+  // spotlight: __DEV__,
+});
 
 LogBox.ignoreAllLogs(true);
 SplashScreen.preventAutoHideAsync();
@@ -54,4 +69,4 @@ function AppWrapper() {
     </SafeAreaProvider>
   );
 }
-export default AppWrapper;
+export default Sentry.wrap(AppWrapper);
