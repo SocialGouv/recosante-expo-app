@@ -82,6 +82,14 @@
             "deploymentTarget": "18.0"
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry2.fabrique.social.gouv.fr/",
+          "project": "recosante-mobile",
+          "organization": "incubateur"
+        }
       ]
     ],
     "hooks": {}
