@@ -2,7 +2,7 @@
   "expo": {
     "name": "Recosante",
     "slug": "recosante",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.recosante.recosante",
-      "buildNumber": "82",
+      "buildNumber": "83",
       "config": {
         "usesNonExemptEncryption": false
       },
